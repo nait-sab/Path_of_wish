@@ -134,7 +134,7 @@ func _on_equip(item_to_add: Item) -> void:
 			"evasion":
 				mods_as_modifiers.append(StatEngineClass.create_modifier("evasion", StatEngine.ModifierForm.FLAT, value))
 			"energy_shield":
-				mods_as_modifiers.append(StatEngineClass.create_modifier("energy_shield", StatEngine.ModifierForm.FLAT, value))
+				mods_as_modifiers.append(StatEngineClass.create_modifier("energy_shield_max", StatEngine.ModifierForm.FLAT, value))
 			"move_speed_percent":
 				mods_as_modifiers.append(StatEngineClass.create_modifier("move_speed_percent", StatEngine.ModifierForm.INCREASED, value))
 			"block_chance_percent":

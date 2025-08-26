@@ -28,6 +28,6 @@ func _on_quitter_pressed() -> void:
 	# Clear StatEngine and reset data
 	toggle()
 	get_tree().paused = false
-	get_tree().change_scene_to_file("res://scenes/menus/character_select.tscn")
+	get_tree().change_scene_to_file("res://scenes/menus/character_select/character_select.tscn")
 	StatEngine.clear()
 	Game.current_char = {}

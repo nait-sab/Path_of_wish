@@ -1,5 +1,8 @@
 class_name Player extends CharacterBody2D
 
+const DAMAGE_PACKET = preload("res://scripts/combat/damage_packet.gd")
+const DAMAGE_RESOLVER = preload("res://scripts/combat/damage_resolver.gd")
+
 signal stats_changed(stats)
 
 @export_category("Data")
@@ -86,11 +89,33 @@ func _try_attack():
 
 	if target.global_position.distance_to(global_position) > melee_range:
 		return
+		
+	var packet := DAMAGE_PACKET.melee_physical(melee_damage)
+	packet.can_crit = false
+	packet.crit_chance = 0.0
+	packet.crit_multiplier = 0.0
+	
+	if "receive_hit" in target:
+		target.receive_hit(packet)
 
-	target.apply_damage(melee_damage)
+	#target.apply_damage(melee_damage)
 	mana = clamp(mana - mana_cost, 0, StatEngine.get_stat("mana_max"))
 	emit_signal("stats_changed", self)
 	_cd = attack_cooldown
+	
+func receive_hit(packet: DamagePacket) -> DamageReport:
+	var defender_get := Callable(StatEngine, "get_stat")
+	var defender_state := {
+		"life": life,
+		"energy_shield": StatEngine.get_stat("energy_shield_max")
+	}
+	
+	var report := DamageResolver.resolve(defender_get, defender_state, packet, {})
+	if report.applied_to_life > 0.0:
+		life = clamp(life - report.applied_to_life, 0.0, StatEngine.get_stat("life_max"))
+		emit_signal("stats_changed", self)
+		
+	return report
 	
 func _find_enemy_under_mouse():
 	var mouse := get_global_mouse_position()
@@ -108,10 +133,6 @@ func _find_enemy_under_mouse():
 			best = enemy
 			
 	return best
-	
-func apply_damage(amount: int):
-	life = clamp(life - amount, 0, StatEngine.get_stat("life_max"))
-	emit_signal("stats_changed", self)
 	
 func load_current():
 	var stats: Dictionary = Game.current_char["stats"]
@@ -132,18 +153,18 @@ func load_current():
 		# Life /  Mana
 		StatEngineClass.create_modifier("life_max", StatEngineClass.ModifierForm.FLAT, stats.get("life_max")),
 		StatEngineClass.create_modifier("mana_max", StatEngineClass.ModifierForm.FLAT, stats.get("mana_max")),
-		StatEngineClass.create_modifier("life_regen_percent", StatEngineClass.ModifierForm.FLAT, 0),
+		StatEngineClass.create_modifier("life_regen_percent", StatEngineClass.ModifierForm.FLAT, 10), #0),
 		StatEngineClass.create_modifier("mana_regen_percent", StatEngineClass.ModifierForm.FLAT, 10), #1.8),
 	
 		# Resistances
 		StatEngineClass.create_modifier("resistance_fire", StatEngineClass.ModifierForm.FLAT, stats.get("resistance_fire", 0)),
-		StatEngineClass.create_modifier("resistance_fire_max", StatEngineClass.ModifierForm.FLAT, stats.get("resistance_fire_max", 0)),
+		StatEngineClass.create_modifier("resistance_fire_max", StatEngineClass.ModifierForm.FLAT, stats.get("resistance_fire_max", 75)),
 		StatEngineClass.create_modifier("resistance_cold", StatEngineClass.ModifierForm.FLAT, stats.get("resistance_cold", 0)),
-		StatEngineClass.create_modifier("resistance_cold_max", StatEngineClass.ModifierForm.FLAT, stats.get("resistance_cold_max", 0)),
+		StatEngineClass.create_modifier("resistance_cold_max", StatEngineClass.ModifierForm.FLAT, stats.get("resistance_cold_max", 75)),
 		StatEngineClass.create_modifier("resistance_lightning", StatEngineClass.ModifierForm.FLAT, stats.get("resistance_lightning", 0)),
-		StatEngineClass.create_modifier("resistance_lightning_max", StatEngineClass.ModifierForm.FLAT, stats.get("resistance_lightning_max", 0)),
+		StatEngineClass.create_modifier("resistance_lightning_max", StatEngineClass.ModifierForm.FLAT, stats.get("resistance_lightning_max", 75)),
 		StatEngineClass.create_modifier("resistance_chaos", StatEngineClass.ModifierForm.FLAT, stats.get("resistance_chaos", 0)),
-		StatEngineClass.create_modifier("resistance_chaos_max", StatEngineClass.ModifierForm.FLAT, stats.get("resistance_chaos_max", 0)),
+		StatEngineClass.create_modifier("resistance_chaos_max", StatEngineClass.ModifierForm.FLAT, stats.get("resistance_chaos_max", 75)),
 	]
 	StatEngine.set_source("base_char", base_mods)
 	

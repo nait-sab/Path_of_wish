@@ -30,7 +30,7 @@ func _input(event):
 		
 	if event.is_action_pressed("debug_space_enemy"):
 		var enemy = enemy_scene.instantiate()
-		enemy.level = randi() % 6 + 1
+		enemy.level = randi() % 3 + 1
 		print(enemy.level)
 		enemy.rarity = [Item.Rarity.NORMAL, Item.Rarity.MAGIC, Item.Rarity.RARE].pick_random()
 		print(enemy.rarity)

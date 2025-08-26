@@ -100,7 +100,7 @@ func _refresh():
 	
 	# Stats
 	life_value.text = str(int(StatEngine.get_stat("life_max")))
-	energy_shield_value.text = str(StatEngine.get_stat("energy_shield"))
+	energy_shield_value.text = str(StatEngine.get_stat("energy_shield_max"))
 	mana_value.text = str(int(StatEngine.get_stat("mana_max")))
 	spirit_value.text = str(StatEngine.get_stat("spirit"))
 	armour_value.text = "%d%%" % estimate_phys_reduction_percent(StatEngine.get_stat("armour"), player.level)
@@ -109,13 +109,13 @@ func _refresh():
 	
 	# Resistances
 	fire_value.text = "%d%%" % int(StatEngine.get_stat("resistance_fire"))
-	fire_max_value.text = "%d%%" % int(StatEngine.get_stat("resistance_fire_max"))
+	fire_max_value.text = "(Max: %d%%)" % int(StatEngine.get_stat("resistance_fire_max"))
 	cold_value.text = "%d%%" % int(StatEngine.get_stat("resistance_cold"))
-	cold_max_value.text = "%d%%" % int(StatEngine.get_stat("resistance_cold_max"))
+	cold_max_value.text = "(Max: %d%%)" % int(StatEngine.get_stat("resistance_cold_max"))
 	lightning_value.text = "%d%%" % int(StatEngine.get_stat("resistance_lightning"))
-	lightning_max_value.text = "%d%%" % int(StatEngine.get_stat("resistance_lightning_max"))
+	lightning_max_value.text = "(Max: %d%%)" % int(StatEngine.get_stat("resistance_lightning_max"))
 	chaos_value.text = "%d%%" % int(StatEngine.get_stat("resistance_chaos"))
-	chaos_max_value.text = "%d%%" % int(StatEngine.get_stat("resistance_chaos_max"))
+	chaos_max_value.text = "(Max: %d%%)" % int(StatEngine.get_stat("resistance_chaos_max"))
 	
 	# Details
 	_clear_details()
@@ -126,7 +126,7 @@ func _refresh():
 	
 	if StatEngine.get_stat("life_regen_percent") > 0:
 		var value = "%.1f" % float(StatEngine.get_stat("life_max") * StatEngine.get_stat("life_regen_percent") / 100.0)
-		life_details.append(["Récupération de vie par seconde totale",  "%d" % value])
+		life_details.append(["Récupération de vie par seconde totale",  value])
 	
 	_add_detail_section("Vie", life_details)
 	

@@ -12,13 +12,13 @@ radius = 357.237
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tjssy"]
 bg_color = Color(0.723187, 0, 0.111471, 1)
 
-[node name="Enemy" type="CharacterBody2D" node_paths=PackedStringArray("sprite", "life_bar", "dectection_zone", "timer_attack_cooldown", "timer_breeak_cooldown")]
+[node name="Enemy" type="CharacterBody2D" node_paths=PackedStringArray("sprite", "life_bar", "detection_zone", "timer_attack_cooldown", "timer_break_cooldown")]
 script = ExtResource("1_a3pup")
 sprite = NodePath("Sprite2D")
 life_bar = NodePath("ProgressBar")
-dectection_zone = NodePath("Detection Range/CollisionShape2D")
+detection_zone = NodePath("Detection Range/CollisionShape2D")
 timer_attack_cooldown = NodePath("AttackCooldown")
-timer_breeak_cooldown = NodePath("BreakCooldown")
+timer_break_cooldown = NodePath("BreakCooldown")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_a3pup")

@@ -1,7 +1,11 @@
-[gd_scene load_steps=20 format=3 uid="uid://c1anxqj6baj0b"]
+[gd_scene load_steps=24 format=3 uid="uid://c1anxqj6baj0b"]
 
 [ext_resource type="Script" uid="uid://bseobhh8gnn1r" path="res://scenes/ui/character_sheet/character_sheet.gd" id="1_vhyxx"]
 [ext_resource type="Texture2D" uid="uid://bk3w8sbuv1d5a" path="res://assets/textures/icon.svg" id="2_epj2k"]
+[ext_resource type="Texture2D" uid="uid://cfbu6kp3vygth" path="res://assets/textures/ui/character_sheet/resistance_fire_icon.png" id="3_26whu"]
+[ext_resource type="Texture2D" uid="uid://mfnk8o5aqdpq" path="res://assets/textures/ui/character_sheet/resistance_cold_icon.png" id="4_xoomq"]
+[ext_resource type="Texture2D" uid="uid://dubsdn63c6idu" path="res://assets/textures/ui/character_sheet/resistance_lightning_icon.png" id="5_nh2eu"]
+[ext_resource type="Texture2D" uid="uid://ydsdt6t2j41o" path="res://assets/textures/ui/character_sheet/resistance_chaos_icon.png" id="6_571rn"]
 
 [sub_resource type="Gradient" id="Gradient_8ndef"]
 colors = PackedColorArray(0.17355, 0.17355, 0.17355, 1, 0.290307, 0.301458, 0.295144, 1)
@@ -85,14 +89,14 @@ spirit_value = NodePath("Control/Window/VBoxContainer/Stats/MarginContainer/Colo
 armour_value = NodePath("Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/HBoxContainer2/BlockArmour/Value")
 evasion_value = NodePath("Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/HBoxContainer2/BlockEvasionRating/Value")
 block_value = NodePath("Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/HBoxContainer2/BlockBlockChance/Value")
-fire_value = NodePath("Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/Resistances/FireResistance/Value")
-fire_max_value = NodePath("Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/Resistances/FireResistance/ValueMax")
-cold_value = NodePath("Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/Resistances/ColdResistance/Value")
-cold_max_value = NodePath("Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/Resistances/ColdResistance/ValueMax")
-lightning_value = NodePath("Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/Resistances/LightningResistance/Value")
-lightning_max_value = NodePath("Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/Resistances/LightningResistance/ValueMax")
-chaos_value = NodePath("Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/Resistances/ChaosResistance/Value")
-chaos_max_value = NodePath("Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/Resistances/ChaosResistance/ValueMax")
+fire_value = NodePath("Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/Resistances/MarginContainer2/FireResistance/Value")
+fire_max_value = NodePath("Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/Resistances/MarginContainer2/FireResistance/ValueMax")
+cold_value = NodePath("Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/Resistances/MarginContainer3/ColdResistance/Value")
+cold_max_value = NodePath("Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/Resistances/MarginContainer3/ColdResistance/ValueMax")
+lightning_value = NodePath("Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/Resistances/MarginContainer4/LightningResistance/Value")
+lightning_max_value = NodePath("Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/Resistances/MarginContainer4/LightningResistance/ValueMax")
+chaos_value = NodePath("Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/Resistances/MarginContainer/ChaosResistance/Value")
+chaos_max_value = NodePath("Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/Resistances/MarginContainer/ChaosResistance/ValueMax")
 panel = NodePath("Control/Window")
 header = NodePath("Control/Window/VBoxContainer/Header")
 details = NodePath("Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/Details")
@@ -559,87 +563,123 @@ horizontal_alignment = 1
 layout_mode = 2
 columns = 2
 
-[node name="FireResistance" type="HBoxContainer" parent="Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/Resistances"]
+[node name="MarginContainer2" type="MarginContainer" parent="Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/Resistances"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 5
+
+[node name="FireResistance" type="HBoxContainer" parent="Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/Resistances/MarginContainer2"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="TextureRect" type="TextureRect" parent="Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/Resistances/FireResistance"]
+[node name="TextureRect" type="TextureRect" parent="Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/Resistances/MarginContainer2/FireResistance"]
 layout_mode = 2
-texture = ExtResource("2_epj2k")
+texture = ExtResource("3_26whu")
+stretch_mode = 5
 
-[node name="Label" type="Label" parent="Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/Resistances/FireResistance"]
+[node name="Label" type="Label" parent="Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/Resistances/MarginContainer2/FireResistance"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Feu"
 
-[node name="Value" type="Label" parent="Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/Resistances/FireResistance"]
+[node name="Value" type="Label" parent="Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/Resistances/MarginContainer2/FireResistance"]
 layout_mode = 2
 text = "0%"
 
-[node name="ValueMax" type="Label" parent="Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/Resistances/FireResistance"]
+[node name="ValueMax" type="Label" parent="Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/Resistances/MarginContainer2/FireResistance"]
 layout_mode = 2
 text = "(0%)"
 
-[node name="ColdResistance" type="HBoxContainer" parent="Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/Resistances"]
+[node name="MarginContainer3" type="MarginContainer" parent="Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/Resistances"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 5
+
+[node name="ColdResistance" type="HBoxContainer" parent="Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/Resistances/MarginContainer3"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="TextureRect" type="TextureRect" parent="Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/Resistances/ColdResistance"]
+[node name="TextureRect" type="TextureRect" parent="Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/Resistances/MarginContainer3/ColdResistance"]
 layout_mode = 2
-texture = ExtResource("2_epj2k")
+texture = ExtResource("4_xoomq")
+stretch_mode = 5
 
-[node name="Label" type="Label" parent="Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/Resistances/ColdResistance"]
+[node name="Label" type="Label" parent="Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/Resistances/MarginContainer3/ColdResistance"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Froid"
 
-[node name="Value" type="Label" parent="Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/Resistances/ColdResistance"]
+[node name="Value" type="Label" parent="Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/Resistances/MarginContainer3/ColdResistance"]
 layout_mode = 2
 text = "0%"
 
-[node name="ValueMax" type="Label" parent="Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/Resistances/ColdResistance"]
+[node name="ValueMax" type="Label" parent="Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/Resistances/MarginContainer3/ColdResistance"]
 layout_mode = 2
 text = "(0%)"
 
-[node name="LightningResistance" type="HBoxContainer" parent="Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/Resistances"]
+[node name="MarginContainer4" type="MarginContainer" parent="Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/Resistances"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 5
+
+[node name="LightningResistance" type="HBoxContainer" parent="Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/Resistances/MarginContainer4"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="TextureRect" type="TextureRect" parent="Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/Resistances/LightningResistance"]
+[node name="TextureRect" type="TextureRect" parent="Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/Resistances/MarginContainer4/LightningResistance"]
 layout_mode = 2
-texture = ExtResource("2_epj2k")
+texture = ExtResource("5_nh2eu")
+stretch_mode = 5
 
-[node name="Label" type="Label" parent="Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/Resistances/LightningResistance"]
+[node name="Label" type="Label" parent="Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/Resistances/MarginContainer4/LightningResistance"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Foudre"
 
-[node name="Value" type="Label" parent="Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/Resistances/LightningResistance"]
+[node name="Value" type="Label" parent="Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/Resistances/MarginContainer4/LightningResistance"]
 layout_mode = 2
 text = "0%"
 
-[node name="ValueMax" type="Label" parent="Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/Resistances/LightningResistance"]
+[node name="ValueMax" type="Label" parent="Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/Resistances/MarginContainer4/LightningResistance"]
 layout_mode = 2
 text = "(0%)"
 
-[node name="ChaosResistance" type="HBoxContainer" parent="Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/Resistances"]
+[node name="MarginContainer" type="MarginContainer" parent="Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/Resistances"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 5
+
+[node name="ChaosResistance" type="HBoxContainer" parent="Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/Resistances/MarginContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="TextureRect" type="TextureRect" parent="Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/Resistances/ChaosResistance"]
+[node name="TextureRect" type="TextureRect" parent="Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/Resistances/MarginContainer/ChaosResistance"]
 layout_mode = 2
-texture = ExtResource("2_epj2k")
+texture = ExtResource("6_571rn")
+stretch_mode = 5
 
-[node name="Label" type="Label" parent="Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/Resistances/ChaosResistance"]
+[node name="Label" type="Label" parent="Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/Resistances/MarginContainer/ChaosResistance"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Chaos"
 
-[node name="Value" type="Label" parent="Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/Resistances/ChaosResistance"]
+[node name="Value" type="Label" parent="Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/Resistances/MarginContainer/ChaosResistance"]
 layout_mode = 2
 text = "0%"
 
-[node name="ValueMax" type="Label" parent="Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/Resistances/ChaosResistance"]
+[node name="ValueMax" type="Label" parent="Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/Resistances/MarginContainer/ChaosResistance"]
 layout_mode = 2
 text = "(0%)"
 

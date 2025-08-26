@@ -2,7 +2,7 @@
 
 **Fan game inspiré de *Path of Exile***
 - Moteur de jeu : **Godot**
-- Projet est **amateur et non officiel**
+- Projet **amateur et non officiel**
 - Aucune affiliation avec Grinding Gear Games ou de la marque *Path of Exile*
 
 ---

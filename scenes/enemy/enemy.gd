@@ -1,5 +1,8 @@
 class_name Enemy extends CharacterBody2D
 
+const DAMAGE_PACKET = preload("res://scripts/combat/damage_packet.gd")
+const DAMAGE_RESOLVER = preload("res://scripts/combat/damage_resolver.gd")
+
 @export_category("Base")
 @export var level := 1
 @export var rarity: Item.Rarity = Item.Rarity.NORMAL
@@ -13,9 +16,9 @@ class_name Enemy extends CharacterBody2D
 @export_category("Components")
 @export var sprite: Sprite2D
 @export var life_bar: ProgressBar
-@export var dectection_zone: CollisionShape2D
+@export var detection_zone: CollisionShape2D
 @export var timer_attack_cooldown: Timer
-@export var timer_breeak_cooldown: Timer
+@export var timer_break_cooldown: Timer
 
 var stat_block: StatBlock
 
@@ -38,9 +41,9 @@ func _ready():
 	add_to_group("Enemy")
 
 	# Setup actual attack system
-	dectection_zone.shape.radius = aggro_range
+	detection_zone.shape.radius = aggro_range
 	timer_attack_cooldown.wait_time = attack_cooldown
-	timer_breeak_cooldown.wait_time = break_duration
+	timer_break_cooldown.wait_time = break_duration
 	
 	# Setup local stat block
 	stat_block = StatBlock.new()
@@ -93,9 +96,49 @@ func _physics_process(_delta: float) -> void:
 func attack_target():
 	if not target or is_broken:
 		return
-	if "apply_damage" in target:
-		target.apply_damage(roundi(damage))
+	#if "apply_damage" in target:
+	#	target.apply_damage(roundi(damage))
+	
+	var packet := DAMAGE_PACKET.melee_physical(damage)
+	packet.can_crit = true
+	packet.crit_chance = 0.05
+	packet.crit_multiplier = 1.5
+	
+	if "receive_hit" in target:
+		target.receive_hit(packet)
+	
 	timer_attack_cooldown.start()
+	
+func receive_hit(packet: DamagePacket) -> DamageReport:
+	if is_dead:
+		return DamageReport.new()
+	
+	var defender_get := Callable(stat_block, "get_stat")
+	var defender_state := {
+		"life": life,
+		"energy_shield": energy_shield
+	}
+	
+	var report := DamageResolver.resolve(defender_get, defender_state, packet, {
+		"is_broken": is_broken
+	})
+	
+	var energy_shield_damage := report.applied_to_energy_shield
+	var life_damage := report.applied_to_life
+	
+	if energy_shield_damage > 0.0 and energy_shield > 0.0:
+		energy_shield = max(0.0, energy_shield - energy_shield_damage)
+		
+	if life_damage > 0.0:
+		life = clamp(life - life_damage, 0.0, life_max_cached)
+		life_bar.value = life
+		
+	_add_break(report.final_total)
+	
+	if life <= 0.0:
+		die()
+		
+	return report;
 
 func _on_detection_range_body_entered(body: Node2D) -> void:
 	if body.is_in_group("Player"):
@@ -104,58 +147,7 @@ func _on_detection_range_body_entered(body: Node2D) -> void:
 func _on_detection_range_body_exited(body: Node2D) -> void:
 	if body == target:
 		target = null
-		
-func apply_damage(amount: int):
-	if is_dead: 
-		return
-		
-	print("Damage received %d" % amount)
-	
-	# Break give 40% more damage
-	if is_broken:
-		amount *= 1.4
-		print("Damage received %d (+ 40% from break)" % amount)
-		
-	# 1 - Evasion Check
-	var evasion_rating = stat_block.get_stat("evasion_rating")
-	var dodge_chance = clamp(evasion_rating / (evasion_rating + 100), 0, .95)
-	if randf() < dodge_chance:
-		print("[Enemy have dodge]")
-		return
-		
-	# 2 - Block Chance
-	var block_chance = stat_block.get_stat("block_chance_percent")
-	if block_chance > 0:
-		var roll = randf() * 100
-		if roll < block_chance:
-			print("[Enemy have block the attack]")
-			return
-	
-	# 3 - Armour
-	var armour  = stat_block.get_stat("armour")
-	if armour > 0:
-		var reduction = armour / (armour + 5 * amount)
-		var reduced_amount = int(amount * (1.0 - reduction))
-		print("Armour reduces damage by %.1f%%" % (reduction * 100))
-		print("Damage received %d" % reduced_amount)
-		amount = reduced_amount
-	
-	# 4 - Energy Shield
-	if energy_shield > 0:
-		var energy_absorb = min(amount, energy_shield)
-		print("Energy shield have block %d damage" % energy_absorb)
-		amount -= energy_absorb
-		energy_shield -= energy_absorb
-		
-	print("Final damage received %d" % amount)
-	life = clamp(life - amount, 0, stat_block.get_stat("life_max"))
-	life_bar.value = life
-	
-	_add_break(amount)
-	
-	if life <= 0:
-		die()
-		
+
 func _add_break(amount: int) -> void:
 	if is_broken:
 		return
@@ -167,7 +159,7 @@ func _trigger_break() -> void:
 	is_broken = true
 	break_value = break_max
 	print("[Enemy] is broken !")
-	timer_breeak_cooldown.start()
+	timer_break_cooldown.start()
 
 func _on_break_cooldown_timeout() -> void:
 	is_broken = false
