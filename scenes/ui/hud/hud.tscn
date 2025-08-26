@@ -1,0 +1,61 @@
+[gd_scene load_steps=5 format=3 uid="uid://up0b15oa2a68"]
+
+[ext_resource type="Script" uid="uid://dwxdkaxl8puwc" path="res://scenes/ui/hud/hud.gd" id="1_8qguk"]
+[ext_resource type="Texture2D" uid="uid://btdj0jkixbuk0" path="res://assets/textures/hud/orb_frame.png" id="1_bo48s"]
+[ext_resource type="Texture2D" uid="uid://dikwxis4uaog6" path="res://assets/textures/hud/orb_life_fill.png" id="2_8qguk"]
+[ext_resource type="Texture2D" uid="uid://b2io0derawsca" path="res://assets/textures/hud/orb_mana_fill.png" id="3_136eg"]
+
+[node name="Hud" type="CanvasLayer" node_paths=PackedStringArray("life_orb", "mana_orb")]
+script = ExtResource("1_8qguk")
+life_orb = NodePath("Control/Life Orb")
+mana_orb = NodePath("Control2/Mana Orb")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -40.0
+offset_right = 40.0
+grow_vertical = 0
+
+[node name="Life Orb" type="TextureProgressBar" parent="Control"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -300.0
+offset_right = 300.0
+grow_vertical = 0
+value = 85.0
+fill_mode = 3
+texture_under = ExtResource("1_bo48s")
+texture_progress = ExtResource("2_8qguk")
+
+[node name="Control2" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -40.0
+offset_top = -40.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="Mana Orb" type="TextureProgressBar" parent="Control2"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -300.0
+offset_top = -300.0
+grow_horizontal = 0
+grow_vertical = 0
+value = 85.0
+fill_mode = 3
+texture_under = ExtResource("1_bo48s")
+texture_progress = ExtResource("3_136eg")

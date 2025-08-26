@@ -1,0 +1,23 @@
+# Godot cache
+.godot/
+.import/
+.export/
+
+# Crash Mono
+mono_crash.*
+
+# OS
+.DS_STORE
+Thumbs.db
+desktop.ini
+
+# IDE
+.vscode/
+.idea/
+.*swp
+*.swo
+
+# Export templates / Build
+builds/
+dist/
+export_preset.cfg

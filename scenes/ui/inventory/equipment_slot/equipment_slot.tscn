@@ -1,0 +1,86 @@
+[gd_scene load_steps=16 format=3 uid="uid://br1tphtdhmq0n"]
+
+[ext_resource type="Script" uid="uid://bqu86rudsj055" path="res://scenes/ui/inventory/equipment_slot/equipment_slot.gd" id="1_stf0l"]
+[ext_resource type="Texture2D" uid="uid://bk3w8sbuv1d5a" path="res://assets/textures/icon.svg" id="2_ahuri"]
+[ext_resource type="Texture2D" uid="uid://bed6g75k2imqc" path="res://assets/textures/hud/inventory_slot.png" id="2_r5tm6"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_r5tm6"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wwhko"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_st5va"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_bba8s"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_yj1wc"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_424e6"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0bntx"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_m7tmq"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1jtbw"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_03f3w"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4ack0"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wwhko"]
+
+[node name="EquipmentSlot" type="Button" node_paths=PackedStringArray("texture_rect")]
+custom_minimum_size = Vector2(48, 48)
+offset_right = 48.0
+offset_bottom = 48.0
+theme_override_styles/focus = SubResource("StyleBoxEmpty_r5tm6")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_wwhko")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_st5va")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_bba8s")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_yj1wc")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_424e6")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_0bntx")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_m7tmq")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_1jtbw")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_03f3w")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_4ack0")
+script = ExtResource("1_stf0l")
+texture_rect = NodePath("Panel/MarginContainer/TextureRect")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_wwhko")
+
+[node name="Background" type="TextureRect" parent="Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_r5tm6")
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="TextureRect" type="TextureRect" parent="Panel/MarginContainer"]
+layout_mode = 2
+texture = ExtResource("2_ahuri")
+expand_mode = 1
+
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

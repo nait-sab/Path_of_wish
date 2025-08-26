@@ -1,0 +1,20 @@
+[
+	{
+		"id": "rope_cuffs",
+		"name": "Poignets en corde",
+		"item_level": 1,
+		"tags": ["armor", "glove"],
+		"size": { "width": 2, "height": 2 },
+		"requirements" : {
+			"level": 5,
+			"strength": 0,
+			"dexterity": 0,
+			"intelligence": 0
+		},
+		"properties": {
+            "armour": 12,
+			"energy_shield": 6
+		},
+		"vendor_value": 8
+	}
+]

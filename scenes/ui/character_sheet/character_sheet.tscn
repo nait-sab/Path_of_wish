@@ -1,0 +1,649 @@
+[gd_scene load_steps=20 format=3 uid="uid://c1anxqj6baj0b"]
+
+[ext_resource type="Script" uid="uid://bseobhh8gnn1r" path="res://scenes/ui/character_sheet/character_sheet.gd" id="1_vhyxx"]
+[ext_resource type="Texture2D" uid="uid://bk3w8sbuv1d5a" path="res://assets/textures/icon.svg" id="2_epj2k"]
+
+[sub_resource type="Gradient" id="Gradient_8ndef"]
+colors = PackedColorArray(0.17355, 0.17355, 0.17355, 1, 0.290307, 0.301458, 0.295144, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_wi1cf"]
+noise_type = 3
+seed = 1024
+frequency = 0.0106
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_vhyxx"]
+color_ramp = SubResource("Gradient_8ndef")
+noise = SubResource("FastNoiseLite_wi1cf")
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_vhyxx"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_epj2k"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_26whu"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xoomq"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hbtm5"]
+bg_color = Color(0.363388, 0.0975401, 0.054111, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.927697, 0.952031, 0.779962, 1)
+corner_radius_top_left = 50
+corner_radius_top_right = 50
+corner_radius_bottom_right = 50
+corner_radius_bottom_left = 50
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_571rn"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_fhhkl"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ory4q"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_26whu"]
+bg_color = Color(0.199167, 0.207236, 0.0710632, 1)
+corner_radius_bottom_right = 50
+corner_radius_bottom_left = 50
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xoomq"]
+bg_color = Color(0.158802, 0.0159541, 0.0146464, 1)
+corner_radius_top_left = 50
+corner_radius_bottom_left = 50
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nh2eu"]
+bg_color = Color(0.0130465, 0.0914326, 0.0502328, 1)
+corner_radius_top_left = 50
+corner_radius_bottom_left = 50
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_571rn"]
+bg_color = Color(0.00912503, 0, 0.220487, 1)
+corner_radius_top_left = 50
+corner_radius_bottom_left = 50
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fhlt6"]
+bg_color = Color(0.0627732, 0.063809, 0.0126462, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fhhkl"]
+corner_radius_top_left = 50
+corner_radius_top_right = 50
+expand_margin_left = 60.0
+expand_margin_right = 60.0
+
+[node name="CharacterSheet" type="CanvasLayer" node_paths=PackedStringArray("level_class", "map_name", "character_name", "strength_value", "dexterity_value", "intelligence_value", "life_value", "energy_shield_value", "mana_value", "spirit_value", "armour_value", "evasion_value", "block_value", "fire_value", "fire_max_value", "cold_value", "cold_max_value", "lightning_value", "lightning_max_value", "chaos_value", "chaos_max_value", "panel", "header", "details")]
+script = ExtResource("1_vhyxx")
+level_class = NodePath("Control/Window/VBoxContainer/Informations/MarginContainer/ColorRect/MarginContainer/MarginContainer/HBoxContainer/VBoxContainer/LevelClass")
+map_name = NodePath("Control/Window/VBoxContainer/Informations/MarginContainer/ColorRect/MarginContainer/MarginContainer/HBoxContainer/VBoxContainer/MapName")
+character_name = NodePath("Control/Window/VBoxContainer/Informations/MarginContainer/ColorRect/MarginContainer/MarginContainer/HBoxContainer/VBoxContainer2/CharacterName")
+strength_value = NodePath("Control/Window/VBoxContainer/Informations/MarginContainer/ColorRect/MarginContainer/MarginContainer/HBoxContainer/VBoxContainer3/PanelContainer/MarginContainer/HBoxContainer/StrengthValue")
+dexterity_value = NodePath("Control/Window/VBoxContainer/Informations/MarginContainer/ColorRect/MarginContainer/MarginContainer/HBoxContainer/VBoxContainer3/PanelContainer2/MarginContainer/HBoxContainer/DexterityValue")
+intelligence_value = NodePath("Control/Window/VBoxContainer/Informations/MarginContainer/ColorRect/MarginContainer/MarginContainer/HBoxContainer/VBoxContainer3/PanelContainer3/MarginContainer/HBoxContainer/IntelligenceValue")
+life_value = NodePath("Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/HBoxContainer/BlockLife/Value")
+energy_shield_value = NodePath("Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/HBoxContainer/BlockEnergyShield/Value")
+mana_value = NodePath("Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/HBoxContainer/BlockMana/Value")
+spirit_value = NodePath("Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/HBoxContainer/BlockSpirit/Value")
+armour_value = NodePath("Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/HBoxContainer2/BlockArmour/Value")
+evasion_value = NodePath("Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/HBoxContainer2/BlockEvasionRating/Value")
+block_value = NodePath("Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/HBoxContainer2/BlockBlockChance/Value")
+fire_value = NodePath("Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/Resistances/FireResistance/Value")
+fire_max_value = NodePath("Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/Resistances/FireResistance/ValueMax")
+cold_value = NodePath("Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/Resistances/ColdResistance/Value")
+cold_max_value = NodePath("Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/Resistances/ColdResistance/ValueMax")
+lightning_value = NodePath("Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/Resistances/LightningResistance/Value")
+lightning_max_value = NodePath("Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/Resistances/LightningResistance/ValueMax")
+chaos_value = NodePath("Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/Resistances/ChaosResistance/Value")
+chaos_max_value = NodePath("Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/Resistances/ChaosResistance/ValueMax")
+panel = NodePath("Control/Window")
+header = NodePath("Control/Window/VBoxContainer/Header")
+details = NodePath("Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/Details")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 100.0
+offset_top = 50.0
+offset_right = 140.0
+offset_bottom = 90.0
+
+[node name="Window" type="Panel" parent="Control"]
+layout_mode = 0
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_right = 630.0
+offset_bottom = 780.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_type_variation = &"Panel"
+
+[node name="BackgroundColor" type="ColorRect" parent="Control/Window"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.263475, 0.259659, 0.25296, 1)
+
+[node name="BackgroundTexture" type="TextureRect" parent="Control/Window"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("NoiseTexture2D_vhyxx")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/Window"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Header" type="Control" parent="Control/Window/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="CloseButton" type="Button" parent="Control/Window/VBoxContainer/Header"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -70.0
+offset_top = -20.0
+offset_right = -30.0
+offset_bottom = 20.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.847769, 0.875197, 0.618694, 1)
+theme_override_styles/focus = SubResource("StyleBoxEmpty_vhyxx")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_epj2k")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_26whu")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_xoomq")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_hbtm5")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_571rn")
+theme_override_styles/hover = SubResource("StyleBoxFlat_hbtm5")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_fhhkl")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_hbtm5")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_ory4q")
+theme_override_styles/normal = SubResource("StyleBoxFlat_hbtm5")
+text = "X"
+
+[node name="ColorRect" type="ColorRect" parent="Control/Window/VBoxContainer/Header"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -100.0
+offset_top = -40.0
+offset_right = 100.0
+grow_horizontal = 2
+grow_vertical = 0
+color = Color(0.934747, 0.968141, 0.74984, 1)
+
+[node name="Label" type="Label" parent="Control/Window/VBoxContainer/Header/ColorRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "Personnage"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Informations" type="Control" parent="Control/Window/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 1.5
+
+[node name="MarginContainer" type="MarginContainer" parent="Control/Window/VBoxContainer/Informations"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 5
+
+[node name="ColorRect" type="ColorRect" parent="Control/Window/VBoxContainer/Informations/MarginContainer"]
+layout_mode = 2
+color = Color(0.431045, 0.386996, 0.157523, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="Control/Window/VBoxContainer/Informations/MarginContainer/ColorRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="ColorRect2" type="ColorRect" parent="Control/Window/VBoxContainer/Informations/MarginContainer/ColorRect/MarginContainer"]
+layout_mode = 2
+color = Color(0.1134, 0.107253, 0.0285146, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="Control/Window/VBoxContainer/Informations/MarginContainer/ColorRect/MarginContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_right = 20
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/Window/VBoxContainer/Informations/MarginContainer/ColorRect/MarginContainer/MarginContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/Window/VBoxContainer/Informations/MarginContainer/ColorRect/MarginContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+alignment = 1
+
+[node name="LevelClass" type="Label" parent="Control/Window/VBoxContainer/Informations/MarginContainer/ColorRect/MarginContainer/MarginContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 1
+text = "Niveau 1 Guerrier"
+vertical_alignment = 1
+
+[node name="MapName" type="Label" parent="Control/Window/VBoxContainer/Informations/MarginContainer/ColorRect/MarginContainer/MarginContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 1
+text = "La bordure de la rivière"
+vertical_alignment = 1
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="Control/Window/VBoxContainer/Informations/MarginContainer/ColorRect/MarginContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.75
+
+[node name="CharacterName" type="Label" parent="Control/Window/VBoxContainer/Informations/MarginContainer/ColorRect/MarginContainer/MarginContainer/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.949035, 0.949467, 0.822591, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_26whu")
+text = "Mern Alf"
+horizontal_alignment = 1
+
+[node name="CharacterIcon" type="TextureRect" parent="Control/Window/VBoxContainer/Informations/MarginContainer/ColorRect/MarginContainer/MarginContainer/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+size_flags_vertical = 3
+texture = ExtResource("2_epj2k")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="VBoxContainer3" type="VBoxContainer" parent="Control/Window/VBoxContainer/Informations/MarginContainer/ColorRect/MarginContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+alignment = 1
+
+[node name="PanelContainer" type="PanelContainer" parent="Control/Window/VBoxContainer/Informations/MarginContainer/ColorRect/MarginContainer/MarginContainer/HBoxContainer/VBoxContainer3"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_xoomq")
+
+[node name="MarginContainer" type="MarginContainer" parent="Control/Window/VBoxContainer/Informations/MarginContainer/ColorRect/MarginContainer/MarginContainer/HBoxContainer/VBoxContainer3/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_right = 10
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/Window/VBoxContainer/Informations/MarginContainer/ColorRect/MarginContainer/MarginContainer/HBoxContainer/VBoxContainer3/PanelContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="StrengthLabel" type="Label" parent="Control/Window/VBoxContainer/Informations/MarginContainer/ColorRect/MarginContainer/MarginContainer/HBoxContainer/VBoxContainer3/PanelContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Force"
+
+[node name="StrengthValue" type="Label" parent="Control/Window/VBoxContainer/Informations/MarginContainer/ColorRect/MarginContainer/MarginContainer/HBoxContainer/VBoxContainer3/PanelContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+text = "15"
+
+[node name="PanelContainer2" type="PanelContainer" parent="Control/Window/VBoxContainer/Informations/MarginContainer/ColorRect/MarginContainer/MarginContainer/HBoxContainer/VBoxContainer3"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_nh2eu")
+
+[node name="MarginContainer" type="MarginContainer" parent="Control/Window/VBoxContainer/Informations/MarginContainer/ColorRect/MarginContainer/MarginContainer/HBoxContainer/VBoxContainer3/PanelContainer2"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_right = 10
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/Window/VBoxContainer/Informations/MarginContainer/ColorRect/MarginContainer/MarginContainer/HBoxContainer/VBoxContainer3/PanelContainer2/MarginContainer"]
+layout_mode = 2
+
+[node name="DexterityLabel" type="Label" parent="Control/Window/VBoxContainer/Informations/MarginContainer/ColorRect/MarginContainer/MarginContainer/HBoxContainer/VBoxContainer3/PanelContainer2/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Dextérité"
+
+[node name="DexterityValue" type="Label" parent="Control/Window/VBoxContainer/Informations/MarginContainer/ColorRect/MarginContainer/MarginContainer/HBoxContainer/VBoxContainer3/PanelContainer2/MarginContainer/HBoxContainer"]
+layout_mode = 2
+text = "7"
+
+[node name="PanelContainer3" type="PanelContainer" parent="Control/Window/VBoxContainer/Informations/MarginContainer/ColorRect/MarginContainer/MarginContainer/HBoxContainer/VBoxContainer3"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_571rn")
+
+[node name="MarginContainer" type="MarginContainer" parent="Control/Window/VBoxContainer/Informations/MarginContainer/ColorRect/MarginContainer/MarginContainer/HBoxContainer/VBoxContainer3/PanelContainer3"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_right = 10
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/Window/VBoxContainer/Informations/MarginContainer/ColorRect/MarginContainer/MarginContainer/HBoxContainer/VBoxContainer3/PanelContainer3/MarginContainer"]
+layout_mode = 2
+
+[node name="IntelligenceLabel" type="Label" parent="Control/Window/VBoxContainer/Informations/MarginContainer/ColorRect/MarginContainer/MarginContainer/HBoxContainer/VBoxContainer3/PanelContainer3/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Intelligence"
+
+[node name="IntelligenceValue" type="Label" parent="Control/Window/VBoxContainer/Informations/MarginContainer/ColorRect/MarginContainer/MarginContainer/HBoxContainer/VBoxContainer3/PanelContainer3/MarginContainer/HBoxContainer"]
+layout_mode = 2
+text = "7"
+
+[node name="Stats" type="Control" parent="Control/Window/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 5.0
+
+[node name="MarginContainer" type="MarginContainer" parent="Control/Window/VBoxContainer/Stats"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 5
+
+[node name="ColorRect" type="ColorRect" parent="Control/Window/VBoxContainer/Stats/MarginContainer"]
+layout_mode = 2
+color = Color(0.431373, 0.388235, 0.156863, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="ColorRect" type="ColorRect" parent="Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer"]
+layout_mode = 2
+color = Color(0.113725, 0.105882, 0.027451, 1)
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="BlockLife" type="VBoxContainer" parent="Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/HBoxContainer/BlockLife"]
+layout_mode = 2
+texture = ExtResource("2_epj2k")
+stretch_mode = 5
+
+[node name="Title" type="Label" parent="Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/HBoxContainer/BlockLife"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "Vie"
+horizontal_alignment = 1
+
+[node name="Value" type="Label" parent="Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/HBoxContainer/BlockLife"]
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_fhlt6")
+text = "58"
+horizontal_alignment = 1
+
+[node name="BlockEnergyShield" type="VBoxContainer" parent="Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/HBoxContainer/BlockEnergyShield"]
+layout_mode = 2
+texture = ExtResource("2_epj2k")
+stretch_mode = 5
+
+[node name="Title" type="Label" parent="Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/HBoxContainer/BlockEnergyShield"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "Bouclier d'énergie"
+horizontal_alignment = 1
+
+[node name="Value" type="Label" parent="Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/HBoxContainer/BlockEnergyShield"]
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_fhlt6")
+text = "0"
+horizontal_alignment = 1
+
+[node name="BlockMana" type="VBoxContainer" parent="Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/HBoxContainer/BlockMana"]
+layout_mode = 2
+texture = ExtResource("2_epj2k")
+stretch_mode = 5
+
+[node name="Title" type="Label" parent="Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/HBoxContainer/BlockMana"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "Mana"
+horizontal_alignment = 1
+
+[node name="Value" type="Label" parent="Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/HBoxContainer/BlockMana"]
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_fhlt6")
+text = "48"
+horizontal_alignment = 1
+
+[node name="BlockSpirit" type="VBoxContainer" parent="Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/HBoxContainer/BlockSpirit"]
+layout_mode = 2
+texture = ExtResource("2_epj2k")
+stretch_mode = 5
+
+[node name="Title" type="Label" parent="Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/HBoxContainer/BlockSpirit"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "Spirit"
+horizontal_alignment = 1
+
+[node name="Value" type="Label" parent="Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/HBoxContainer/BlockSpirit"]
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_fhlt6")
+text = "0"
+horizontal_alignment = 1
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="BlockArmour" type="VBoxContainer" parent="Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/HBoxContainer2/BlockArmour"]
+layout_mode = 2
+texture = ExtResource("2_epj2k")
+stretch_mode = 5
+
+[node name="Title" type="Label" parent="Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/HBoxContainer2/BlockArmour"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "Armure"
+horizontal_alignment = 1
+
+[node name="Value" type="Label" parent="Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/HBoxContainer2/BlockArmour"]
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_fhlt6")
+text = "0%"
+horizontal_alignment = 1
+
+[node name="BlockEvasionRating" type="VBoxContainer" parent="Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/HBoxContainer2/BlockEvasionRating"]
+layout_mode = 2
+texture = ExtResource("2_epj2k")
+stretch_mode = 5
+
+[node name="Title" type="Label" parent="Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/HBoxContainer2/BlockEvasionRating"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "Evasion"
+horizontal_alignment = 1
+
+[node name="Value" type="Label" parent="Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/HBoxContainer2/BlockEvasionRating"]
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_fhlt6")
+text = "6%"
+horizontal_alignment = 1
+
+[node name="BlockBlockChance" type="VBoxContainer" parent="Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/HBoxContainer2/BlockBlockChance"]
+layout_mode = 2
+texture = ExtResource("2_epj2k")
+stretch_mode = 5
+
+[node name="Title" type="Label" parent="Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/HBoxContainer2/BlockBlockChance"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "Blocage"
+horizontal_alignment = 1
+
+[node name="Value" type="Label" parent="Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/HBoxContainer2/BlockBlockChance"]
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_fhlt6")
+text = "0%"
+horizontal_alignment = 1
+
+[node name="Label" type="Label" parent="Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_styles/normal = SubResource("StyleBoxFlat_fhhkl")
+text = "Résistances"
+horizontal_alignment = 1
+
+[node name="Resistances" type="GridContainer" parent="Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+columns = 2
+
+[node name="FireResistance" type="HBoxContainer" parent="Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/Resistances"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="TextureRect" type="TextureRect" parent="Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/Resistances/FireResistance"]
+layout_mode = 2
+texture = ExtResource("2_epj2k")
+
+[node name="Label" type="Label" parent="Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/Resistances/FireResistance"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Feu"
+
+[node name="Value" type="Label" parent="Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/Resistances/FireResistance"]
+layout_mode = 2
+text = "0%"
+
+[node name="ValueMax" type="Label" parent="Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/Resistances/FireResistance"]
+layout_mode = 2
+text = "(0%)"
+
+[node name="ColdResistance" type="HBoxContainer" parent="Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/Resistances"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="TextureRect" type="TextureRect" parent="Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/Resistances/ColdResistance"]
+layout_mode = 2
+texture = ExtResource("2_epj2k")
+
+[node name="Label" type="Label" parent="Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/Resistances/ColdResistance"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Froid"
+
+[node name="Value" type="Label" parent="Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/Resistances/ColdResistance"]
+layout_mode = 2
+text = "0%"
+
+[node name="ValueMax" type="Label" parent="Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/Resistances/ColdResistance"]
+layout_mode = 2
+text = "(0%)"
+
+[node name="LightningResistance" type="HBoxContainer" parent="Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/Resistances"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="TextureRect" type="TextureRect" parent="Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/Resistances/LightningResistance"]
+layout_mode = 2
+texture = ExtResource("2_epj2k")
+
+[node name="Label" type="Label" parent="Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/Resistances/LightningResistance"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Foudre"
+
+[node name="Value" type="Label" parent="Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/Resistances/LightningResistance"]
+layout_mode = 2
+text = "0%"
+
+[node name="ValueMax" type="Label" parent="Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/Resistances/LightningResistance"]
+layout_mode = 2
+text = "(0%)"
+
+[node name="ChaosResistance" type="HBoxContainer" parent="Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/Resistances"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="TextureRect" type="TextureRect" parent="Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/Resistances/ChaosResistance"]
+layout_mode = 2
+texture = ExtResource("2_epj2k")
+
+[node name="Label" type="Label" parent="Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/Resistances/ChaosResistance"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Chaos"
+
+[node name="Value" type="Label" parent="Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/Resistances/ChaosResistance"]
+layout_mode = 2
+text = "0%"
+
+[node name="ValueMax" type="Label" parent="Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/Resistances/ChaosResistance"]
+layout_mode = 2
+text = "(0%)"
+
+[node name="Details" type="VBoxContainer" parent="Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[connection signal="pressed" from="Control/Window/VBoxContainer/Header/CloseButton" to="." method="_on_close_button_pressed"]

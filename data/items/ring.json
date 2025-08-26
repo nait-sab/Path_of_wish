@@ -1,0 +1,19 @@
+[
+	{
+		"id": "iron_ring",
+		"name": "Anneau de fer",
+		"item_level": 1,
+		"tags": ["jewelry", "ring"],
+		"size": { "width": 1, "height": 1 },
+		"requirements" : {
+			"level": 1,
+			"strength": 0,
+			"dexterity": 0,
+			"intelligence": 0
+		},
+		"properties": {
+			"physical_min": 1,
+			"physical_max": 4
+		}
+	}
+]

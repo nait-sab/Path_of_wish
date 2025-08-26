@@ -1,0 +1,22 @@
+[
+	{
+		"id": "short_sword",
+		"name": "Épée courte",
+		"item_level": 1,
+		"tags": ["weapon", "sword", "one_handed"],
+		"size": { "width": 2, "height": 3 },
+		"requirements" : {
+			"level": 1,
+			"strength": 0,
+			"dexterity": 0,
+			"intelligence": 0
+		},
+		"properties": {
+			"physical_min": 6,
+			"physical_max": 9,
+			"critical_chance": 5.0,
+			"attack_per_second": 1.55
+		},
+		"vendor_value": 26
+	}
+]

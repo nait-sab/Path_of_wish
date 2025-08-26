@@ -1,0 +1,19 @@
+[
+	{
+		"id": "torn_gloves",
+		"name": "Gant déchiré",
+		"item_level": 1,
+		"tags": ["armor", "glove"],
+		"size": { "width": 2, "height": 2 },
+		"requirements" : {
+			"level": 1,
+			"strength": 0,
+			"dexterity": 0,
+			"intelligence": 0
+		},
+		"properties": {
+			"energy_shield": 9
+		},
+		"vendor_value": 8
+	}
+]

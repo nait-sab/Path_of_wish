@@ -1,0 +1,60 @@
+[gd_scene load_steps=6 format=3 uid="uid://dfvbrbq54u2a2"]
+
+[ext_resource type="Texture2D" uid="uid://bk3w8sbuv1d5a" path="res://assets/textures/icon.svg" id="1_4a83h"]
+[ext_resource type="Script" uid="uid://iog6w8jntpxe" path="res://scenes/enemy/enemy.gd" id="1_a3pup"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_a3pup"]
+radius = 81.0062
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_40wdo"]
+radius = 357.237
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tjssy"]
+bg_color = Color(0.723187, 0, 0.111471, 1)
+
+[node name="Enemy" type="CharacterBody2D" node_paths=PackedStringArray("sprite", "life_bar", "dectection_zone", "timer_attack_cooldown", "timer_breeak_cooldown")]
+script = ExtResource("1_a3pup")
+sprite = NodePath("Sprite2D")
+life_bar = NodePath("ProgressBar")
+dectection_zone = NodePath("Detection Range/CollisionShape2D")
+timer_attack_cooldown = NodePath("AttackCooldown")
+timer_breeak_cooldown = NodePath("BreakCooldown")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_a3pup")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(0.99898, 0.387902, 0.244506, 1)
+texture = ExtResource("1_4a83h")
+
+[node name="Detection Range" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Detection Range"]
+shape = SubResource("CircleShape2D_40wdo")
+
+[node name="AttackCooldown" type="Timer" parent="."]
+one_shot = true
+
+[node name="BreakCooldown" type="Timer" parent="."]
+one_shot = true
+
+[node name="ProgressBar" type="ProgressBar" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -125.0
+offset_top = -113.5
+offset_right = 125.0
+offset_bottom = -86.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/fill = SubResource("StyleBoxFlat_tjssy")
+value = 60.0
+rounded = true
+show_percentage = false
+
+[connection signal="body_entered" from="Detection Range" to="." method="_on_detection_range_body_entered"]
+[connection signal="body_exited" from="Detection Range" to="." method="_on_detection_range_body_exited"]
+[connection signal="timeout" from="BreakCooldown" to="." method="_on_break_cooldown_timeout"]

@@ -1,0 +1,20 @@
+[
+	{
+		"id": "splintered_tower_shield",
+		"name": "Bouclier de la tour brisée",
+		"item_level": 1,
+		"tags": ["armor", "shield", "one_handed"],
+		"size": { "width": 2, "height": 4 },
+		"requirements" : {
+			"level": 1,
+			"strength": 0,
+			"dexterity": 0,
+			"intelligence": 0
+		},
+		"properties": {
+			"block_chance_percent": 26,
+			"armour": 18
+		},
+		"vendor_value": 26
+	}
+]

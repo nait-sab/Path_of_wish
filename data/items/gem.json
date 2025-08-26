@@ -1,0 +1,20 @@
+[
+	{
+		"id": "gem_cleave",
+		"name": "Cleave",
+		"item_level": 1,
+		"tags": ["gem", "attack", "melee"],
+		"size": { "width": 1, "height": 1 },
+		"requirements" : {
+			"level": 1,
+			"strength": 10,
+			"dexterity": 0,
+			"intelligence": 0
+		},
+		"description": "Frappe les ennemis devant vous avec une arme de mêlée",
+        "spirit_cost": 0,
+        "is_support": false,
+        "allowed_weapon_tags": ["sword", "axe"],
+		"vendor_value": 5
+	}
+]

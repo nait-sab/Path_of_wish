@@ -1,0 +1,38 @@
+[gd_scene load_steps=6 format=3 uid="uid://da38mat7gdu37"]
+
+[ext_resource type="Texture2D" uid="uid://bk3w8sbuv1d5a" path="res://assets/textures/icon.svg" id="1_8afob"]
+[ext_resource type="Script" uid="uid://bsy3n334voc73" path="res://scenes/player/player.gd" id="1_dovo2"]
+[ext_resource type="Script" uid="uid://tmt3ojfx0xxq" path="res://scripts/player/follow_camera.gd" id="3_gmlin"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_dovo2"]
+radius = 71.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_gmlin"]
+radius = 214.234
+
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("sprite", "melee_zone")]
+script = ExtResource("1_dovo2")
+base_speed = 400.0
+melee_range = 200.0
+sprite = NodePath("Sprite2D")
+melee_zone = NodePath("Melee Zone/CollisionShape2D")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+rotation = 1.5708
+texture = ExtResource("1_8afob")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_dovo2")
+
+[node name="Melee Zone" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Melee Zone"]
+shape = SubResource("CircleShape2D_gmlin")
+
+[node name="Timer" type="Timer" parent="."]
+
+[node name="Stats" type="Node2D" parent="."]
+
+[node name="Follow Camera" type="Camera2D" parent="."]
+limit_smoothed = true
+script = ExtResource("3_gmlin")

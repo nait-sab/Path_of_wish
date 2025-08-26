@@ -1,0 +1,94 @@
+[
+    {
+        "id": "fast",
+        "name": "Rapide",
+        "type": "suffix",
+        "min_level": 1,
+        "weight": 1200,
+        "group": "speed",
+        "effects": [
+            { "stat": "move_speed_percent", "form": "increased", "min": 20, "max": 40, "value_type": "int" },
+            { "stat": "attack_speed_percent", "form": "increased", "min": 10, "max": 20, "value_type": "int" }
+        ]
+    }, {
+        "id": "powerful",
+        "name": "Puissant",
+        "type": "prefix",
+        "min_level": 1,
+        "weight": 1000,
+        "group": "offense",
+        "effects": [
+            { "stat": "damage", "form": "increased", "min": 20, "max": 40, "value_type": "int" }
+        ]
+    }, {
+        "id": "armoured",
+        "name": "Blindé",
+        "type": "prefix",
+        "min_level": 4,
+        "weight": 900,
+        "group": "defense",
+        "effects": [
+            { "stat": "armour", "form": "increased", "min": 50, "max": 100, "value_type": "int" }
+        ]
+    }, {
+        "id": "evasive",
+        "name": "Esquiveur",
+        "type": "suffix",
+        "min_level": 4,
+        "weight": 900,
+        "group": "defense",
+        "effects": [
+            { "stat": "evasion_rating", "form": "increased", "min": 50, "max": 100, "value_type": "int" }
+        ]
+    }, {
+        "id": "resistance_fire",
+        "name": "Résistant au feu",
+        "type": "prefix",
+        "min_level": 1,
+        "weight": 800,
+        "group": "resistance_fire",
+        "effects": [
+            { "stat": "resistance_fire", "form": "flat", "min": 25, "max": 40, "value_type": "int" }
+        ]
+    }, {
+        "id": "resistance_lightning",
+        "name": "Résistant à la foudre",
+        "type": "prefix",
+        "min_level": 1,
+        "weight": 800,
+        "group": "resistance_lightning",
+        "effects": [
+            { "stat": "resistance_lightning", "form": "flat", "min": 25, "max": 40, "value_type": "int" }
+        ]
+    }, {
+        "id": "resistance_cold",
+        "name": "Résistant au froid",
+        "type": "prefix",
+        "min_level": 1,
+        "weight": 800,
+        "group": "resistance_cold",
+        "effects": [
+            { "stat": "resistance_cold", "form": "flat", "min": 25, "max": 40, "value_type": "int" }
+        ]
+    }, {
+        "id": "resistance_chaos",
+        "name": "Résistant au chaos",
+        "type": "prefix",
+        "min_level": 1,
+        "weight": 800,
+        "group": "resistance_chaos",
+        "effects": [
+            { "stat": "resistance_chaos", "form": "flat", "min": 25, "max": 40, "value_type": "int" }
+        ]
+    }, {
+        "id": "regenerating",
+        "name": "Régénérant",
+        "type": "suffix",
+        "min_level": 6,
+        "weight": 700,
+        "group": "regen",
+        "effects": [
+            { "stat": "life_regen_percent", "form": "flat", "min": 0.8, "max": 2.0, "value_type": "float" }
+        ]
+    }
+]

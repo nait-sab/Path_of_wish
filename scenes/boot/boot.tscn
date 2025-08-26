@@ -1,0 +1,20 @@
+[gd_scene load_steps=5 format=3 uid="uid://bceoue0hettj5"]
+
+[ext_resource type="Script" uid="uid://biokq7eclgmde" path="res://scenes/boot/boot.gd" id="1_lhnci"]
+[ext_resource type="Texture2D" uid="uid://biie610agbood" path="res://assets/textures/intro/intro1.png" id="2_cfko8"]
+[ext_resource type="Texture2D" uid="uid://dth45dfv5rj7x" path="res://assets/textures/intro/intro2.png" id="3_fodqe"]
+[ext_resource type="Texture2D" uid="uid://dgpkk6t4e1qqa" path="res://assets/textures/intro/intro3.png" id="4_am3gy"]
+
+[node name="Boot" type="Node2D" node_paths=PackedStringArray("sprite", "timer")]
+script = ExtResource("1_lhnci")
+intro_textures = Array[Texture2D]([ExtResource("2_cfko8"), ExtResource("3_fodqe"), ExtResource("4_am3gy")])
+sprite = NodePath("Sprite2D")
+timer = NodePath("Timer")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+centered = false
+
+[node name="Timer" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

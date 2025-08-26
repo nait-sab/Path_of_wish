@@ -1,0 +1,18 @@
+[
+	{
+		"id": "scroll_of_wisdom",
+		"name": "Parchemin de sagesse",
+		"item_level": 1,
+		"tags": ["currency", "consumable", "scroll"],
+		"size": { "width": 1, "height": 1 },
+		"requirements" : {
+			"level": -1,
+			"strength": 0,
+			"dexterity": 0,
+			"intelligence": 0
+		},
+		"stack_max": 40,
+        "value": -1,
+        "consumable": true
+	}
+]

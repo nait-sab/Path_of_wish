@@ -1,0 +1,82 @@
+[gd_scene load_steps=2 format=3 uid="uid://b13qyqvf6sun6"]
+
+[ext_resource type="Script" uid="uid://brglot24id8en" path="res://scenes/menus/character_select/character_select.gd" id="1_oablf"]
+
+[node name="CharacterSelect" type="Control" node_paths=PackedStringArray("list")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_oablf")
+list = NodePath("ItemList")
+
+[node name="ItemList" type="ItemList" parent="."]
+custom_minimum_size = Vector2(300, 100)
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -40.0
+offset_top = -20.0
+offset_bottom = 20.0
+grow_horizontal = 0
+grow_vertical = 2
+auto_width = true
+auto_height = true
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -40.0
+offset_right = 20.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -226.0
+offset_top = -50.0
+offset_right = 226.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 20
+
+[node name="Button Create" type="Button" parent="Control/HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Créer"
+
+[node name="Button Delete" type="Button" parent="Control/HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Supprimer"
+
+[node name="Button Play" type="Button" parent="Control/HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Jouer"
+
+[node name="Button Back" type="Button" parent="Control/HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Retour
+"
+
+[connection signal="pressed" from="Control/HBoxContainer/Button Create" to="." method="_on_button_create_pressed"]
+[connection signal="pressed" from="Control/HBoxContainer/Button Delete" to="." method="_on_button_delete_pressed"]
+[connection signal="pressed" from="Control/HBoxContainer/Button Play" to="." method="_on_button_play_pressed"]
+[connection signal="pressed" from="Control/HBoxContainer/Button Back" to="." method="_on_button_back_pressed"]
