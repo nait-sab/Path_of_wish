@@ -1,15 +1,45 @@
-# Godot cache
-.godot/
+# -------------------------
+# Godot Engine
+# -------------------------
 .import/
-.export/
+.godot/
 
 # Crash Mono
 mono_crash.*
 
+# -------------------------
+# Export / Builds
+# -------------------------
+.export/
+builds/
+dist/
+export_preset.cfg
+
+# -------------------------
+# Binaries
+# -------------------------
+*.exe
+*.exe~
+*.pck
+*.zip
+*.apk
+*.aab
+*.xcodeproj
+*.app
+*.dmg
+*.so
+*.dll
+*.dylib
+*.wasm
+*.html
+
+# -------------------------
 # OS
+# -------------------------
 .DS_STORE
 Thumbs.db
 desktop.ini
+*~
 
 # IDE
 .vscode/
@@ -17,7 +47,9 @@ desktop.ini
 .*swp
 *.swo
 
-# Export templates / Build
-builds/
-dist/
-export_preset.cfg
+# -------------------------
+# Logs / Temporary
+# -------------------------
+
+# Logs éventuels
+*.log
