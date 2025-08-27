@@ -50,21 +50,21 @@ func _ready():
 	StatEngine.stats_updated.connect(_on_stat_engine_changed)
 	_refresh()
 	
-	var world = get_parent()
-	if world and world.has_signal("toggle_character_sheet"):
-		world.connect("toggle_character_sheet", Callable(self, "toggle"))
-	
-func toggle():
+func _toggle():
 	visible = not visible
 	if visible:
 		_refresh()
 
 func _on_close_button_pressed() -> void:
-	toggle()
+	_toggle()
 	
 func _on_stat_engine_changed(_final_stats: Dictionary) -> void:
 	if visible:
 		_refresh()
+		
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_pressed("toggle_character_sheet"):
+		_toggle()
 	
 func _input(event: InputEvent) -> void:
 	if not visible:
@@ -88,7 +88,6 @@ func _input(event: InputEvent) -> void:
 		
 func _refresh():
 	var infos: Dictionary = Game.current_char
-	#var stats: Dictionary = infos.get("stats", {})
 	
 	# Informations
 	level_class.text = "Niveau %d %s" % [player.level, infos.get("class", "Unknow")]

@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://bk3w8sbuv1d5a" path="res://assets/textures/icon.svg" id="2_b6rfu"]
 
 [node name="HeldItem" type="Control" node_paths=PackedStringArray("texture_rect", "amount_label")]
+top_level = true
 z_index = 999
 layout_mode = 3
 anchors_preset = 0

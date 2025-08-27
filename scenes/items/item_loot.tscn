@@ -3,17 +3,19 @@
 [ext_resource type="Script" uid="uid://cv04nhiuebv1n" path="res://scenes/items/item_loot.gd" id="1_thva0"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_64enq"]
-size = Vector2(114, 52)
+size = Vector2(192, 40)
 
-[node name="ItemLoot" type="Area2D" node_paths=PackedStringArray("name_label", "collision")]
+[node name="ItemLoot" type="Area2D" node_paths=PackedStringArray("name_label", "margin", "box", "collision")]
 script = ExtResource("1_thva0")
-name_label = NodePath("CollisionShape2D/Root/MarginContainer/Name")
+name_label = NodePath("Root/MarginContainer/Name")
+margin = NodePath("Root/MarginContainer")
+box = NodePath("Root")
 collision = NodePath("CollisionShape2D")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_64enq")
 
-[node name="Root" type="PanelContainer" parent="CollisionShape2D"]
+[node name="Root" type="PanelContainer" parent="."]
 z_index = 10
 anchors_preset = 8
 anchor_left = 0.5
@@ -28,15 +30,18 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="CollisionShape2D/Root"]
+[node name="MarginContainer" type="MarginContainer" parent="Root"]
 layout_mode = 2
 mouse_filter = 2
-theme_override_constants/margin_left = 5
-theme_override_constants/margin_right = 5
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 5
 
-[node name="Name" type="Label" parent="CollisionShape2D/Root/MarginContainer"]
+[node name="Name" type="Label" parent="Root/MarginContainer"]
 layout_mode = 2
 text = "Parchemin de sagesse"
+horizontal_alignment = 1
 
 [connection signal="input_event" from="." to="." method="_on_area_2d_input_event"]
 [connection signal="mouse_entered" from="." to="." method="_on_area_2d_mouse_entered"]

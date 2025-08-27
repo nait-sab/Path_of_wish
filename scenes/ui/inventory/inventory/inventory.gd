@@ -3,8 +3,11 @@ class_name Inventory extends Control
 @export var equipment_control: Control
 @export var grid: GridContainer
 @export var gold_label: Label
+@export var root_panel: Control
 
 var player: Player
+var dragging = false
+var drag_offset = Vector2.ZERO
 var slots: Array = []
 var equipment_slots: Array = []
 var held_item: Item = null
@@ -19,13 +22,6 @@ func _ready():
 	
 	# For debug !
 	insert(ItemDb.instantiate_random([Item.Tag.SWORD], 1, Item.Rarity.RARE))
-	#insert(ItemDb.instantiate_random([Item.Tag.BOW], 1, Item.Rarity.RARE))
-	#insert(ItemDb.instantiate_random([Item.Tag.QUIVER], 1, Item.Rarity.RARE))
-	#insert(ItemDb.instantiate_random([Item.Tag.SHIELD], 1, Item.Rarity.RARE))
-	#insert(ItemDb.instantiate_random([Item.Tag.GLOVE], 1, Item.Rarity.RARE))
-	#insert(ItemDb.instantiate_random([Item.Tag.GLOVE], 1, Item.Rarity.RARE))
-	#insert(ItemDb.instantiate_random([Item.Tag.GLOVE], 1, Item.Rarity.RARE))
-	#insert(ItemDb.instantiate_random([Item.Tag.GLOVE], 1, Item.Rarity.RARE))
 
 	connect_equip_slots()
 	connect_slots()
@@ -33,6 +29,26 @@ func _ready():
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("toggle_inventory"):
 		_toggle()
+		
+func _input(event: InputEvent) -> void:
+	if not visible:
+		return
+
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
+		if event.is_pressed():
+			var panel_rect = Rect2(root_panel.global_position, root_panel.size)
+			if panel_rect.has_point(event.position):
+				dragging = true
+				drag_offset = event.position - root_panel.global_position
+		else:
+			dragging = false
+
+	if event is InputEventMouseMotion and dragging:
+		var new_position = event.position - drag_offset
+		var viewport_size = get_viewport().get_visible_rect().size
+		new_position.x = clamp(new_position.x, 0, viewport_size.x - root_panel.size.x)
+		new_position.y = clamp(new_position.y, 0, viewport_size.y - root_panel.size.y)
+		root_panel.global_position = new_position
 
 static func get_any() -> Inventory:
 	var tree := Engine.get_main_loop() as SceneTree
@@ -252,3 +268,14 @@ func find_single_master_in_area(col: int, row: int, item: Item) -> InventorySlot
 	
 	# return null or unique master
 	return target_master
+	
+func is_point_over_inventory(pos: Vector2) -> bool:
+	return root_panel.get_global_rect().has_point(pos)
+	
+func _drop_held_item_to_ground(world: World, origin: Vector2) -> void:
+	world.spawn_loot(held_item.clone(), origin)
+	HeldItem.get_any().clear_item()
+	held_item = null
+
+func _on_close_button_pressed() -> void:
+	_toggle()

@@ -3,6 +3,7 @@
 # -------------------------
 .import/
 .godot/
+*.tmp
 
 # Crash Mono
 mono_crash.*

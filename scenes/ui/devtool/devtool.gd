@@ -24,8 +24,11 @@ func _on_debug_button_1_pressed() -> void:
 	pass
 
 func _on_debug_button_2_pressed() -> void:
-	# TODO : Move the display of StatEngine here
-	pass
+	var stats = StatEngine.get_final_stats()
+	print("--- DEBUG Stats ---")
+	for key in stats.keys():
+		print("%s : %s" % [key, str(stats[key])])
+	print("-------------------")
 
 func _on_debug_button_3_pressed() -> void:
 	var player: Player = get_tree().get_first_node_in_group("Player")

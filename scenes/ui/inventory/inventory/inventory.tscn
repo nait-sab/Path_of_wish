@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://ce4lue806eu41"]
+[gd_scene load_steps=19 format=3 uid="uid://ce4lue806eu41"]
 
 [ext_resource type="Script" uid="uid://g4f1cmigrwjo" path="res://scenes/ui/inventory/inventory/inventory.gd" id="1_xce7s"]
 [ext_resource type="PackedScene" uid="uid://dj34wt6g60kma" path="res://scenes/ui/inventory/inventory_slot/inventory_slot.tscn" id="2_xce7s"]
@@ -37,7 +37,33 @@ height = 32
 fill = 1
 fill_from = Vector2(0.5, 0.5)
 
-[node name="Inventory" type="Control" node_paths=PackedStringArray("equipment_control", "grid", "gold_label")]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_r6pol"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_rlmwj"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4qcjm"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ed0m2"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tybmf"]
+bg_color = Color(0.363388, 0.0975401, 0.054111, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.927697, 0.952031, 0.779962, 1)
+corner_radius_top_left = 50
+corner_radius_top_right = 50
+corner_radius_bottom_right = 50
+corner_radius_bottom_left = 50
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_lacsi"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7kb73"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_h7qlq"]
+
+[node name="Inventory" type="Control" node_paths=PackedStringArray("equipment_control", "grid", "gold_label", "root_panel")]
 layout_mode = 3
 anchors_preset = 1
 anchor_left = 1.0
@@ -47,6 +73,7 @@ script = ExtResource("1_xce7s")
 equipment_control = NodePath("InventoryUI/MarginContainer/Sections/Equipment/MarginContainer/Control")
 grid = NodePath("InventoryUI/MarginContainer/Sections/Inventory/VBoxContainer/GridContainer")
 gold_label = NodePath("InventoryUI/MarginContainer/Sections/Inventory/VBoxContainer/HBoxContainer/Gold")
+root_panel = NodePath("InventoryUI")
 
 [node name="InventoryUI" type="Control" parent="."]
 custom_minimum_size = Vector2(630, 750)
@@ -77,17 +104,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("NoiseTexture2D_otfgc")
-
-[node name="Panel" type="Panel" parent="InventoryUI"]
-visible = false
-custom_minimum_size = Vector2(500, 700)
-layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -630.0
-offset_bottom = 700.0
-grow_horizontal = 0
 
 [node name="MarginContainer" type="MarginContainer" parent="InventoryUI"]
 layout_mode = 1
@@ -542,3 +558,30 @@ layout_mode = 2
 texture = SubResource("GradientTexture2D_otfgc")
 expand_mode = 2
 stretch_mode = 5
+
+[node name="CloseButton" type="Button" parent="InventoryUI"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -45.0
+offset_top = 5.0
+offset_right = -5.0
+offset_bottom = 45.0
+grow_horizontal = 0
+theme_override_colors/font_color = Color(0.847769, 0.875197, 0.618694, 1)
+theme_override_styles/focus = SubResource("StyleBoxEmpty_r6pol")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_rlmwj")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_4qcjm")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_ed0m2")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_tybmf")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_lacsi")
+theme_override_styles/hover = SubResource("StyleBoxFlat_tybmf")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_7kb73")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_tybmf")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_h7qlq")
+theme_override_styles/normal = SubResource("StyleBoxFlat_tybmf")
+text = "X"
+
+[connection signal="pressed" from="InventoryUI/CloseButton" to="." method="_on_close_button_pressed"]
