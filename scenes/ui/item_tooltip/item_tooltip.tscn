@@ -1,19 +1,14 @@
-[gd_scene load_steps=3 format=3 uid="uid://6fvn45q6m2qo"]
+[gd_scene load_steps=2 format=3 uid="uid://6fvn45q6m2qo"]
 
 [ext_resource type="Script" uid="uid://cy1i5s42tci3" path="res://scenes/ui/item_tooltip/item_tooltip.gd" id="1_5152n"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_53ivg"]
-bg_color = Color(0.242604, 0.242604, 0.242604, 0.862745)
-
 [node name="ItemTooltip" type="PanelContainer" node_paths=PackedStringArray("item_name", "item_description")]
+top_level = true
 z_index = 1000
-custom_minimum_size = Vector2(250, 0)
-offset_right = 250.0
+custom_minimum_size = Vector2(200, 0)
+offset_right = 133.0
 offset_bottom = 55.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
 mouse_filter = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_53ivg")
 script = ExtResource("1_5152n")
 item_name = NodePath("MarginContainer/VBoxContainer/Name")
 item_description = NodePath("MarginContainer/VBoxContainer/Description")
@@ -27,6 +22,7 @@ theme_override_constants/margin_bottom = 10
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2
+mouse_filter = 2
 
 [node name="Name" type="Label" parent="MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(50, 0)
@@ -38,9 +34,12 @@ horizontal_alignment = 1
 
 [node name="HSeparator" type="HSeparator" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
+mouse_filter = 2
 
 [node name="Description" type="RichTextLabel" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
+mouse_filter = 2
 bbcode_enabled = true
 fit_content = true
+autowrap_mode = 0
 horizontal_alignment = 1

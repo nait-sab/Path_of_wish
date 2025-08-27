@@ -32,6 +32,10 @@ var last_mana: float = 0
 var attack_cooldown: float = .35
 var _cd: float = 0
 
+# Loot
+var pickup_target: ItemLoot = null
+const PICKUP_RADIUS := 24.0
+
 func _ready():
 	add_to_group("Player")
 	melee_zone.shape.radius = melee_range
@@ -64,6 +68,15 @@ func _process(delta: float) -> void:
 		
 func _physics_process(delta: float) -> void:
 	var direction := Input.get_vector("move_left", "move_right", "move_up", "move_down")
+	
+	if pickup_target and is_instance_valid(pickup_target):
+		var distance := (pickup_target.global_position - global_position)
+		if distance.length() > PICKUP_RADIUS:
+			direction = distance.normalized()
+		else:
+			_try_pickup_item(pickup_target)
+			pickup_target = null
+	
 	var movespeed_percent = StatEngine.get_stat("move_speed_percent")
 	var speed = base_speed * (1.0 + movespeed_percent / 100.0)
 	velocity = direction * speed
@@ -116,6 +129,19 @@ func receive_hit(packet: DamagePacket) -> DamageReport:
 		emit_signal("stats_changed", self)
 		
 	return report
+	
+func request_pickup(target: ItemLoot) -> void:
+	pickup_target = target
+	
+func _try_pickup_item(node: ItemLoot) -> void:
+	if not node or not is_instance_valid(node):
+		return
+	var inventory = get_tree().get_first_node_in_group("Inventory") as Inventory
+	if inventory and inventory.try_insert_item(node.item):
+		node.queue_free()
+	else:
+		# TODO - Sound of full inventory
+		pass
 	
 func _find_enemy_under_mouse():
 	var mouse := get_global_mouse_position()

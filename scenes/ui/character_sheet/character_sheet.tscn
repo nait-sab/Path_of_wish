@@ -1,9 +1,12 @@
-[gd_scene load_steps=24 format=3 uid="uid://c1anxqj6baj0b"]
+[gd_scene load_steps=27 format=3 uid="uid://c1anxqj6baj0b"]
 
 [ext_resource type="Script" uid="uid://bseobhh8gnn1r" path="res://scenes/ui/character_sheet/character_sheet.gd" id="1_vhyxx"]
 [ext_resource type="Texture2D" uid="uid://bk3w8sbuv1d5a" path="res://assets/textures/icon.svg" id="2_epj2k"]
+[ext_resource type="Texture2D" uid="uid://blka21x1tcsik" path="res://assets/textures/ui/character_sheet/armour_icon.png" id="3_5xnum"]
 [ext_resource type="Texture2D" uid="uid://cfbu6kp3vygth" path="res://assets/textures/ui/character_sheet/resistance_fire_icon.png" id="3_26whu"]
+[ext_resource type="Texture2D" uid="uid://b8hdulufxusre" path="res://assets/textures/ui/character_sheet/evasion_rating_icon.png" id="4_ory4q"]
 [ext_resource type="Texture2D" uid="uid://mfnk8o5aqdpq" path="res://assets/textures/ui/character_sheet/resistance_cold_icon.png" id="4_xoomq"]
+[ext_resource type="Texture2D" uid="uid://couavehnd7pp6" path="res://assets/textures/ui/character_sheet/chance_block_icon.png" id="5_hbtm5"]
 [ext_resource type="Texture2D" uid="uid://dubsdn63c6idu" path="res://assets/textures/ui/character_sheet/resistance_lightning_icon.png" id="5_nh2eu"]
 [ext_resource type="Texture2D" uid="uid://ydsdt6t2j41o" path="res://assets/textures/ui/character_sheet/resistance_chaos_icon.png" id="6_571rn"]
 
@@ -493,11 +496,12 @@ layout_mode = 2
 alignment = 1
 
 [node name="BlockArmour" type="VBoxContainer" parent="Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/HBoxContainer2"]
+custom_minimum_size = Vector2(128, 0)
 layout_mode = 2
 
 [node name="TextureRect" type="TextureRect" parent="Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/HBoxContainer2/BlockArmour"]
 layout_mode = 2
-texture = ExtResource("2_epj2k")
+texture = ExtResource("3_5xnum")
 stretch_mode = 5
 
 [node name="Title" type="Label" parent="Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/HBoxContainer2/BlockArmour"]
@@ -513,11 +517,12 @@ text = "0%"
 horizontal_alignment = 1
 
 [node name="BlockEvasionRating" type="VBoxContainer" parent="Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/HBoxContainer2"]
+custom_minimum_size = Vector2(128, 0)
 layout_mode = 2
 
 [node name="TextureRect" type="TextureRect" parent="Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/HBoxContainer2/BlockEvasionRating"]
 layout_mode = 2
-texture = ExtResource("2_epj2k")
+texture = ExtResource("4_ory4q")
 stretch_mode = 5
 
 [node name="Title" type="Label" parent="Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/HBoxContainer2/BlockEvasionRating"]
@@ -533,11 +538,12 @@ text = "6%"
 horizontal_alignment = 1
 
 [node name="BlockBlockChance" type="VBoxContainer" parent="Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/HBoxContainer2"]
+custom_minimum_size = Vector2(128, 0)
 layout_mode = 2
 
 [node name="TextureRect" type="TextureRect" parent="Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/HBoxContainer2/BlockBlockChance"]
 layout_mode = 2
-texture = ExtResource("2_epj2k")
+texture = ExtResource("5_hbtm5")
 stretch_mode = 5
 
 [node name="Title" type="Label" parent="Control/Window/VBoxContainer/Stats/MarginContainer/ColorRect/MarginContainer/ColorRect/ScrollContainer/VBoxContainer/HBoxContainer2/BlockBlockChance"]

@@ -110,12 +110,10 @@ func _on_mouse_entered() -> void:
 	var target: EquipmentSlot = self
 		
 	if target.item:
-		var tooltip: ItemTooltip = get_tree().get_root().get_node("World/Inventory/ItemTooltip")
-		tooltip.show_item(target.item)
+		ItemTooltip.get_any().show_item(target.item)
 	
 func _on_mouse_exited() -> void:
-	var tooltip: ItemTooltip = get_tree().get_root().get_node("World/Inventory/ItemTooltip")
-	tooltip.hide_item()
+	ItemTooltip.get_any().hide_item()
 
 # --- StatEngine
 func _on_equip(item_to_add: Item) -> void:
@@ -150,7 +148,6 @@ func _on_equip(item_to_add: Item) -> void:
 				mods_as_modifiers.append(modifier)
 				
 	if mods_as_modifiers.size() > 0:
-		print(mods_as_modifiers)
 		StatEngine.set_source("equip_" + str(item_to_add.id), mods_as_modifiers)
 	
 func _on_unequip(item_to_remove: Item) -> void:

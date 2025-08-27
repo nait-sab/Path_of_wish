@@ -67,6 +67,7 @@ func _ready():
 	# Setup Break
 	break_max = life_max_cached * 1.5
 	
+	print("[ENEMY SPAWN] : Level %d (%s)" % [level, str(rarity)])
 	print(stat_block.get_final_stats())
 	
 func _physics_process(_delta: float) -> void:
@@ -168,7 +169,9 @@ func _on_break_cooldown_timeout() -> void:
 
 func die():
 	is_dead = true
-	# TODO Drop loot
+	var drops := LootDb.roll_for_enemy(level, rarity)
+	for item: Item in drops:
+		get_tree().root.get_node("World").spawn_loot(item, global_position)
 	queue_free()
 
 # --- Stats Calc
@@ -219,7 +222,6 @@ func apply_base_stats():
 	
 	var rolled_mods: Array = EnemyModDb.roll_for_enemy(level, rarity)
 	var raw_modifiers: Array = EnemyModDb._to_stat_modifiers(rolled_mods)
-	print(raw_modifiers)
 	
 	var modifiers: Array = []
 	for raw in raw_modifiers:

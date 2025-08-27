@@ -3,7 +3,7 @@
 		"id": "lether_vest",
 		"name": "Veste en cuir",
 		"item_level": 1,
-		"tags": ["armor"],
+		"tags": ["armour", "body"],
 		"size": { "width": 2, "height": 3 },
 		"requirements" : {
 			"level": 1,

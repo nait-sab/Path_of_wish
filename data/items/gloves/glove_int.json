@@ -3,7 +3,7 @@
 		"id": "torn_gloves",
 		"name": "Gant déchiré",
 		"item_level": 1,
-		"tags": ["armor", "glove"],
+		"tags": ["armour", "glove"],
 		"size": { "width": 2, "height": 2 },
 		"requirements" : {
 			"level": 1,

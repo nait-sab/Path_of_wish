@@ -3,7 +3,7 @@
 		"id": "rope_cuffs",
 		"name": "Poignets en corde",
 		"item_level": 1,
-		"tags": ["armor", "glove"],
+		"tags": ["armour", "glove"],
 		"size": { "width": 2, "height": 2 },
 		"requirements" : {
 			"level": 5,

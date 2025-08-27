@@ -4,7 +4,14 @@ class_name ItemTooltip extends PanelContainer
 @export var item_description: RichTextLabel
 
 func _ready() -> void:
+	add_to_group("ItemTooltip")
 	visible = false
+	
+static func get_any() -> ItemTooltip:
+	var tree := Engine.get_main_loop() as SceneTree
+	if tree == null:
+		return null
+	return tree.get_first_node_in_group("ItemTooltip") as ItemTooltip
 
 func show_item(item: Item):
 	clear()
@@ -51,7 +58,13 @@ func show_item(item: Item):
 	if item.tags.has(Item.Tag.CURRENCY):
 		append_line("Pile: %d / %d" % [item.stack_current, item.stack_max], null, Color(.7, .7, .7))
 	
+	call_deferred("_after_fill")
 	visible = true
+	
+func _after_fill() -> void:
+	if is_instance_valid(item_description):
+		item_description.fit_content = true
+	reset_size()
 	
 func hide_item():
 	visible = false

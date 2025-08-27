@@ -1,0 +1,34 @@
+[
+    {
+        "id": "pool_currency",
+        "name": "Currency",
+        "tags": ["currency"],
+        "weight": 60,
+        "min_level": 1,
+        "stack_range": [1, 3]
+    }, {
+        "id": "pool_weapon",
+        "name": "Weapons (any)",
+        "tags": ["weapon"],
+        "weight": 30,
+        "min_level": 1
+    }, {
+        "id": "pool_armour",
+        "name": "Armours (any)",
+        "tags": ["armour"],
+        "weight": 30,
+        "min_level": 1
+    }, {
+        "id": "pool_jewelry",
+        "name": "Jewelry (ring or amulets)",
+        "tags": ["jewelry"],
+        "weight": 10,
+        "min_level": 5
+    }, {
+        "id": "pool_gem",
+        "name": "Skill Gems",
+        "tags": ["gem"],
+        "weight": 5,
+        "min_level": 1
+    }
+]

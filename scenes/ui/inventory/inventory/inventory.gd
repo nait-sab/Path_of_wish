@@ -1,8 +1,7 @@
-class_name Inventory extends CanvasLayer
+class_name Inventory extends Control
 
 @export var equipment_control: Control
 @export var grid: GridContainer
-@export var held_icon: HeldItem
 @export var gold_label: Label
 
 var player: Player
@@ -12,6 +11,7 @@ var held_item: Item = null
 
 func _ready():
 	visible = false
+	add_to_group("Inventory")
 	player = get_tree().get_first_node_in_group("Player") as Player
 	gold_label.text = "Gold : %s" % str(player.gold)
 	slots = grid.get_children()
@@ -19,21 +19,27 @@ func _ready():
 	
 	# For debug !
 	insert(ItemDb.instantiate_random([Item.Tag.SWORD], 1, Item.Rarity.RARE))
-	insert(ItemDb.instantiate_random([Item.Tag.BOW], 1, Item.Rarity.RARE))
-	insert(ItemDb.instantiate_random([Item.Tag.QUIVER], 1, Item.Rarity.RARE))
-	insert(ItemDb.instantiate_random([Item.Tag.SHIELD], 1, Item.Rarity.RARE))
-	insert(ItemDb.instantiate_random([Item.Tag.GLOVE], 1, Item.Rarity.RARE))
-	insert(ItemDb.instantiate_random([Item.Tag.GLOVE], 1, Item.Rarity.RARE))
-	insert(ItemDb.instantiate_random([Item.Tag.GLOVE], 1, Item.Rarity.RARE))
-	insert(ItemDb.instantiate_random([Item.Tag.GLOVE], 1, Item.Rarity.RARE))
+	#insert(ItemDb.instantiate_random([Item.Tag.BOW], 1, Item.Rarity.RARE))
+	#insert(ItemDb.instantiate_random([Item.Tag.QUIVER], 1, Item.Rarity.RARE))
+	#insert(ItemDb.instantiate_random([Item.Tag.SHIELD], 1, Item.Rarity.RARE))
+	#insert(ItemDb.instantiate_random([Item.Tag.GLOVE], 1, Item.Rarity.RARE))
+	#insert(ItemDb.instantiate_random([Item.Tag.GLOVE], 1, Item.Rarity.RARE))
+	#insert(ItemDb.instantiate_random([Item.Tag.GLOVE], 1, Item.Rarity.RARE))
+	#insert(ItemDb.instantiate_random([Item.Tag.GLOVE], 1, Item.Rarity.RARE))
 
 	connect_equip_slots()
 	connect_slots()
-	
-	var world = get_parent()
-	if world and world.has_signal("toggle_inventory"):
-		world.connect("toggle_inventory", Callable(self, "toggle"))
-		
+
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_pressed("toggle_inventory"):
+		_toggle()
+
+static func get_any() -> Inventory:
+	var tree := Engine.get_main_loop() as SceneTree
+	if tree == null:
+		return null
+	return tree.get_first_node_in_group("Inventory") as Inventory
+
 func _index_to_col_row(index: int) -> Vector2i:
 	return Vector2i(index % grid.columns, int(float(index) / grid.columns))
 		
@@ -54,7 +60,7 @@ func connect_slots():
 	for slot: InventorySlot in slots:
 		slot.pressed.connect(on_slot_clicked.bind(slot))
 		
-func toggle():
+func _toggle():
 	visible = not visible
 	
 func insert(item: Item):
@@ -81,6 +87,30 @@ func insert(item: Item):
 				place_item_at(col, row, item.clone())
 				return
 				
+func try_insert_item(item: Item) -> bool:
+	# Try to stack
+	if item.tags.has(Item.Tag.CURRENCY) and item.stack_max > 1:
+		for slot: InventorySlot in slots:
+			if slot.item and slot.item.id == item.id:
+				var found: Item = slot.item
+				if found.stack_current < found.stack_max:
+					var can: int= min(found.stack_max - found.stack_current, item.stack_current)
+					found.stack_current += can
+					item.stack_current -= can
+					slot.refresh()
+					if item.stack_current <= 0:
+						return true
+	
+	# Try to place
+	var rows: int = int(ceil(float(slots.size()) / float(grid.columns)))
+	for row in range(rows):
+		for col in range(grid. columns):
+			if can_place_item_at(col, row, item):
+				place_item_at(col, row, item.clone())
+				return true
+				
+	return false
+
 func on_equipment_slot_clicked(slot: EquipmentSlot):
 	if held_item != null:
 		var item := held_item
@@ -90,16 +120,16 @@ func on_equipment_slot_clicked(slot: EquipmentSlot):
 		slot.set_item(item)
 		if previous:
 			held_item = previous.clone()
-			held_icon.set_item(held_item)
+			HeldItem.get_any().set_item(held_item)
 		else:
-			held_icon.clear_item()
+			HeldItem.get_any().clear_item()
 			held_item = null
 		slot.update_ui()
 	else:
 		if slot.has_item():
 			var taken := slot.take_item()
 			held_item = taken.clone()
-			held_icon.set_item(held_item)
+			HeldItem.get_any().set_item(held_item)
 			slot.update_ui()
 	
 func on_slot_clicked(slot: InventorySlot):
@@ -110,7 +140,7 @@ func on_slot_clicked(slot: InventorySlot):
 		if slot.item:
 			held_item = slot.item.clone()
 			slot.clear_item()
-			held_icon.set_item(held_item)
+			HeldItem.get_any().set_item(held_item)
 	else:
 		# Try to place or swap the item
 		var index = slots.find(slot)
@@ -120,7 +150,7 @@ func on_slot_clicked(slot: InventorySlot):
 		# target is totally empty, just place the item
 		if can_place_item_at(col, row, held_item):
 			if place_item_at(col, row, held_item.clone()):
-				held_icon.clear_item()
+				HeldItem.get_any().clear_item()
 				held_item = null
 				
 			return
@@ -134,7 +164,7 @@ func on_slot_clicked(slot: InventorySlot):
 			
 			if place_item_at(col, row, held_item.clone()):
 				held_item = temp_item
-				held_icon.set_item(temp_item.clone())
+				HeldItem.get_any().set_item(temp_item.clone())
 			else:
 				var master_index := slots.find(target_master)
 				var master_col = master_index % grid.columns

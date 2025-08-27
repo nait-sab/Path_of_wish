@@ -1,8 +1,6 @@
-[gd_scene load_steps=13 format=3 uid="uid://ce4lue806eu41"]
+[gd_scene load_steps=11 format=3 uid="uid://ce4lue806eu41"]
 
 [ext_resource type="Script" uid="uid://g4f1cmigrwjo" path="res://scenes/ui/inventory/inventory/inventory.gd" id="1_xce7s"]
-[ext_resource type="PackedScene" uid="uid://6fvn45q6m2qo" path="res://scenes/ui/item_tooltip/item_tooltip.tscn" id="2_lobmi"]
-[ext_resource type="PackedScene" uid="uid://bcthwf35yc4wh" path="res://scenes/ui/inventory/held_item/held_item.tscn" id="2_pefhr"]
 [ext_resource type="PackedScene" uid="uid://dj34wt6g60kma" path="res://scenes/ui/inventory/inventory_slot/inventory_slot.tscn" id="2_xce7s"]
 [ext_resource type="PackedScene" uid="uid://br1tphtdhmq0n" path="res://scenes/ui/inventory/equipment_slot/equipment_slot.tscn" id="4_8ndef"]
 
@@ -39,23 +37,20 @@ height = 32
 fill = 1
 fill_from = Vector2(0.5, 0.5)
 
-[node name="Inventory" type="CanvasLayer" node_paths=PackedStringArray("equipment_control", "grid", "held_icon", "gold_label")]
+[node name="Inventory" type="Control" node_paths=PackedStringArray("equipment_control", "grid", "gold_label")]
+layout_mode = 3
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+grow_horizontal = 0
 script = ExtResource("1_xce7s")
 equipment_control = NodePath("InventoryUI/MarginContainer/Sections/Equipment/MarginContainer/Control")
 grid = NodePath("InventoryUI/MarginContainer/Sections/Inventory/VBoxContainer/GridContainer")
-held_icon = NodePath("HeldItem")
 gold_label = NodePath("InventoryUI/MarginContainer/Sections/Inventory/VBoxContainer/HBoxContainer/Gold")
-
-[node name="ItemTooltip" parent="." instance=ExtResource("2_lobmi")]
-unique_name_in_owner = true
-offset_right = 133.0
-
-[node name="HeldItem" parent="." instance=ExtResource("2_pefhr")]
-unique_name_in_owner = true
 
 [node name="InventoryUI" type="Control" parent="."]
 custom_minimum_size = Vector2(630, 750)
-layout_mode = 3
+layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0

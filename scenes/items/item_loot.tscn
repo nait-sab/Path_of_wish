@@ -1,0 +1,43 @@
+[gd_scene load_steps=3 format=3 uid="uid://sf33kwlhcnus"]
+
+[ext_resource type="Script" uid="uid://cv04nhiuebv1n" path="res://scenes/items/item_loot.gd" id="1_thva0"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_64enq"]
+size = Vector2(114, 52)
+
+[node name="ItemLoot" type="Area2D" node_paths=PackedStringArray("name_label", "collision")]
+script = ExtResource("1_thva0")
+name_label = NodePath("CollisionShape2D/Root/MarginContainer/Name")
+collision = NodePath("CollisionShape2D")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_64enq")
+
+[node name="Root" type="PanelContainer" parent="CollisionShape2D"]
+z_index = 10
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -90.5
+offset_top = -20.0
+offset_right = 90.5
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="CollisionShape2D/Root"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_right = 5
+
+[node name="Name" type="Label" parent="CollisionShape2D/Root/MarginContainer"]
+layout_mode = 2
+text = "Parchemin de sagesse"
+
+[connection signal="input_event" from="." to="." method="_on_area_2d_input_event"]
+[connection signal="mouse_entered" from="." to="." method="_on_area_2d_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_area_2d_mouse_exited"]

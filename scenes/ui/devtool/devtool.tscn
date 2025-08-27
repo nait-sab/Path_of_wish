@@ -63,7 +63,13 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 20
 text = "Test damage"
 
+[node name="DebugButton4" type="Button" parent="Root/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Drop Test"
+
 [connection signal="pressed" from="Root/MarginContainer/VBoxContainer/HBoxContainer2/Exit" to="." method="_on_exit_pressed"]
 [connection signal="pressed" from="Root/MarginContainer/VBoxContainer/HBoxContainer/DebugButton1" to="." method="_on_debug_button_1_pressed"]
 [connection signal="pressed" from="Root/MarginContainer/VBoxContainer/HBoxContainer/DebugButton2" to="." method="_on_debug_button_2_pressed"]
 [connection signal="pressed" from="Root/MarginContainer/VBoxContainer/HBoxContainer/DebugButton3" to="." method="_on_debug_button_3_pressed"]
+[connection signal="pressed" from="Root/MarginContainer/VBoxContainer/HBoxContainer/DebugButton4" to="." method="_on_debug_button_4_pressed"]

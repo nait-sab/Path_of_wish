@@ -75,8 +75,7 @@ func _on_mouse_entered() -> void:
 		target = master_slot
 		
 	if target.item:
-		var tooltip: ItemTooltip = get_tree().get_root().get_node("World/Inventory/ItemTooltip")
-		tooltip.show_item(target.item)
+		ItemTooltip.get_any().show_item(target.item)
 	
 func _on_mouse_exited() -> void:
 	var target: InventorySlot = self
@@ -84,7 +83,7 @@ func _on_mouse_exited() -> void:
 	if is_linked and master_slot:
 		target = master_slot
 		
-	var tooltip: ItemTooltip = get_tree().get_root().get_node("World/Inventory/ItemTooltip")
+	var tooltip = ItemTooltip.get_any()
 	
 	if not target.is_mouse_over_any():
 		tooltip.hide_item()

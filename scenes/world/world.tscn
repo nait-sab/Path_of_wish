@@ -1,20 +1,26 @@
-[gd_scene load_steps=8 format=3 uid="uid://djatk87yr8qql"]
+[gd_scene load_steps=10 format=3 uid="uid://djatk87yr8qql"]
 
 [ext_resource type="Script" uid="uid://vcs46cmckm4e" path="res://scenes/world/world.gd" id="1_6m72w"]
 [ext_resource type="PackedScene" uid="uid://da38mat7gdu37" path="res://scenes/player/player.tscn" id="2_v5dby"]
+[ext_resource type="PackedScene" uid="uid://6fvn45q6m2qo" path="res://scenes/ui/item_tooltip/item_tooltip.tscn" id="3_j2gmx"]
 [ext_resource type="PackedScene" uid="uid://up0b15oa2a68" path="res://scenes/ui/hud/hud.tscn" id="4_bq33v"]
 [ext_resource type="PackedScene" uid="uid://c1anxqj6baj0b" path="res://scenes/ui/character_sheet/character_sheet.tscn" id="5_v5dby"]
 [ext_resource type="PackedScene" uid="uid://ce4lue806eu41" path="res://scenes/ui/inventory/inventory/inventory.tscn" id="6_t5ptc"]
 [ext_resource type="PackedScene" uid="uid://s1pigorfv2bo" path="res://scenes/ui/pause/pause_menu.tscn" id="7_bq33v"]
 [ext_resource type="PackedScene" uid="uid://bmns8k22lr4o4" path="res://scenes/ui/devtool/devtool.tscn" id="7_j2gmx"]
+[ext_resource type="PackedScene" uid="uid://bcthwf35yc4wh" path="res://scenes/ui/inventory/held_item/held_item.tscn" id="9_1yooq"]
 
-[node name="World" type="Node2D" node_paths=PackedStringArray("player", "enemies_node")]
+[node name="World" type="Node2D" node_paths=PackedStringArray("player", "enemies_node", "loots_node")]
 script = ExtResource("1_6m72w")
 player = NodePath("Player")
 enemies_node = NodePath("Enemies")
+loots_node = NodePath("Loots")
 
 [node name="Player" parent="." instance=ExtResource("2_v5dby")]
 position = Vector2(805, 608)
+melee_damage = 50.0
+
+[node name="Loots" type="Node2D" parent="."]
 
 [node name="Enemies" type="Node2D" parent="."]
 
@@ -22,8 +28,15 @@ position = Vector2(805, 608)
 
 [node name="CharacterSheet" parent="." instance=ExtResource("5_v5dby")]
 
-[node name="Inventory" parent="." instance=ExtResource("6_t5ptc")]
-
 [node name="PauseMenu" parent="." instance=ExtResource("7_bq33v")]
 
 [node name="Devtool" parent="." instance=ExtResource("7_j2gmx")]
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="ItemTooltip" parent="UI" instance=ExtResource("3_j2gmx")]
+offset_right = 300.0
+
+[node name="HeldItem" parent="UI" instance=ExtResource("9_1yooq")]
+
+[node name="Inventory" parent="UI" instance=ExtResource("6_t5ptc")]

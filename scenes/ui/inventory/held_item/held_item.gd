@@ -8,7 +8,14 @@ var item: Item = null
 var default_texture = preload("res://assets/textures/icon.svg")
 
 func _ready() -> void:
+	add_to_group("HeldItem")
 	visible = false
+	
+static func get_any() -> HeldItem:
+	var tree := Engine.get_main_loop() as SceneTree
+	if tree == null:
+		return null
+	return tree.get_first_node_in_group("HeldItem") as HeldItem
 
 func set_item(data: Item):
 	item = data

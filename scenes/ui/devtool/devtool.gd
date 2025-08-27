@@ -73,3 +73,12 @@ func _dump_layers(label: String, report: DamageReport) -> void:
 	print("after_armour      : ", report.after_armour)
 	print("after_resistances : ", report.after_resistances)
 	print("applied ES=", report.applied_to_energy_shield, " life=", report.applied_to_life, " total=", report.final_total)
+
+func _on_debug_button_4_pressed() -> void:
+	var level := 10
+	var enemy_rarity := Item.Rarity.MAGIC
+	var drops := LootDb.roll_for_enemy(level, enemy_rarity)
+	print("--- LOOT (lvl=%d, rarity=%s) ---" % [level, str(enemy_rarity)])
+	for item: Item in drops:
+		var stack := (item.stack_current if item.tags.has(Item.Tag.CURRENCY) else 1)
+		print("• %s (%s) x%d" % [item.name, str(item.rarity), stack])

@@ -33,4 +33,3 @@ func select_character(id: String) -> void:
 func save_current():
 	if current_char_id != "":
 		SaveManager.save_character(current_char)
-		print("save character")

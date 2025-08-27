@@ -161,7 +161,7 @@ func _instantiate_from_model(model: Dictionary) -> Item:
 	var instance: Item = null
 	var tags: Array = model.get("tags", [])
 
-	if tags.has("weapon") or tags.has("armor") or tags.has("jewelry"):
+	if tags.has("weapon") or tags.has("armour") or tags.has("jewelry"):
 		instance = Gear.new()
 	elif tags.has("consumable"):
 		instance = Consumable.new()
@@ -182,7 +182,11 @@ func instantiate_random(tags: Array = [], max_level: int = 0, rarity: Item.Rarit
 		var has_all_tags: bool = true
 		
 		for tag in tags:
-			if not model.get("tags", []).has(Item.convert_tag_to_string(tag)):
+			var tag_searched = tag
+			if typeof(tag_searched) == TYPE_INT:
+				tag_searched = Item.convert_tag_to_string(tag_searched)
+			
+			if not model.get("tags", []).has(tag_searched):
 				has_all_tags = false
 				break
 				
