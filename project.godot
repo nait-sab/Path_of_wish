@@ -24,6 +24,8 @@ StatEngine="*res://scripts/autoload/stat_engine.gd"
 ModDb="*res://scripts/autoload/mod_db.gd"
 EnemyModDb="*res://scripts/autoload/enemy_mod_db.gd"
 LootDb="*res://scripts/autoload/loot_db.gd"
+SkillDb="*res://scripts/autoload/skill_db.gd"
+SupportDb="*res://scripts/autoload/support_db.gd"
 
 [display]
 

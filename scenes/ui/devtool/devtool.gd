@@ -85,3 +85,45 @@ func _on_debug_button_4_pressed() -> void:
 	for item: Item in drops:
 		var stack := (item.stack_current if item.tags.has(Item.Tag.CURRENCY) else 1)
 		print("• %s (%s) x%d" % [item.name, str(item.rarity), stack])
+
+func _on_debug_button_5_pressed() -> void:
+	var cleave := Gem.new()
+	cleave.name = "Cleave"
+	cleave.item_level = 1
+	cleave.skill_id = "cleave"
+
+	var fire_support := Gem.new()
+	fire_support.name = "Added Fire"
+	fire_support.item_level = 1
+	fire_support.support_id = "added_fire"
+	
+	var skill := SkillInstance.new()
+	skill.setup_from_gem(cleave)
+	
+	var support := SkillInstance.new()
+	support.setup_from_gem(fire_support)
+
+	print("Avant support")
+	skill.dump()
+	skill.apply_supports([support])
+	
+	print("Après support")
+	skill.dump()
+	
+	var main_hand := ItemDb.instantiate_random([Item.Tag.SWORD], 1, Item.Rarity.NORMAL) as Gear
+	var packet := SkillMath.build_packet(skill, Callable(StatEngine, "get_stat"), main_hand)
+	print("[Skill Cast] packet = ", packet.debug_string(), " total = ", packet.total())
+	
+	var enemies = get_tree().root.get_node("World/Enemies") as Node2D
+	if enemies.get_children().size() == 0:
+		print("[Devtool] Need one enemy to test a Skill")
+		return
+		
+	var enemy = enemies.get_children()[0]
+	var defender_get := Callable(enemy.stat_block, "get_stat")
+	
+	var report := DamageResolver.resolve(defender_get, {
+		"life" = enemy.life,
+		"energy_shield" = enemy.energy_shield
+	}, packet)
+	report.debug_full()

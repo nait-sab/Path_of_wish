@@ -1,0 +1,35 @@
+{
+    "id": "added_fire",
+    "type": "support",
+    "applies_to_tags": ["attack", "spell"],
+    "drop_level": 1,
+    "levels": [
+        {
+            "level": 1,
+            "requirements" : {
+                "level": 1,
+                "strength": 0,
+                "dexterity": 0,
+                "intelligence": 0
+            },
+            "effects": {
+                "added_fire_from_physical_percent": 25.0,
+                "mana_multiplier_percent": 110
+            },
+            "xp_to_next": 70
+        }, {
+            "level": 2,
+            "requirements" : {
+                "level": 2,
+                "strength": 0,
+                "dexterity": 0,
+                "intelligence": 0
+            },
+            "effects": {
+                "added_fire_from_physical_percent": 25.0,
+                "mana_multiplier_percent": 110
+            },
+            "xp_to_next": 70
+        }
+    ]
+}

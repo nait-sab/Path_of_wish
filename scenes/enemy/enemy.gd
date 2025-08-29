@@ -216,6 +216,16 @@ func apply_base_stats():
 		stat_block.create_modifier("armour", StatBlock.ModifierForm.FLAT, base_armour),
 		stat_block.create_modifier("evasion_rating", StatBlock.ModifierForm.FLAT, base_evasion_rating),
 		stat_block.create_modifier("energy_shield_max", StatBlock.ModifierForm.FLAT, base_energy_shield),
+		
+		# Resistances
+		stat_block.create_modifier("resistance_fire", StatBlock.ModifierForm.FLAT, 0),
+		stat_block.create_modifier("resistance_fire_max", StatBlock.ModifierForm.FLAT, 75),
+		stat_block.create_modifier("resistance_cold", StatBlock.ModifierForm.FLAT, 0),
+		stat_block.create_modifier("resistance_cold_max", StatBlock.ModifierForm.FLAT, 75),
+		stat_block.create_modifier("resistance_lightning", StatBlock.ModifierForm.FLAT, 0),
+		stat_block.create_modifier("resistance_lightning_max", StatBlock.ModifierForm.FLAT, 75),
+		stat_block.create_modifier("resistance_chaos", StatBlock.ModifierForm.FLAT, 0),
+		stat_block.create_modifier("resistance_chaos_max", StatBlock.ModifierForm.FLAT, 75),
 	]
 
 	stat_block.set_source("base", base_mods)

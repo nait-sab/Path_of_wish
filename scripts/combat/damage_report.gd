@@ -27,3 +27,16 @@ func clone_layers() -> Dictionary:
 		"after_armour": after_armour.duplicate(),
 		"after_resistances": after_resistances.duplicate()
 	}
+	
+func debug_full() -> void:
+	print("\n=== Damage Report ===")
+	print("evade=%s blocked=%s" % [str(evaded), str(blocked)])
+	print("before            : ", before)
+	print("after_block       : ", after_block)
+	print("after_armour       : ", after_armour)
+	print("after_resistances : ", after_resistances)
+	print("applied ES=%.1f life=%.1f total=%.1f" % [
+		applied_to_energy_shield,
+		applied_to_life,
+		final_total
+	])

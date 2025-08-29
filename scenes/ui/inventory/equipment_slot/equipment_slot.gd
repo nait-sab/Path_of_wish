@@ -83,6 +83,11 @@ func can_accept(cheked_item: Item) -> bool:
 			return false
 		
 	return true
+	
+func get_equipped_main_hand() -> Gear:
+	if main_weapon_slot != null:
+		return main_weapon_slot.item
+	return null
 
 func _check_tags(checked_item: Item) -> bool:
 	var valid := false

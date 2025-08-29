@@ -1,0 +1,19 @@
+[
+	{
+		"id": "gem_added_fire",
+		"name": "Added Fire Support",
+		"support_id": "added_fire",
+		"item_level": 1,
+		"tags": ["gem", "support"],
+		"size": { "width": 1, "height": 1 },
+		"requirements" : {
+			"level": 1,
+			"strength": 0,
+			"dexterity": 0,
+			"intelligence": 0
+		},
+		"vendor_value": 1,
+		"xp_current": 0,
+		"xp_to_next": 100
+	}
+]

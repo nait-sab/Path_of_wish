@@ -1,0 +1,40 @@
+{
+    "id": "fireball",
+    "type": "active",
+    "tags": ["spell", "projectile", "aoe", "fire"],
+    "drop_level": 1,
+    "uses_weapon": false,
+    "levels": [
+        {
+            "level": 1,
+            "requirements" : {
+                "level": 1,
+                "strength": 0,
+                "dexterity": 0,
+                "intelligence": 0
+            },
+            "mana_cost": 6,
+            "damage_base": { "fire": [9, 14] },
+            "effectiveness_of_added_damage": 2.6,
+            "projectile_speed": 1040,
+            "crit_chance_percent": 6.0,
+            "radius": 9,
+            "xp_to_next": 70
+        }, {
+            "level": 2,
+            "requirements" : {
+                "level": 2,
+                "strength": 0,
+                "dexterity": 0,
+                "intelligence": 0
+            },
+            "mana_cost": 6,
+            "damage_base": { "fire": [10, 16] },
+            "effectiveness_of_added_damage": 2.6,
+            "projectile_speed": 1040,
+            "crit_chance_percent": 6.0,
+            "radius": 9,
+            "xp_to_next": 378
+        }
+    ]
+}

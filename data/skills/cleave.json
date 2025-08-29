@@ -1,0 +1,38 @@
+{
+    "id": "cleave",
+    "type": "active",
+    "tags": ["attack", "melee", "aoe", "physical"],
+    "drop_level": 1,
+    "uses_weapon": true,
+    "levels": [
+        {
+            "level": 1,
+            "requirements" : {
+                "level": 1,
+                "strength": 0,
+                "dexterity": 0,
+                "intelligence": 0
+            },
+            "mana_cost": 7,
+            "attack_speed_scalar": 0.8,
+            "weapon_physical_percent": 179.4,
+            "effectiveness_of_added_damage": 1.0,
+            "radius": 20,
+            "xp_to_next": 70
+        }, {
+            "level": 2,
+            "requirements" : {
+                "level": 2,
+                "strength": 0,
+                "dexterity": 0,
+                "intelligence": 0
+            },
+            "mana_cost": 7,
+            "attack_speed_scalar": 0.8,
+            "weapon_physical_percent": 188.7,
+            "effectiveness_of_added_damage": 1.0,
+            "radius": 21,
+            "xp_to_next": 378
+        }
+    ]
+}

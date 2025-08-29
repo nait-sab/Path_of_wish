@@ -1,0 +1,37 @@
+[
+	{
+		"id": "gem_cleave",
+		"name": "Cleave",
+		"skill_id": "cleave",
+		"item_level": 1,
+		"tags": ["gem", "active", "attack", "melee", "aoe"],
+		"size": { "width": 1, "height": 1 },
+		"requirements" : {
+			"level": 1,
+			"strength": 0,
+			"dexterity": 0,
+			"intelligence": 0
+		},
+		"description": "Un coup de mêlée en arc de cercle frappant plusieurs ennemis",
+		"vendor_value": 1,
+		"xp_current": 0,
+		"xp_to_next": 100
+	}, {
+		"id": "gem_fireball",
+		"name": "Fireball",
+		"skill_id": "gem_fireball",
+		"item_level": 1,
+		"tags": ["gem", "active", "spell", "projectile", "aoe", "fire"],
+		"size": { "width": 1, "height": 1 },
+		"requirements" : {
+			"level": 1,
+			"strength": 0,
+			"dexterity": 0,
+			"intelligence": 0
+		},
+		"description": "Déchaîne une boule de feu vers une cible qui explose, endommageant les ennemis proches",
+		"vendor_value": 1,
+		"xp_current": 0,
+		"xp_to_next": 100
+	}
+]
