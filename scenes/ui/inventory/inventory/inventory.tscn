@@ -4,17 +4,17 @@
 [ext_resource type="PackedScene" uid="uid://dj34wt6g60kma" path="res://scenes/ui/inventory/inventory_slot/inventory_slot.tscn" id="2_xce7s"]
 [ext_resource type="PackedScene" uid="uid://br1tphtdhmq0n" path="res://scenes/ui/inventory/equipment_slot/equipment_slot.tscn" id="4_8ndef"]
 
-[sub_resource type="Gradient" id="Gradient_8ndef"]
+[sub_resource type="Gradient" id="Gradient_r6pol"]
 colors = PackedColorArray(0.17355, 0.17355, 0.17355, 1, 0.293216, 0.240169, 0.0787779, 1)
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_wi1cf"]
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_rlmwj"]
 noise_type = 3
 seed = 1024
 frequency = 0.0106
 
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_otfgc"]
-color_ramp = SubResource("Gradient_8ndef")
-noise = SubResource("FastNoiseLite_wi1cf")
+color_ramp = SubResource("Gradient_r6pol")
+noise = SubResource("FastNoiseLite_rlmwj")
 
 [sub_resource type="Gradient" id="Gradient_g1xhy"]
 colors = PackedColorArray(0.666569, 0.666569, 0.666569, 1, 0, 0, 0, 1)

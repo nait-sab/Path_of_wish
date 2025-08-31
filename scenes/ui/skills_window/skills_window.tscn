@@ -1,0 +1,186 @@
+[gd_scene load_steps=15 format=3 uid="uid://b46y766uljjon"]
+
+[ext_resource type="Script" uid="uid://bmows7bgd6opw" path="res://scenes/ui/skills_window/skills_window.gd" id="1_3ht1q"]
+[ext_resource type="PackedScene" uid="uid://r32xuxcryjdt" path="res://scenes/ui/skills_window/skill_slot/skill_window_slot.tscn" id="1_jam1y"]
+
+[sub_resource type="Gradient" id="Gradient_8ndef"]
+colors = PackedColorArray(0.17355, 0.17355, 0.17355, 1, 0.293216, 0.240169, 0.0787779, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_wi1cf"]
+noise_type = 3
+seed = 1024
+frequency = 0.0106
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_3ht1q"]
+color_ramp = SubResource("Gradient_8ndef")
+noise = SubResource("FastNoiseLite_wi1cf")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fj7xd"]
+content_margin_left = 10.0
+content_margin_top = 5.0
+content_margin_right = 10.0
+content_margin_bottom = 5.0
+bg_color = Color(0.634947, 0.515731, 0.182196, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_icxi6"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_231ih"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_l5k04"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8bwel"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_q2nk7"]
+bg_color = Color(0.363388, 0.0975401, 0.054111, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.927697, 0.952031, 0.779962, 1)
+corner_radius_top_left = 50
+corner_radius_top_right = 50
+corner_radius_bottom_right = 50
+corner_radius_bottom_left = 50
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_m1sw0"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_t63nc"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_hhuah"]
+
+[node name="SkillsWindow" type="Control" node_paths=PackedStringArray("skill_slots_container")]
+custom_minimum_size = Vector2(600, 800)
+layout_mode = 3
+anchors_preset = 0
+offset_left = 50.0
+offset_top = 50.0
+offset_right = 700.0
+offset_bottom = 900.0
+script = ExtResource("1_3ht1q")
+skill_slots_container = NodePath("MarginContainer/VBoxContainer/ColorRect2/MarginContainer/ScrollContainer/VBoxContainer")
+
+[node name="BackgroundColor" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.263475, 0.259659, 0.25296, 1)
+
+[node name="BackgroundTexture" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("NoiseTexture2D_3ht1q")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="ColorRect" type="ColorRect" parent="MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+color = Color(0.231228, 0.212277, 0.049562, 1)
+
+[node name="Title" type="Label" parent="MarginContainer/VBoxContainer/ColorRect"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -23.0
+offset_right = 20.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("StyleBoxFlat_fj7xd")
+text = "Aptitudes"
+
+[node name="ColorRect2" type="ColorRect" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+color = Color(0.08617, 0.0682436, 0.018055, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/ColorRect2"]
+layout_mode = 2
+offset_top = 4.0
+offset_right = 610.0
+offset_bottom = 706.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/VBoxContainer/ColorRect2/MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/ColorRect2/MarginContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 20
+
+[node name="SkillSlot1" parent="MarginContainer/VBoxContainer/ColorRect2/MarginContainer/ScrollContainer/VBoxContainer" instance=ExtResource("1_jam1y")]
+layout_mode = 2
+
+[node name="SkillSlot2" parent="MarginContainer/VBoxContainer/ColorRect2/MarginContainer/ScrollContainer/VBoxContainer" instance=ExtResource("1_jam1y")]
+layout_mode = 2
+
+[node name="SkillSlot3" parent="MarginContainer/VBoxContainer/ColorRect2/MarginContainer/ScrollContainer/VBoxContainer" instance=ExtResource("1_jam1y")]
+layout_mode = 2
+
+[node name="SkillSlot4" parent="MarginContainer/VBoxContainer/ColorRect2/MarginContainer/ScrollContainer/VBoxContainer" instance=ExtResource("1_jam1y")]
+layout_mode = 2
+
+[node name="SkillSlot5" parent="MarginContainer/VBoxContainer/ColorRect2/MarginContainer/ScrollContainer/VBoxContainer" instance=ExtResource("1_jam1y")]
+layout_mode = 2
+
+[node name="CloseButton" type="Button" parent="."]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -55.0
+offset_top = 15.0
+offset_right = -15.0
+offset_bottom = 55.0
+grow_horizontal = 0
+theme_override_colors/font_color = Color(0.847769, 0.875197, 0.618694, 1)
+theme_override_styles/focus = SubResource("StyleBoxEmpty_icxi6")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_231ih")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_l5k04")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_8bwel")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_q2nk7")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_m1sw0")
+theme_override_styles/hover = SubResource("StyleBoxFlat_q2nk7")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_t63nc")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_q2nk7")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_hhuah")
+theme_override_styles/normal = SubResource("StyleBoxFlat_q2nk7")
+text = "X"
+
+[connection signal="pressed" from="CloseButton" to="." method="_on_close_button_pressed"]

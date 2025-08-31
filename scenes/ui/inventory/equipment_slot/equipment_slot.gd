@@ -127,7 +127,7 @@ func _on_equip(item_to_add: Item) -> void:
 
 	var mods_as_modifiers: Array = []
 	
-	# Save armor properties
+	# Save properties
 	for key in item_to_add.properties_final.keys():
 		var value = item_to_add.properties_final[key]
 		

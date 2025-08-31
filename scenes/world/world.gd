@@ -26,14 +26,21 @@ func _input(event):
 		enemies_node.add_child(enemy)
 	
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and not event.is_pressed():
-		var inventory = Inventory.get_any()
-		var held_item = inventory.held_item
+		var interfaces: Array = []
+		interfaces.append(Inventory.get_any())
+		interfaces.append(CharacterSheet.get_any())
+		interfaces.append(SkillsWindow.get_any())
+		
+		var held_item = HeldItem.get_any().item
 		if held_item == null:
 			return
 		var mouse_pos: Vector2 = event.position
-		if inventory.is_point_over_inventory(mouse_pos):
-			return
-		inventory._drop_held_item_to_ground(self, player.global_position)
+		
+		for interface in interfaces:
+			if interface.is_point_over(mouse_pos):
+				return
+			
+		_drop_held_item_to_ground()
 		
 func spawn_loot(item: Item, origin: Vector2) -> void:
 	var instance: ItemLoot = loot_scene.instantiate()
@@ -42,6 +49,10 @@ func spawn_loot(item: Item, origin: Vector2) -> void:
 	loots_node.add_child(instance)
 	instance.pickup_requested.connect(_on_loot_pickup_requested)
 	
+func _drop_held_item_to_ground() -> void:
+	spawn_loot(HeldItem.get_any().item.clone(), player.global_position)
+	HeldItem.get_any().clear_item()
+
 func _find_free_loot_position(new_loot: ItemLoot, origin: Vector2) -> Vector2:
 	var new_size: Vector2 = new_loot.collision.shape.extents * 2.0
 	var padding := Vector2(4, 4)	

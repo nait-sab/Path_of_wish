@@ -1,5 +1,7 @@
 class_name Inventory extends Control
 
+signal equipment_changed
+
 @export var equipment_control: Control
 @export var grid: GridContainer
 @export var gold_label: Label
@@ -10,7 +12,6 @@ var dragging = false
 var drag_offset = Vector2.ZERO
 var slots: Array = []
 var equipment_slots: Array = []
-var held_item: Item = null
 
 func _ready():
 	visible = false
@@ -22,6 +23,9 @@ func _ready():
 	
 	# For debug !
 	insert(ItemDb.instantiate_random([Item.Tag.SWORD], 1, Item.Rarity.RARE))
+	
+	for _i in range(10):
+		insert(ItemDb.instantiate_random([Item.Tag.GEM], 1))
 
 	connect_equip_slots()
 	connect_slots()
@@ -55,6 +59,12 @@ static func get_any() -> Inventory:
 	if tree == null:
 		return null
 	return tree.get_first_node_in_group("Inventory") as Inventory
+	
+func get_main_weapon() -> Gear:
+	for slot: EquipmentSlot in equipment_slots:
+		if slot.is_main_weapon_slot and slot.item != null:
+			return slot.item
+	return null
 
 func _index_to_col_row(index: int) -> Vector2i:
 	return Vector2i(index % grid.columns, int(float(index) / grid.columns))
@@ -128,35 +138,33 @@ func try_insert_item(item: Item) -> bool:
 	return false
 
 func on_equipment_slot_clicked(slot: EquipmentSlot):
-	if held_item != null:
-		var item := held_item
+	if HeldItem.get_any().item != null:
+		var item := HeldItem.get_any().item
 		if not slot.can_accept(item):
 			return
 		var previous := slot.take_item()
 		slot.set_item(item)
 		if previous:
-			held_item = previous.clone()
-			HeldItem.get_any().set_item(held_item)
+			HeldItem.get_any().set_item(previous.clone())
 		else:
 			HeldItem.get_any().clear_item()
-			held_item = null
 		slot.update_ui()
 	else:
 		if slot.has_item():
 			var taken := slot.take_item()
-			held_item = taken.clone()
-			HeldItem.get_any().set_item(held_item)
+			HeldItem.get_any().set_item(taken.clone())
 			slot.update_ui()
+			
+	equipment_changed.emit()
 	
 func on_slot_clicked(slot: InventorySlot):
-	if held_item == null:
+	if HeldItem.get_any().item == null:
 		# Take a new item
 		if slot.is_linked:
 			slot = slot.master_slot
 		if slot.item:
-			held_item = slot.item.clone()
+			HeldItem.get_any().set_item(slot.item.clone())
 			slot.clear_item()
-			HeldItem.get_any().set_item(held_item)
 	else:
 		# Try to place or swap the item
 		var index = slots.find(slot)
@@ -164,22 +172,19 @@ func on_slot_clicked(slot: InventorySlot):
 		var row = _index_to_col_row(index).y
 		
 		# target is totally empty, just place the item
-		if can_place_item_at(col, row, held_item):
-			if place_item_at(col, row, held_item.clone()):
+		if can_place_item_at(col, row, HeldItem.get_any().item):
+			if place_item_at(col, row, HeldItem.get_any().item.clone()):
 				HeldItem.get_any().clear_item()
-				held_item = null
-				
 			return
 			
 		# Check if the slots have only one master to swap
-		var target_master := find_single_master_in_area(col, row, held_item)
+		var target_master := find_single_master_in_area(col, row, HeldItem.get_any().item)
 		
 		if target_master != null:
 			var temp_item = target_master.item.clone()
 			target_master.clear_item()
 			
-			if place_item_at(col, row, held_item.clone()):
-				held_item = temp_item
+			if place_item_at(col, row, HeldItem.get_any().item.clone()):
 				HeldItem.get_any().set_item(temp_item.clone())
 			else:
 				var master_index := slots.find(target_master)
@@ -269,13 +274,8 @@ func find_single_master_in_area(col: int, row: int, item: Item) -> InventorySlot
 	# return null or unique master
 	return target_master
 	
-func is_point_over_inventory(pos: Vector2) -> bool:
+func is_point_over(pos: Vector2) -> bool:
 	return root_panel.get_global_rect().has_point(pos)
-	
-func _drop_held_item_to_ground(world: World, origin: Vector2) -> void:
-	world.spawn_loot(held_item.clone(), origin)
-	HeldItem.get_any().clear_item()
-	held_item = null
 
 func _on_close_button_pressed() -> void:
 	_toggle()

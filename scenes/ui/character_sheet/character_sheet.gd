@@ -45,11 +45,21 @@ const REF_ACCURARY_BY_LEVEL := {
 }
 
 func _ready():
+	add_to_group("CharacterSheet")
 	visible = false
 	player = get_tree().get_first_node_in_group("Player")
 	StatEngine.stats_updated.connect(_on_stat_engine_changed)
 	_refresh()
 	
+static func get_any() -> CharacterSheet:
+	var tree := Engine.get_main_loop() as SceneTree
+	if tree == null:
+		return null
+	return tree.get_first_node_in_group("CharacterSheet") as CharacterSheet
+
+func is_point_over(pos: Vector2) -> bool:
+	return panel.get_global_rect().has_point(pos)
+
 func _toggle():
 	visible = not visible
 	if visible:
