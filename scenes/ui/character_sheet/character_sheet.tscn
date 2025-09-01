@@ -77,7 +77,9 @@ corner_radius_top_right = 50
 expand_margin_left = 60.0
 expand_margin_right = 60.0
 
-[node name="CharacterSheet" type="CanvasLayer" node_paths=PackedStringArray("level_class", "map_name", "character_name", "strength_value", "dexterity_value", "intelligence_value", "life_value", "energy_shield_value", "mana_value", "spirit_value", "armour_value", "evasion_value", "block_value", "fire_value", "fire_max_value", "cold_value", "cold_max_value", "lightning_value", "lightning_max_value", "chaos_value", "chaos_max_value", "panel", "header", "details")]
+[node name="CharacterSheet" type="Control" node_paths=PackedStringArray("level_class", "map_name", "character_name", "strength_value", "dexterity_value", "intelligence_value", "life_value", "energy_shield_value", "mana_value", "spirit_value", "armour_value", "evasion_value", "block_value", "fire_value", "fire_max_value", "cold_value", "cold_max_value", "lightning_value", "lightning_max_value", "chaos_value", "chaos_max_value", "panel", "header", "details")]
+layout_mode = 3
+anchors_preset = 0
 script = ExtResource("1_vhyxx")
 level_class = NodePath("Control/Window/VBoxContainer/Informations/MarginContainer/ColorRect/MarginContainer/MarginContainer/HBoxContainer/VBoxContainer/LevelClass")
 map_name = NodePath("Control/Window/VBoxContainer/Informations/MarginContainer/ColorRect/MarginContainer/MarginContainer/HBoxContainer/VBoxContainer/MapName")

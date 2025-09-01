@@ -125,7 +125,7 @@ static func build_packet_average(skill: SkillInstance, _get_stat: Callable, main
 	var critical_chance := float(skill.final.get("crit_chance_percent", 0.0))
 	# TODO - Prepare critical stats on the player ! use 50% multiplier by default
 	var critical_multiplier := 1.5
-	var average_critical := 1.0 + (critical_multiplier - 1.0) * critical_chance
+	var average_critical := 1.0 + (critical_multiplier - 1.0) * (critical_chance / 100.0)
 	
 	base_physical 	*= average_critical
 	base_fire 		*= average_critical

@@ -134,8 +134,8 @@ func _on_equip(item_to_add: Item) -> void:
 		match key:
 			"armour":
 				mods_as_modifiers.append(StatEngineClass.create_modifier("armour", StatEngine.ModifierForm.FLAT, value))
-			"evasion":
-				mods_as_modifiers.append(StatEngineClass.create_modifier("evasion", StatEngine.ModifierForm.FLAT, value))
+			"evasion_rating":
+				mods_as_modifiers.append(StatEngineClass.create_modifier("evasion_rating", StatEngine.ModifierForm.FLAT, value))
 			"energy_shield":
 				mods_as_modifiers.append(StatEngineClass.create_modifier("energy_shield_max", StatEngine.ModifierForm.FLAT, value))
 			"move_speed_percent":

@@ -25,10 +25,6 @@ melee_damage = 50.0
 
 [node name="Enemies" type="Node2D" parent="."]
 
-[node name="Hud" parent="." instance=ExtResource("4_bq33v")]
-
-[node name="CharacterSheet" parent="." instance=ExtResource("5_v5dby")]
-
 [node name="PauseMenu" parent="." instance=ExtResource("7_bq33v")]
 
 [node name="Devtool" parent="." instance=ExtResource("7_j2gmx")]
@@ -43,3 +39,7 @@ offset_right = 300.0
 [node name="Inventory" parent="UI" instance=ExtResource("6_t5ptc")]
 
 [node name="SkillsWindow" parent="UI" instance=ExtResource("10_gb53w")]
+
+[node name="CharacterSheet" parent="UI" instance=ExtResource("5_v5dby")]
+
+[node name="Hud" parent="UI" instance=ExtResource("4_bq33v")]

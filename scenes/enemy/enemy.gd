@@ -1,8 +1,5 @@
 class_name Enemy extends CharacterBody2D
 
-const DAMAGE_PACKET = preload("res://scripts/combat/damage_packet.gd")
-const DAMAGE_RESOLVER = preload("res://scripts/combat/damage_resolver.gd")
-
 @export_category("Base")
 @export var level := 1
 @export var rarity: Item.Rarity = Item.Rarity.NORMAL
@@ -100,7 +97,7 @@ func attack_target():
 	#if "apply_damage" in target:
 	#	target.apply_damage(roundi(damage))
 	
-	var packet := DAMAGE_PACKET.melee_physical(damage)
+	var packet := (DamagePacket.new()).melee_physical(damage)
 	packet.can_crit = true
 	packet.crit_chance = 0.05
 	packet.crit_multiplier = 1.5

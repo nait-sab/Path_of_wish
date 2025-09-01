@@ -23,8 +23,12 @@ func _ready():
 	
 	# For debug !
 	insert(ItemDb.instantiate_random([Item.Tag.SWORD], 1, Item.Rarity.RARE))
+	insert(ItemDb.instantiate_random([Item.Tag.SHIELD], 1, Item.Rarity.RARE))
+	
 	for _i in range(10):
 		insert(ItemDb.instantiate_random([Item.Tag.GEM], 1))
+	for _i in range(3):
+		insert(ItemDb.instantiate_random([Item.Tag.GLOVE], 1))
 
 	connect_equip_slots()
 	connect_slots()

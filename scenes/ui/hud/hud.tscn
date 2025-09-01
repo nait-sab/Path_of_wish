@@ -1,25 +1,196 @@
-[gd_scene load_steps=5 format=3 uid="uid://up0b15oa2a68"]
+[gd_scene load_steps=19 format=3 uid="uid://up0b15oa2a68"]
 
 [ext_resource type="Script" uid="uid://dwxdkaxl8puwc" path="res://scenes/ui/hud/hud.gd" id="1_8qguk"]
 [ext_resource type="Texture2D" uid="uid://btdj0jkixbuk0" path="res://assets/textures/hud/orb_frame.png" id="1_bo48s"]
 [ext_resource type="Texture2D" uid="uid://dikwxis4uaog6" path="res://assets/textures/hud/orb_life_fill.png" id="2_8qguk"]
 [ext_resource type="Texture2D" uid="uid://b2io0derawsca" path="res://assets/textures/hud/orb_mana_fill.png" id="3_136eg"]
 
-[node name="Hud" type="CanvasLayer" node_paths=PackedStringArray("life_orb", "mana_orb")]
-script = ExtResource("1_8qguk")
-life_orb = NodePath("Control/Life Orb")
-mana_orb = NodePath("Control2/Mana Orb")
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ax4tw"]
+content_margin_left = 10.0
+content_margin_top = 8.0
+content_margin_right = 10.0
+content_margin_bottom = 8.0
+bg_color = Color(0.1, 0.1, 0.1, 0.55)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.85, 0.8, 0.6, 0.7)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
 
-[node name="Control" type="Control" parent="."]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2wu1p"]
+bg_color = Color(0.18, 0.18, 0.18, 0.9)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.6, 0.55, 0.4, 0.9)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="Gradient" id="Gradient_ax4tw"]
+offsets = PackedFloat32Array(1)
+colors = PackedColorArray(0.0223863, 0, 0.339954, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_2wu1p"]
+gradient = SubResource("Gradient_ax4tw")
+
+[sub_resource type="Gradient" id="Gradient_4m4yb"]
+offsets = PackedFloat32Array(1)
+colors = PackedColorArray(0.306964, 0.598463, 0.894294, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_todbw"]
+gradient = SubResource("Gradient_4m4yb")
+
+[sub_resource type="Gradient" id="Gradient_2wu1p"]
+offsets = PackedFloat32Array(1)
+colors = PackedColorArray(0.262932, 0.262932, 0.262932, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_4m4yb"]
+gradient = SubResource("Gradient_2wu1p")
+
+[sub_resource type="Gradient" id="Gradient_todbw"]
+offsets = PackedFloat32Array(1)
+colors = PackedColorArray(0.964807, 0.913944, 0.703118, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_e7gie"]
+gradient = SubResource("Gradient_todbw")
+
+[sub_resource type="Gradient" id="Gradient_swth0"]
+offsets = PackedFloat32Array(1)
+colors = PackedColorArray(0.31276, 0.235953, 0.0516746, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_a660p"]
+gradient = SubResource("Gradient_swth0")
+
+[sub_resource type="Gradient" id="Gradient_m7evv"]
+offsets = PackedFloat32Array(1)
+colors = PackedColorArray(0.799546, 0.708394, 0.413728, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_7kkr4"]
+gradient = SubResource("Gradient_m7evv")
+
+[node name="HUD" type="Control" node_paths=PackedStringArray("life_orb", "energy_shield_gauge", "life_label", "energy_shield_label", "experience_jauge", "mana_orb", "spirit_gauge", "mana_label", "spirit_label")]
 layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_8qguk")
+life_orb = NodePath("HBoxContainer/LeftDock/LifeGroup/LifeOrb")
+energy_shield_gauge = NodePath("HBoxContainer/LeftDock/LifeGroup/ShieldGauge")
+life_label = NodePath("HBoxContainer/LeftDock/LifeGroup/LifeLabel")
+energy_shield_label = NodePath("HBoxContainer/LeftDock/LifeGroup/EnergyShieldLabel")
+experience_jauge = NodePath("HBoxContainer/BottomXP/TextureProgressBar")
+mana_orb = NodePath("HBoxContainer/RightDock/ManaGroup/ManaOrb")
+spirit_gauge = NodePath("HBoxContainer/RightDock/ManaGroup/SpiritGauge")
+mana_label = NodePath("HBoxContainer/RightDock/ManaGroup/ManaLabel")
+spirit_label = NodePath("HBoxContainer/RightDock/ManaGroup/SpiritLabel")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+
+[node name="LeftDock" type="Control" parent="HBoxContainer"]
+custom_minimum_size = Vector2(0, 200)
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="LeftPanel" type="PanelContainer" parent="HBoxContainer/LeftDock"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ax4tw")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/LeftDock/LeftPanel"]
+layout_mode = 2
+mouse_filter = 2
+alignment = 2
+
+[node name="RowPotions" type="HBoxContainer" parent="HBoxContainer/LeftDock/LeftPanel/HBoxContainer"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="PotionLife" type="Button" parent="HBoxContainer/LeftDock/LeftPanel/HBoxContainer/RowPotions"]
+custom_minimum_size = Vector2(64, 128)
+layout_mode = 2
+text = "HP"
+
+[node name="PotionMana" type="Button" parent="HBoxContainer/LeftDock/LeftPanel/HBoxContainer/RowPotions"]
+custom_minimum_size = Vector2(64, 128)
+layout_mode = 2
+text = "MP"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/LeftDock/LeftPanel/HBoxContainer"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 30
+alignment = 1
+
+[node name="RowButtons" type="HBoxContainer" parent="HBoxContainer/LeftDock/LeftPanel/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+mouse_filter = 2
+alignment = 1
+
+[node name="MenuButton" type="Button" parent="HBoxContainer/LeftDock/LeftPanel/HBoxContainer/VBoxContainer/RowButtons"]
+custom_minimum_size = Vector2(64, 32)
+layout_mode = 2
+text = "Menu"
+
+[node name="ShopButton" type="Button" parent="HBoxContainer/LeftDock/LeftPanel/HBoxContainer/VBoxContainer/RowButtons"]
+custom_minimum_size = Vector2(64, 32)
+layout_mode = 2
+text = "Shop"
+
+[node name="RowCharms" type="HBoxContainer" parent="HBoxContainer/LeftDock/LeftPanel/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="CharmSlot1" type="Button" parent="HBoxContainer/LeftDock/LeftPanel/HBoxContainer/VBoxContainer/RowCharms"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_2wu1p")
+
+[node name="CharmSlot2" type="Button" parent="HBoxContainer/LeftDock/LeftPanel/HBoxContainer/VBoxContainer/RowCharms"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_2wu1p")
+
+[node name="CharmSlot3" type="Button" parent="HBoxContainer/LeftDock/LeftPanel/HBoxContainer/VBoxContainer/RowCharms"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_2wu1p")
+
+[node name="LifeGroup" type="Control" parent="HBoxContainer/LeftDock"]
+layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
-offset_top = -40.0
-offset_right = 40.0
+offset_top = -310.0
+offset_right = 310.0
 grow_vertical = 0
+mouse_filter = 2
 
-[node name="Life Orb" type="TextureProgressBar" parent="Control"]
+[node name="LifeOrb" type="TextureProgressBar" parent="HBoxContainer/LeftDock/LifeGroup"]
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
@@ -27,24 +198,164 @@ anchor_bottom = 1.0
 offset_top = -300.0
 offset_right = 300.0
 grow_vertical = 0
+mouse_filter = 2
 value = 85.0
 fill_mode = 3
 texture_under = ExtResource("1_bo48s")
 texture_progress = ExtResource("2_8qguk")
 
-[node name="Control2" type="Control" parent="."]
-layout_mode = 3
+[node name="ShieldGauge" type="TextureProgressBar" parent="HBoxContainer/LeftDock/LifeGroup"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 305.0
+offset_top = -280.0
+offset_right = 320.0
+offset_bottom = -20.0
+grow_vertical = 0
+mouse_filter = 2
+value = 30.0
+fill_mode = 3
+nine_patch_stretch = true
+texture_under = SubResource("GradientTexture2D_2wu1p")
+texture_progress = SubResource("GradientTexture2D_todbw")
+
+[node name="LifeLabel" type="Label" parent="HBoxContainer/LeftDock/LifeGroup"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -33.0
+offset_top = -20.0
+offset_right = 33.0
+offset_bottom = 3.0
+grow_horizontal = 2
+text = "Vie: 0 / 0"
+
+[node name="EnergyShieldLabel" type="Label" parent="HBoxContainer/LeftDock/LifeGroup"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -52.5
+offset_top = -40.0
+offset_right = 52.5
+offset_bottom = -17.0
+grow_horizontal = 2
+text = "Bouclier: 0 / 0"
+
+[node name="BottomXP" type="Control" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.75
+mouse_filter = 2
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="HBoxContainer/BottomXP"]
+custom_minimum_size = Vector2(0, 15)
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+value = 30.0
+nine_patch_stretch = true
+texture_under = SubResource("GradientTexture2D_4m4yb")
+texture_progress = SubResource("GradientTexture2D_e7gie")
+
+[node name="RightDock" type="Control" parent="HBoxContainer"]
+custom_minimum_size = Vector2(0, 200)
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="RightPanel" type="PanelContainer" parent="HBoxContainer/RightDock"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ax4tw")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/RightDock/RightPanel"]
+layout_mode = 2
+size_flags_horizontal = 0
+mouse_filter = 2
+theme_override_constants/separation = 10
+alignment = 1
+
+[node name="RowTop" type="HBoxContainer" parent="HBoxContainer/RightDock/RightPanel/VBoxContainer"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="PortalButton" type="Button" parent="HBoxContainer/RightDock/RightPanel/VBoxContainer/RowTop"]
+custom_minimum_size = Vector2(128, 32)
+layout_mode = 2
+text = "Portail"
+
+[node name="SkillSlot1" type="Button" parent="HBoxContainer/RightDock/RightPanel/VBoxContainer/RowTop"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_2wu1p")
+
+[node name="SkillSlot2" type="Button" parent="HBoxContainer/RightDock/RightPanel/VBoxContainer/RowTop"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_2wu1p")
+
+[node name="SkillSlot3" type="Button" parent="HBoxContainer/RightDock/RightPanel/VBoxContainer/RowTop"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_2wu1p")
+
+[node name="RowBottom" type="HBoxContainer" parent="HBoxContainer/RightDock/RightPanel/VBoxContainer"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="SkillSlot1" type="Button" parent="HBoxContainer/RightDock/RightPanel/VBoxContainer/RowBottom"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_2wu1p")
+
+[node name="SkillSlot2" type="Button" parent="HBoxContainer/RightDock/RightPanel/VBoxContainer/RowBottom"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_2wu1p")
+
+[node name="SkillSlot3" type="Button" parent="HBoxContainer/RightDock/RightPanel/VBoxContainer/RowBottom"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_2wu1p")
+
+[node name="SkillSlot4" type="Button" parent="HBoxContainer/RightDock/RightPanel/VBoxContainer/RowBottom"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_2wu1p")
+
+[node name="SkillSlot5" type="Button" parent="HBoxContainer/RightDock/RightPanel/VBoxContainer/RowBottom"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_2wu1p")
+
+[node name="ManaGroup" type="Control" parent="HBoxContainer/RightDock"]
+layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -40.0
-offset_top = -40.0
+offset_left = -310.0
+offset_top = -310.0
 grow_horizontal = 0
 grow_vertical = 0
+mouse_filter = 2
 
-[node name="Mana Orb" type="TextureProgressBar" parent="Control2"]
+[node name="ManaOrb" type="TextureProgressBar" parent="HBoxContainer/RightDock/ManaGroup"]
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
@@ -55,7 +366,54 @@ offset_left = -300.0
 offset_top = -300.0
 grow_horizontal = 0
 grow_vertical = 0
+mouse_filter = 2
 value = 85.0
 fill_mode = 3
 texture_under = ExtResource("1_bo48s")
 texture_progress = ExtResource("3_136eg")
+
+[node name="SpiritGauge" type="TextureProgressBar" parent="HBoxContainer/RightDock/ManaGroup"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -320.0
+offset_top = -280.0
+offset_right = -305.0
+offset_bottom = -20.0
+grow_horizontal = 0
+grow_vertical = 0
+mouse_filter = 2
+value = 30.0
+fill_mode = 3
+nine_patch_stretch = true
+texture_under = SubResource("GradientTexture2D_a660p")
+texture_progress = SubResource("GradientTexture2D_7kkr4")
+
+[node name="ManaLabel" type="Label" parent="HBoxContainer/RightDock/ManaGroup"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -42.5
+offset_top = -20.0
+offset_right = 42.5
+offset_bottom = 3.0
+grow_horizontal = 2
+text = "Mana: 0 / 0"
+horizontal_alignment = 2
+
+[node name="SpiritLabel" type="Label" parent="HBoxContainer/RightDock/ManaGroup"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -43.0
+offset_top = -40.0
+offset_right = 43.0
+offset_bottom = -17.0
+grow_horizontal = 2
+text = "Esprit: 0 / 0"
+horizontal_alignment = 2

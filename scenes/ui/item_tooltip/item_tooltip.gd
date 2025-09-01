@@ -23,8 +23,8 @@ func show_item(item: Item):
 	# Type
 	if item.tags.has(Item.Tag.WEAPON):
 		append_line("Arme - " + tags_to_strings(item.tags, [Item.Tag.WEAPON]))
-	elif item.tags.has(Item.Tag.ARMOR):
-		append_line("Armure - " + tags_to_strings(item.tags, [Item.Tag.ARMOR]))
+	elif item.tags.has(Item.Tag.ARMOUR):
+		append_line("Armure - " + tags_to_strings(item.tags, [Item.Tag.ARMOUR]))
 	elif item.tags.has(Item.Tag.CURRENCY):
 		append_line("Currency")
 	elif item.tags.has(Item.Tag.GEM):

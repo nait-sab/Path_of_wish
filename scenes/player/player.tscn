@@ -10,12 +10,13 @@ radius = 71.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_gmlin"]
 radius = 214.234
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("sprite", "melee_zone")]
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("sprite", "melee_zone", "energy_shield_delay_timer")]
 script = ExtResource("1_dovo2")
 base_speed = 400.0
 melee_range = 200.0
 sprite = NodePath("Sprite2D")
 melee_zone = NodePath("Melee Zone/CollisionShape2D")
+energy_shield_delay_timer = NodePath("EnergyShieldDelay")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 rotation = 1.5708
@@ -29,10 +30,14 @@ shape = SubResource("CircleShape2D_dovo2")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Melee Zone"]
 shape = SubResource("CircleShape2D_gmlin")
 
-[node name="Timer" type="Timer" parent="."]
-
 [node name="Stats" type="Node2D" parent="."]
 
 [node name="Follow Camera" type="Camera2D" parent="."]
 limit_smoothed = true
 script = ExtResource("3_gmlin")
+
+[node name="EnergyShieldDelay" type="Timer" parent="."]
+wait_time = 4.0
+one_shot = true
+
+[connection signal="timeout" from="EnergyShieldDelay" to="." method="_on_energy_shield_delay_timeout"]

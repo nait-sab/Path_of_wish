@@ -10,7 +10,7 @@ enum Tag {
 	ONE_HANDED,
 	TWO_HANDED,
 	SHIELD,
-	ARMOR,
+	ARMOUR,
 	HELMET,
 	BODY,
 	BOOT,

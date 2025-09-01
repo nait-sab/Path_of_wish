@@ -3,7 +3,7 @@
 		"id": "splintered_tower_shield",
 		"name": "Bouclier de la tour brisée",
 		"item_level": 1,
-		"tags": ["armor", "shield", "one_handed"],
+		"tags": ["armour", "shield", "one_handed"],
 		"size": { "width": 2, "height": 4 },
 		"requirements" : {
 			"level": 1,

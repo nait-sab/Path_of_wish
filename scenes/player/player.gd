@@ -1,8 +1,5 @@
 class_name Player extends CharacterBody2D
 
-const DAMAGE_PACKET = preload("res://scripts/combat/damage_packet.gd")
-const DAMAGE_RESOLVER = preload("res://scripts/combat/damage_resolver.gd")
-
 signal stats_changed(stats)
 
 @export_category("Data")
@@ -14,6 +11,7 @@ signal stats_changed(stats)
 @export_category("Components")
 @export var sprite: Sprite2D
 @export var melee_zone: CollisionShape2D
+@export var energy_shield_delay_timer: Timer
 
 # Caracteristics
 var level: int = 1
@@ -22,11 +20,24 @@ var dexterity: int = 0
 var intelligence: int = 0
 var gold: int = 0
 
-# Dynamic variables
+# Life
 var life: float = 0
-var last_life: float = 0
+var life_last: float = 0
+var life_max_cached: float = 0
+var life_regen_percent: float = 0.0
+
+# Mana
 var mana: float = 0
-var last_mana: float = 0
+var mana_last: float = 0
+var mana_max_cached: float = 0
+var mana_regen_percent: float = 0.0
+
+# Energy shield
+var energy_shield: float = 0
+var energy_shield_last: float = 0
+var energy_shield_max_cached: float = 0
+var energy_shield_regen_percent: float = 0.0
+var energy_shield_can_regen: bool = true
 
 # Combat
 var attack_cooldown: float = .35
@@ -38,33 +49,36 @@ const PICKUP_RADIUS := 24.0
 
 func _ready():
 	add_to_group("Player")
+	await get_tree().current_scene.ready
+	Inventory.get_any().connect("equipment_changed", Callable(self, "_on_equipment_changed"))
 	melee_zone.shape.radius = melee_range
 	load_current()
+	_refresh_data()
 	emit_signal("stats_changed", self)
 	
 func _process(delta: float) -> void:
 	var updated = false
 	
-	# Get StatEngine infos
-	var life_max = StatEngine.get_stat("life_max")
-	var mana_max = StatEngine.get_stat("mana_max")
-	var life_regen_percent = StatEngine.get_stat("life_regen_percent")
-	var mana_regen_percent = StatEngine.get_stat("mana_regen_percent")
-	
-	if life < life_max and life_regen_percent > 0:
-		var regen_amount = (life_max * (life_regen_percent / 100.0)) * delta
-		life = min(life + regen_amount, life_max)
+	if life < life_max_cached and life_regen_percent > 0.0:
+		var regen_amount = life_max_cached * (life_regen_percent / 100.0) * delta
+		life = min(life + regen_amount, life_max_cached)
 		updated = true
 
-	if mana < mana_max and mana_regen_percent > 0:
-		var regen_amount = (mana_max * (mana_regen_percent / 100.0)) * delta
-		mana = min(mana + regen_amount, mana_max)
+	if mana < mana_max_cached and mana_regen_percent > 0.0:
+		var regen_amount = mana_max_cached * (mana_regen_percent / 100.0) * delta
+		mana = min(mana + regen_amount, mana_max_cached)
 		updated = true
 		
-	if updated and (life != last_life or mana != last_mana):
+	if energy_shield_max_cached > 0.0 and energy_shield < energy_shield_max_cached and energy_shield_regen_percent > 0.0 and energy_shield_can_regen:
+		var regen_amount = energy_shield_max_cached * (energy_shield_regen_percent / 100.0) * delta
+		energy_shield = min(energy_shield + regen_amount, energy_shield_max_cached)
+		updated = true
+		
+	if updated and (life != life_last or mana != mana_last or energy_shield != energy_shield_last):
+		life_last = life
+		mana_last = mana
+		energy_shield_last = energy_shield
 		emit_signal("stats_changed", self)
-		last_life = life
-		last_mana = mana
 		
 func _physics_process(delta: float) -> void:
 	var direction := Input.get_vector("move_left", "move_right", "move_up", "move_down")
@@ -103,7 +117,7 @@ func _try_attack():
 	if target.global_position.distance_to(global_position) > melee_range:
 		return
 		
-	var packet := DAMAGE_PACKET.melee_physical(melee_damage)
+	var packet := (DamagePacket.new()).melee_physical(melee_damage)
 	packet.can_crit = false
 	packet.crit_chance = 0.0
 	packet.crit_multiplier = 0.0
@@ -120,10 +134,16 @@ func receive_hit(packet: DamagePacket) -> DamageReport:
 	var defender_get := Callable(StatEngine, "get_stat")
 	var defender_state := {
 		"life": life,
-		"energy_shield": StatEngine.get_stat("energy_shield_max")
+		"energy_shield": energy_shield
 	}
 	
 	var report := DamageResolver.resolve(defender_get, defender_state, packet, {})
+	
+	if report.applied_to_energy_shield > 0.0 and energy_shield > 0.0:
+		energy_shield = max(0.0, energy_shield - report.applied_to_energy_shield)
+		_restart_energy_shield_cooldown()
+		emit_signal("stats_changed", self)
+	
 	if report.applied_to_life > 0.0:
 		life = clamp(life - report.applied_to_life, 0.0, StatEngine.get_stat("life_max"))
 		emit_signal("stats_changed", self)
@@ -170,17 +190,21 @@ func load_current():
 	gold = stats["gold"]
 	
 	life = stats["life"]
-	last_life = life
+	life_last = life
 	mana = stats["mana"]
-	last_mana = mana
+	mana_last = mana
 	
 	# Send base data to StatEngine
 	var base_mods = [
 		# Life /  Mana
 		StatEngineClass.create_modifier("life_max", StatEngineClass.ModifierForm.FLAT, stats.get("life_max")),
 		StatEngineClass.create_modifier("mana_max", StatEngineClass.ModifierForm.FLAT, stats.get("mana_max")),
-		StatEngineClass.create_modifier("life_regen_percent", StatEngineClass.ModifierForm.FLAT, 10), #0),
+		StatEngineClass.create_modifier("life_regen_percent", StatEngineClass.ModifierForm.FLAT, 3), #0),
 		StatEngineClass.create_modifier("mana_regen_percent", StatEngineClass.ModifierForm.FLAT, 10), #1.8),
+		
+		# Energy shield
+		StatEngineClass.create_modifier("energy_shield_regen_percent", StatEngineClass.ModifierForm.FLAT, 12.5),
+		StatEngineClass.create_modifier("energy_shield_delay", StatEngineClass.ModifierForm.FLAT, 4.0),
 	
 		# Resistances
 		StatEngineClass.create_modifier("resistance_fire", StatEngineClass.ModifierForm.FLAT, stats.get("resistance_fire", 0)),
@@ -201,6 +225,8 @@ func load_current():
 			global_position = Vector2(player_position[0], player_position[1])
 		elif typeof(player_position) == TYPE_VECTOR2:
 			global_position = player_position
+			
+	_refresh_data()
 
 func save_current():
 	var stats: Dictionary = Game.current_char["stats"]
@@ -217,3 +243,30 @@ func save_current():
 	stats["mana_max"] = StatEngine.get_stat("mana_max")
 	
 	Game.current_char["stats"] = stats
+
+func _restart_energy_shield_cooldown() -> void:
+	energy_shield_delay_timer.stop()
+	energy_shield_delay_timer.wait_time = StatEngine.get_stat("energy_shield_delay")
+	energy_shield_can_regen = false
+	energy_shield_delay_timer.start()
+	
+func _on_equipment_changed() -> void:
+	_refresh_data()
+	_restart_energy_shield_cooldown()
+	emit_signal("stats_changed", self)
+
+func _refresh_data() -> void:
+	life_max_cached = StatEngine.get_stat("life_max")
+	mana_max_cached = StatEngine.get_stat("mana_max")
+	energy_shield_max_cached = StatEngine.get_stat("energy_shield_max")
+	
+	life_regen_percent = StatEngine.get_stat("life_regen_percent")
+	mana_regen_percent = StatEngine.get_stat("mana_regen_percent")
+	energy_shield_regen_percent = StatEngine.get_stat("energy_shield_regen_percent")
+	
+	life = clamp(life, 0.0, life_max_cached)
+	mana = clamp(mana, 0.0, mana_max_cached)
+	energy_shield = clamp(energy_shield, 0.0, energy_shield_max_cached)
+
+func _on_energy_shield_delay_timeout() -> void:
+	energy_shield_can_regen = true

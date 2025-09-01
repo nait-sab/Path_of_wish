@@ -1,4 +1,4 @@
-class_name CharacterSheet extends CanvasLayer
+class_name CharacterSheet extends Control
 
 @export_category("Informations")
 @export var level_class: Label
