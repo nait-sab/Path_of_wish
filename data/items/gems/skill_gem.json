@@ -19,7 +19,7 @@
 	}, {
 		"id": "gem_fireball",
 		"name": "Fireball",
-		"skill_id": "gem_fireball",
+		"skill_id": "fireball",
 		"item_level": 1,
 		"tags": ["gem", "active", "spell", "projectile", "aoe", "fire"],
 		"size": { "width": 1, "height": 1 },

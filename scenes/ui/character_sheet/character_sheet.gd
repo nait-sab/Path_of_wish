@@ -204,11 +204,11 @@ func _clear_details() -> void:
 func estimate_phys_reduction_percent(armour: float, level: int) -> int:
 	if armour == 0.0:
 		return 0
-	var ref_hit := int(REF_HIT_BY_LEVEL.get(level, 60))
-	var reduction := 0
-	if ref_hit > 0:
-		reduction = armour / (armour + 10.0 * ref_hit)
-	return roundi(clamp(reduction * 100, 0, 90))
+	var ref_hit := float(REF_HIT_BY_LEVEL.get(level, 60))
+	if ref_hit <= 0.0:
+		return 0
+	var reduction: float = armour / (armour + 10.0 * ref_hit)
+	return clamp(roundi(reduction * 100.0), 0, 90)
 	
 func estimate_evade_percent(evasion: float, level: int) -> int:
 	if evasion == 0.0:

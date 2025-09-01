@@ -1,57 +1,16 @@
 extends Node
 
-var mods_by_id: Dictionary = {}
 var mods_list: Array = []
 
-func _ready():
-	_load_all_mods()
-	
-func _load_all_mods():
-	mods_by_id.clear()
-	mods_list.clear()
-	
-	var dir_source = DirAccess.open("res://data/mods")
-	if dir_source == null:
-		push_warning("ModDB: data/mods can't be found")
-		return
-	_scan_dir(dir_source)
-	
-func _scan_dir(dir: DirAccess):
-	dir.list_dir_begin()
-	var dir_name = dir.get_next()
-	while dir_name != "":
-		if dir.current_is_dir() and dir_name not in [".", ".."]:
-			var sub = DirAccess.open(dir.get_current_dir() + "/" + dir_name)
-			if sub:
-				_scan_dir(sub)
-		elif dir_name.ends_with(".json"):
-			var path = dir.get_current_dir() + "/" + dir_name
-			_load_mod_file(path)
-		dir_name = dir.get_next()
-	dir.list_dir_end()
-	
-func _load_mod_file(path: String):
-	var file = FileAccess.open(path, FileAccess.READ)
-	if file == null:
-		push_warning("ModDB: Can't read %s" % path)
-		return
+func _ready() -> void:
+	if DataReader.list_categories().is_empty():
+		DataReader.data_indexed.connect(load_data)
+	else:
+		load_data()
 
-	var txt = file.get_as_text()
-	file.close()
-	
-	var json = JSON.parse_string(txt)
-	if typeof(json) == TYPE_ARRAY:
-		for mod in json:
-			_register_mod(mod)
-	elif typeof(json) == TYPE_DICTIONARY:
-		_register_mod(json)
-
-func _register_mod(mod: Dictionary):
-	if not mod.has("id"):
-		push_warning("ModDB: Mod without id: %s" % str(mod))
-		return
-	mods_list.append(mod)
-	mods_by_id[mod.id] = mod
+func load_data() -> void:
+	mods_list = DataReader.get_by_category("mods")
+	print("[MOD_DB] Init done -> %d items loaded" % mods_list.size())
 
 func find_candidates(tags: Array, min_ilvl: int, want_type: String) -> Array:
 	var result = []
@@ -92,12 +51,12 @@ func _weighted_pick(items: Array, key_weight: String = "weight") -> Dictionary:
 		if random <= acc:
 			return item
 
-	return items[items.size() - 1]
+	return items.back()
 
 func roll_from_model(model: Dictionary, item_level: int) -> Dictionary:
 	var tiers = model.get("tiers", [])
 	if tiers.is_empty():
-		push_warning("ModDB: Mod without any tier %s" % model.get("id", "?"))
+		push_warning("[MOD_DB] Mod without any tier %s" % model.get("id", "?"))
 		return {}
 		
 	# Filter tiers

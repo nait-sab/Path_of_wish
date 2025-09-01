@@ -3,11 +3,9 @@ class_name SkillMath extends RefCounted
 static func build_packet(skill: SkillInstance, _get_stat: Callable, main_hand: Gear) -> DamagePacket:
 	# 1 - Get weapon stats
 	var physical_range: Vector2 = Vector2.ZERO
-	var attack_speed: float = 1.0
 	
 	if main_hand:
 		physical_range = main_hand.get_final_physical_range()
-		attack_speed = main_hand.get_final_attack_speed()
 		
 	# 2 - Split the skill damage types
 	var base_physical := 0.0
@@ -134,8 +132,21 @@ static func build_packet_average(skill: SkillInstance, _get_stat: Callable, main
 	base_cold 		*= average_critical
 	base_lightning 	*= average_critical
 	base_chaos 		*= average_critical
+	
+	# 4 - handle speed
+	var speed := 1.0
+	if skill.final.get("uses_weapon", false) and main_hand:
+		speed *= attack_speed
+	else:
+		speed *= float(skill.final.get("casts_per_second", 1.0))
 		
-	# 4 - Make the packet
+	base_physical 	*= speed
+	base_fire 		*= speed
+	base_cold 		*= speed
+	base_lightning 	*= speed
+	base_chaos 		*= speed
+	
+	# 5 - Make the packet
 	var packet := DamagePacket.new()
 	packet.physical 		= max(base_physical, 0.0)
 	packet.fire 			= max(base_fire, 0.0)
@@ -145,7 +156,7 @@ static func build_packet_average(skill: SkillInstance, _get_stat: Callable, main
 	
 	return packet
 
-static func final_mana_cost(skill: SkillInstance, stat_get: Callable) -> int:
+static func final_mana_cost(skill: SkillInstance, _stat_get: Callable) -> int:
 	var base := float(skill.final.get("mana_cost", 0))
 	# TODO - Handle special stats like mana cost reduction, ect
 	return int(round(base))

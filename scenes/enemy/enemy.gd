@@ -149,10 +149,10 @@ func _on_detection_range_body_exited(body: Node2D) -> void:
 	if body == target:
 		target = null
 
-func _add_break(amount: int) -> void:
+func _add_break(amount: float) -> void:
 	if is_broken:
 		return
-	break_value = clamp(break_value + amount, 0, break_max)
+	break_value = clamp(break_value + amount, 0.0, break_max)
 	if break_value >= break_max:
 		_trigger_break()
 		

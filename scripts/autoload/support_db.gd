@@ -3,45 +3,21 @@ extends Node
 var _list: Dictionary = {}
 
 func _ready() -> void:
-	_load_data("res://data/supports")
+	if DataReader.list_categories().is_empty():
+		DataReader.data_indexed.connect(load_data)
+	else:
+		load_data()
 
-func _load_data(root: String) -> void:
+func load_data() -> void:
 	_list.clear()
-	var dir := DirAccess.open(root)
-	if dir == null:
-		push_warning("SupportDb: Can't found %s" % root)
-		return
-	_scan_dir(dir)
-
-func _scan_dir(dir: DirAccess) -> void:
-	dir.list_dir_begin()
-	var dir_name := dir.get_next()
-	while dir_name != "":
-		if dir.current_is_dir() and dir_name not in [".",".."]:
-			var sub := DirAccess.open(dir.get_current_dir() + "/" + dir_name)
-			if sub: 
-				_scan_dir(sub)
-		elif dir_name.to_lower().ends_with(".json"):
-			_load_file(dir.get_current_dir() + "/" + dir_name)
-		dir_name = dir.get_next()
-	dir.list_dir_end()
-
-func _load_file(path: String) -> void:
-	var file := FileAccess.open(path, FileAccess.READ)
-	if file == null:
-		push_warning("SupportDb: Can't found %s" % path)
-		return
-	var txt := file.get_as_text()
-	file.close()
-	var json: Dictionary = JSON.parse_string(txt)
-	if typeof(json) != TYPE_DICTIONARY:
-		push_warning("SupportDb: Incorrect JSON format, skill can't use a list")
-		return
-	var id := str(json.get("id", ""))
-	if id == "":
-		push_warning("SupportDb: Skill withresult id")
-		return
-	_list[id] = json
+	var skills = DataReader.get_by_category("supports")
+	for skill: Dictionary in skills:
+		var id := str(skill.get("id", ""))
+		if id == "":
+			push_warning("[SUPPORT_DB] Skill without id -> skip")
+			continue
+		_list[id] = skill
+	print("[SUPPORT_DB] Init done -> %d items loaded" % _list.size())
 
 # --- Helpers
 static func _as_array(value: Variant) -> Array:
@@ -69,7 +45,7 @@ static func _pick_level_block(levels: Array, want_level: int) -> Dictionary:
 func get_support(id: String, level: int) -> Dictionary:
 	var model: Dictionary = _list.get(id, {})
 	if model == {}:
-		push_warning("SkillDb.get_skill: unknown id %s" % id)
+		push_warning("[SUPPORT_DB] Unknown id %s" % id)
 		return {}
 	var result := {}
 	result["id"] = model.get("id","")

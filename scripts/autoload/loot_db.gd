@@ -26,27 +26,19 @@ const DROP_COUNT_BY_ENEMY_RARITY := {
 	Item.Rarity.UNIQUE: Vector2i(4, 6),
 }
 
+const MAX_ATTEMPTS_FACTOR := 8
+
 var _tables: Array = []
 
 func _ready() -> void:
-	_load_loot_table()
-	
-func _load_loot_table() -> void:
-	_tables.clear()
-	if not FileAccess.file_exists(LOOT_TABLE_PATH):
-		push_warning("LootDB: %s not found" % LOOT_TABLE_PATH)
-		return
-	var file := FileAccess.open(LOOT_TABLE_PATH, FileAccess.READ)
-	if file == null:
-		push_warning("LootDB: can't open %s" % LOOT_TABLE_PATH)
-		return
-	var txt := file.get_as_text()
-	file.close()
-	var json = JSON.parse_string(txt)
-	if typeof(json) == TYPE_ARRAY:
-		_tables = json
+	if DataReader.list_categories().is_empty():
+		DataReader.data_indexed.connect(load_data)
 	else:
-		push_warning("LootDB: Invalid JSON format in %s" % LOOT_TABLE_PATH)
+		load_data()
+
+func load_data() -> void:
+	_tables = DataReader.get_by_category("loot_tables")
+	print("[LOOT_DB] Init done -> %d items loaded" % _tables.size())
 		
 # --- Helpers
 func _weighted_pick(items: Array) -> Dictionary:
