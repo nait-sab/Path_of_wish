@@ -42,6 +42,7 @@ func _on_button_play_pressed() -> void:
 		
 	var id : String = list.get_item_metadata(index[0])
 	Game.select_character(id)
+	MusicManager.stop()
 	get_tree().change_scene_to_file("res://scenes/world/world.tscn")
 
 func _on_button_back_pressed() -> void:

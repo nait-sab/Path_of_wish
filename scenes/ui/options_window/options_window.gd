@@ -15,6 +15,7 @@ class_name OptionsWindow extends Control
 @export_category("Son")
 @export var device : OptionButton
 @export var general_volume : HSlider
+@export var music_volume : HSlider
 
 @export_category("Contrôles")
 
@@ -60,6 +61,7 @@ func _refresh_ui_from_pending() -> void:
 	var actual_device := str(Options.get_option("audio/device"))
 	_select_option_by_metadata(device, actual_device)
 	general_volume.value = int(Options.get_option("audio/master_volume"))
+	music_volume.value = int(Options.get_option("audio/music_volume"))
 	
 	_update_resolution_state()
 
@@ -166,8 +168,11 @@ func _on_audio_device_selected(index: int) -> void:
 	var meta := str(device.get_item_metadata(index))
 	Options.set_pending("audio/device", meta)
 
-func _on_general_volume_changed() -> void:
-	Options.set_pending("audio/master_volume", int(round(general_volume.value)))
+func _on_general_volume_value_changed(value: float) -> void:
+	Options.set_pending("audio/master_volume", int(round(value)))
+
+func _on_music_volume_value_changed(value: float) -> void:
+	Options.set_pending("audio/music_volume", int(round(value)))
 
 # -------------------------------------------------
 # Bottom buttons

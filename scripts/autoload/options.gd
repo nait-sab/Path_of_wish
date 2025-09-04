@@ -1,7 +1,7 @@
 extends Node
 
-signal interface_changed(options: Dictionary)
 signal graphics_changed(options: Dictionary)
+signal interface_changed(options: Dictionary)
 signal audio_changed(options: Dictionary)
 
 const SAVE_KEY := "settings"
@@ -21,7 +21,8 @@ const DEFAULTS := {
 	},
 	"audio": {
 		"device": "Default",
-		"master_volume": 100
+		"master_volume": 100,
+		"music_volume": 80
 	},
 	"controls": {}
 }
@@ -134,6 +135,11 @@ func apply_audio(options: Dictionary) -> void:
 
 	var volume : int = clamp(int(options.get("master_volume", 100)), 0, 100)
 	AudioServer.set_bus_volume_db(0, linear_to_db(volume / 100.0))
+	
+	var music_index := AudioServer.get_bus_index("Music")
+	if music_index != -1:
+		var music_volume : int = clamp(int(options.get("music_volume", 80)), 0, 100)
+		AudioServer.set_bus_volume_db(music_index, linear_to_db(music_volume / 100.0))
 	
 	audio_changed.emit(options)
 

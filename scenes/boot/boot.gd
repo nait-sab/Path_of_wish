@@ -14,6 +14,9 @@ var _skipping := false
 func _ready():
 	await get_tree().process_frame
 	Options.apply_all()
+	
+	var theme: AudioStream = load("res://assets/music/island-of-the-lost-dark-fantasy-background-music.ogg")
+	MusicManager.play_theme(theme, true)
 
 	if intro_textures.is_empty():
 		_go_menu()

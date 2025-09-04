@@ -2,6 +2,7 @@ extends Control
 
 @export var ui_node : CanvasLayer
 @export var options_window_scene : PackedScene
+
 var _options_window : Control
 
 func _on_button_play_pressed() -> void:

@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://up0b15oa2a68"]
+[gd_scene load_steps=22 format=3 uid="uid://up0b15oa2a68"]
 
 [ext_resource type="Script" uid="uid://dwxdkaxl8puwc" path="res://scenes/ui/hud/hud.gd" id="1_8qguk"]
 [ext_resource type="Texture2D" uid="uid://btdj0jkixbuk0" path="res://assets/textures/hud/orb_frame.png" id="1_bo48s"]
@@ -49,6 +49,19 @@ corner_radius_top_right = 6
 corner_radius_bottom_right = 6
 corner_radius_bottom_left = 6
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4m4yb"]
+content_margin_left = 20.0
+content_margin_top = 5.0
+content_margin_right = 20.0
+content_margin_bottom = 5.0
+bg_color = Color(0.219501, 0.219501, 0.219501, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.771963, 0.786824, 0.579414, 1)
+corner_radius_top_right = 20
+
 [sub_resource type="Gradient" id="Gradient_2wu1p"]
 offsets = PackedFloat32Array(1)
 colors = PackedColorArray(0.262932, 0.262932, 0.262932, 1)
@@ -79,7 +92,7 @@ colors = PackedColorArray(0.799546, 0.708394, 0.413728, 1)
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_7kkr4"]
 gradient = SubResource("Gradient_m7evv")
 
-[node name="HUD" type="Control" node_paths=PackedStringArray("life_orb", "energy_shield_gauge", "life_label", "energy_shield_label", "experience_jauge", "mana_orb", "spirit_gauge", "mana_label", "spirit_label")]
+[node name="HUD" type="Control" node_paths=PackedStringArray("life_orb", "energy_shield_gauge", "life_label", "energy_shield_label", "experience_jauge", "clock_label", "clock_timer", "mana_orb", "spirit_gauge", "mana_label", "spirit_label")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -94,7 +107,9 @@ life_orb = NodePath("HBoxContainer/PanelContainer/HBoxContainer/LifeGroup/LifeOr
 energy_shield_gauge = NodePath("HBoxContainer/PanelContainer/HBoxContainer/LifeGroup/ShieldGauge")
 life_label = NodePath("HBoxContainer/PanelContainer/HBoxContainer/LifeGroup/LifeLabel")
 energy_shield_label = NodePath("HBoxContainer/PanelContainer/HBoxContainer/LifeGroup/EnergyShieldLabel")
-experience_jauge = NodePath("HBoxContainer/BottomXP/TextureProgressBar")
+experience_jauge = NodePath("HBoxContainer/BottomXP/VBoxContainer/TextureProgressBar")
+clock_label = NodePath("HBoxContainer/BottomXP/VBoxContainer/Clock")
+clock_timer = NodePath("ClockTimer")
 mana_orb = NodePath("HBoxContainer/PanelContainer2/HBoxContainer/ManaGroup/ManaOrb")
 spirit_gauge = NodePath("HBoxContainer/PanelContainer2/HBoxContainer/ManaGroup/SpiritGauge")
 mana_label = NodePath("HBoxContainer/PanelContainer2/HBoxContainer/ManaGroup/ManaLabel")
@@ -146,6 +161,7 @@ anchors_preset = 11
 anchor_left = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = -1.0
 grow_horizontal = 0
 grow_vertical = 2
 mouse_filter = 2
@@ -259,16 +275,28 @@ layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 2
 
-[node name="TextureProgressBar" type="TextureProgressBar" parent="HBoxContainer/BottomXP"]
-custom_minimum_size = Vector2(0, 15)
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/BottomXP"]
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -1.0
+offset_top = -15.0
 grow_horizontal = 2
 grow_vertical = 0
+theme_override_constants/separation = 0
+
+[node name="Clock" type="Label" parent="HBoxContainer/BottomXP/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_4m4yb")
+text = "01:23"
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="HBoxContainer/BottomXP/VBoxContainer"]
+custom_minimum_size = Vector2(0, 15)
+layout_mode = 2
 mouse_filter = 2
 value = 30.0
 nine_patch_stretch = true
@@ -376,6 +404,7 @@ custom_minimum_size = Vector2(10, 0)
 layout_mode = 1
 anchors_preset = 9
 anchor_bottom = 1.0
+offset_right = 1.0
 grow_vertical = 2
 mouse_filter = 2
 value = 30.0
@@ -409,3 +438,7 @@ offset_bottom = -27.0
 grow_horizontal = 2
 text = "Esprit: 0 / 0"
 horizontal_alignment = 2
+
+[node name="ClockTimer" type="Timer" parent="."]
+
+[connection signal="timeout" from="ClockTimer" to="." method="_on_clock_timer_timeout"]

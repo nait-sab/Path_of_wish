@@ -19,6 +19,7 @@ config/icon="res://assets/textures/icon.svg"
 
 Game="*res://scripts/autoload/game.gd"
 Options="*res://scripts/autoload/options.gd"
+MusicManager="*res://scripts/autoload/music_manager.gd"
 SaveManager="*res://scripts/autoload/save_manager.gd"
 DataReader="*res://scripts/autoload/data_reader.gd"
 StatEngine="*res://scripts/autoload/stat_engine.gd"
