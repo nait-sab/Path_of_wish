@@ -36,6 +36,7 @@ var is_broken := false
 
 func _ready():
 	add_to_group("Enemy")
+	await get_tree().current_scene.ready
 
 	# Setup actual attack system
 	detection_zone.shape.radius = aggro_range

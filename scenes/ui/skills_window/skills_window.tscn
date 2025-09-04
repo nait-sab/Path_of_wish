@@ -3,17 +3,17 @@
 [ext_resource type="Script" uid="uid://bmows7bgd6opw" path="res://scenes/ui/skills_window/skills_window.gd" id="1_3ht1q"]
 [ext_resource type="PackedScene" uid="uid://r32xuxcryjdt" path="res://scenes/ui/skills_window/skill_slot/skill_window_slot.tscn" id="1_jam1y"]
 
-[sub_resource type="Gradient" id="Gradient_8ndef"]
+[sub_resource type="Gradient" id="Gradient_3ht1q"]
 colors = PackedColorArray(0.17355, 0.17355, 0.17355, 1, 0.293216, 0.240169, 0.0787779, 1)
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_wi1cf"]
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_fj7xd"]
 noise_type = 3
 seed = 1024
 frequency = 0.0106
 
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_3ht1q"]
-color_ramp = SubResource("Gradient_8ndef")
-noise = SubResource("FastNoiseLite_wi1cf")
+color_ramp = SubResource("Gradient_3ht1q")
+noise = SubResource("FastNoiseLite_fj7xd")
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fj7xd"]
 content_margin_left = 10.0

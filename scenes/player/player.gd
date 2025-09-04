@@ -139,9 +139,12 @@ func receive_hit(packet: DamagePacket) -> DamageReport:
 	
 	var report := DamageResolver.resolve(defender_get, defender_state, packet, {})
 	
+	var took_damage := report.applied_to_energy_shield > 0.0 or report.applied_to_life > 0.0
+	if took_damage:
+		_restart_energy_shield_cooldown()
+	
 	if report.applied_to_energy_shield > 0.0 and energy_shield > 0.0:
 		energy_shield = max(0.0, energy_shield - report.applied_to_energy_shield)
-		_restart_energy_shield_cooldown()
 		emit_signal("stats_changed", self)
 	
 	if report.applied_to_life > 0.0:
@@ -203,8 +206,8 @@ func load_current():
 		StatEngineClass.create_modifier("mana_regen_percent", StatEngineClass.ModifierForm.FLAT, 10), #1.8),
 		
 		# Energy shield
-		StatEngineClass.create_modifier("energy_shield_regen_percent", StatEngineClass.ModifierForm.FLAT, 12.5),
-		StatEngineClass.create_modifier("energy_shield_delay", StatEngineClass.ModifierForm.FLAT, 4.0),
+		StatEngineClass.create_modifier("energy_shield_regen_percent", StatEngineClass.ModifierForm.FLAT, 20.0),
+		StatEngineClass.create_modifier("energy_shield_delay", StatEngineClass.ModifierForm.FLAT, 2.0),
 	
 		# Resistances
 		StatEngineClass.create_modifier("resistance_fire", StatEngineClass.ModifierForm.FLAT, stats.get("resistance_fire", 0)),

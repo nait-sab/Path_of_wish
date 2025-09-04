@@ -19,6 +19,7 @@ var player : Player = null
 var default_texture = load("res://assets/textures/icon.svg")
 
 func _ready():
+	await get_tree().current_scene.ready
 	player = get_tree().get_first_node_in_group("Player") as Player
 	update_ui()
 		

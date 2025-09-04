@@ -16,6 +16,7 @@ var equipment_slots: Array = []
 func _ready():
 	visible = false
 	add_to_group("Inventory")
+	await get_tree().current_scene.ready
 	player = get_tree().get_first_node_in_group("Player") as Player
 	gold_label.text = "Gold : %s" % str(player.gold)
 	slots = grid.get_children()

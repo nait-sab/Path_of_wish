@@ -47,6 +47,7 @@ const REF_ACCURARY_BY_LEVEL := {
 func _ready():
 	add_to_group("CharacterSheet")
 	visible = false
+	await get_tree().current_scene.ready
 	player = get_tree().get_first_node_in_group("Player")
 	StatEngine.stats_updated.connect(_on_stat_engine_changed)
 	_refresh()

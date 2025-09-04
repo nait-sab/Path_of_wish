@@ -13,6 +13,7 @@ var _instances: Array[SkillInstance] = []
 func _ready():
 	visible = false
 	add_to_group("SkillsWindow")
+	await get_tree().current_scene.ready
 	
 	Inventory.get_any().equipment_changed.connect(_on_equipment_changed)
 	

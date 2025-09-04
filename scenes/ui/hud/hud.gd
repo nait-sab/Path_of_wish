@@ -18,6 +18,7 @@ class_name HUD extends Control
 var player: Player
 
 func _ready() -> void:
+	await get_tree().current_scene.ready
 	player = get_tree().get_first_node_in_group("Player")
 	
 	if player:
