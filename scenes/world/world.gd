@@ -16,6 +16,14 @@ func _exit_tree() -> void:
 		player.save_current()
 		Game.save_current()
 
+func _unhandled_input(event: InputEvent) -> void:
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and not event.is_pressed():
+		var mouse_pos: Vector2 = event.position
+		
+		# Close the skill picker if click outside of it
+		if SkillPicker.get_any().visible and not SkillPicker.get_any().is_point_over(mouse_pos):
+			SkillPicker.get_any().close()
+
 func _input(event):
 	if event.is_action_pressed("debug_space_enemy"):
 		var enemy = enemy_scene.instantiate()

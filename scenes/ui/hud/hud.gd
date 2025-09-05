@@ -32,7 +32,7 @@ func _ready() -> void:
 		player.connect("stats_changed", Callable(self, "_on_stats_changed"))
 		_on_stats_changed(player)
 
-func _on_interface_changed(options: Dictionary) -> void:
+func _on_interface_changed(_options: Dictionary) -> void:
 	apply_interface_options()
 	_on_stats_changed(player)
 
@@ -93,8 +93,8 @@ func _get_stat(stat_name: String) -> float:
 	var value := StatEngine.get_stat(stat_name)
 	return max(0.0, value)
 	
-func sync_jauge(jauge: TextureProgressBar, current: float, max: float) -> void:
-	jauge.max_value = max(1.0, max)
+func sync_jauge(jauge: TextureProgressBar, current: float, value_max: float) -> void:
+	jauge.max_value = max(1.0, value_max)
 	jauge.value = clamp(current, 0.0, jauge.max_value)
 
 func _on_clock_timer_timeout() -> void:

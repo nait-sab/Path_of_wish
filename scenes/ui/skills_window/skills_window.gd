@@ -1,5 +1,7 @@
 class_name SkillsWindow extends Control
 
+signal skills_changed
+
 const SKILL_WINDOW_SLOT: PackedScene = preload("res://scenes/ui/skills_window/skill_slot/skill_window_slot.tscn")
 
 @export var skill_slot_number: int = 5
@@ -25,6 +27,9 @@ func _ready():
 		skill_slots_container.add_child(instance)
 		_instances.append(null)
 		instance.connect("slot_changed", Callable(self, "_on_slot_changed"))
+
+func get_instances() -> Array:
+	return _instances
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("toggle_skills_window"):
@@ -71,6 +76,7 @@ func _on_slot_changed(slot: SkillWindowSlot) -> void:
 		return
 	_instances[index] = slot.build_instance()
 	_update_slot_header(slot, _instances[index])
+	skills_changed.emit()
 	
 func _on_equipment_changed() -> void:
 	for index in range(skill_slots_container.get_child_count()):

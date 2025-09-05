@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://djatk87yr8qql"]
+[gd_scene load_steps=12 format=3 uid="uid://djatk87yr8qql"]
 
 [ext_resource type="Script" uid="uid://vcs46cmckm4e" path="res://scenes/world/world.gd" id="1_6m72w"]
 [ext_resource type="PackedScene" uid="uid://da38mat7gdu37" path="res://scenes/player/player.tscn" id="2_v5dby"]
@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://bmns8k22lr4o4" path="res://scenes/ui/devtool/devtool.tscn" id="7_j2gmx"]
 [ext_resource type="PackedScene" uid="uid://bcthwf35yc4wh" path="res://scenes/ui/inventory/held_item/held_item.tscn" id="9_1yooq"]
 [ext_resource type="PackedScene" uid="uid://b46y766uljjon" path="res://scenes/ui/skills_window/skills_window.tscn" id="10_gb53w"]
+[ext_resource type="PackedScene" uid="uid://xy7umjnumcdd" path="res://scenes/ui/skill_picker/skill_picker.tscn" id="11_5qq27"]
 
 [node name="World" type="Node2D" node_paths=PackedStringArray("player", "enemies_node", "loots_node")]
 script = ExtResource("1_6m72w")
@@ -43,3 +44,5 @@ offset_right = 300.0
 [node name="Hud" parent="UI" instance=ExtResource("4_bq33v")]
 
 [node name="PauseMenu" parent="UI" instance=ExtResource("7_bq33v")]
+
+[node name="SkillPicker" parent="UI" instance=ExtResource("11_5qq27")]

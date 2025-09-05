@@ -35,8 +35,8 @@ func _on_quitter_pressed() -> void:
 	toggle()
 	get_tree().paused = false
 	
-	var theme: AudioStream = load("res://assets/music/island-of-the-lost-dark-fantasy-background-music.ogg")
-	MusicManager.play_theme(theme, true)
+	var music: AudioStream = load("res://assets/music/island-of-the-lost-dark-fantasy-background-music.ogg")
+	MusicManager.play_theme(music, true)
 	
 	get_tree().change_scene_to_file("res://scenes/menus/character_select/character_select.tscn")
 	StatEngine.clear()

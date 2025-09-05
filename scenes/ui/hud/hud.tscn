@@ -1,9 +1,10 @@
-[gd_scene load_steps=22 format=3 uid="uid://up0b15oa2a68"]
+[gd_scene load_steps=23 format=3 uid="uid://up0b15oa2a68"]
 
 [ext_resource type="Script" uid="uid://dwxdkaxl8puwc" path="res://scenes/ui/hud/hud.gd" id="1_8qguk"]
 [ext_resource type="Texture2D" uid="uid://btdj0jkixbuk0" path="res://assets/textures/hud/orb_frame.png" id="1_bo48s"]
 [ext_resource type="Texture2D" uid="uid://dikwxis4uaog6" path="res://assets/textures/hud/orb_life_fill.png" id="2_8qguk"]
 [ext_resource type="Texture2D" uid="uid://b2io0derawsca" path="res://assets/textures/hud/orb_mana_fill.png" id="3_136eg"]
+[ext_resource type="PackedScene" uid="uid://bwjlldw2fm50n" path="res://scenes/ui/skill_slot/skill_slot.tscn" id="4_2wu1p"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ax4tw"]
 
@@ -336,49 +337,37 @@ size_flags_horizontal = 6
 size_flags_vertical = 4
 text = "Portail"
 
-[node name="SkillSlot1" type="Button" parent="HBoxContainer/PanelContainer2/HBoxContainer/RightPanel/VBoxContainer/RowTop"]
-custom_minimum_size = Vector2(48, 48)
+[node name="SkillSlot1" parent="HBoxContainer/PanelContainer2/HBoxContainer/RightPanel/VBoxContainer/RowTop" instance=ExtResource("4_2wu1p")]
 layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxFlat_2wu1p")
 
-[node name="SkillSlot2" type="Button" parent="HBoxContainer/PanelContainer2/HBoxContainer/RightPanel/VBoxContainer/RowTop"]
-custom_minimum_size = Vector2(48, 48)
+[node name="SkillSlot2" parent="HBoxContainer/PanelContainer2/HBoxContainer/RightPanel/VBoxContainer/RowTop" instance=ExtResource("4_2wu1p")]
 layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxFlat_2wu1p")
 
-[node name="SkillSlot3" type="Button" parent="HBoxContainer/PanelContainer2/HBoxContainer/RightPanel/VBoxContainer/RowTop"]
-custom_minimum_size = Vector2(48, 48)
+[node name="SkillSlot3" parent="HBoxContainer/PanelContainer2/HBoxContainer/RightPanel/VBoxContainer/RowTop" instance=ExtResource("4_2wu1p")]
 layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxFlat_2wu1p")
 
 [node name="RowBottom" type="HBoxContainer" parent="HBoxContainer/PanelContainer2/HBoxContainer/RightPanel/VBoxContainer"]
 layout_mode = 2
 mouse_filter = 2
 
-[node name="SkillSlot1" type="Button" parent="HBoxContainer/PanelContainer2/HBoxContainer/RightPanel/VBoxContainer/RowBottom"]
-custom_minimum_size = Vector2(48, 48)
+[node name="SkillSlot1" parent="HBoxContainer/PanelContainer2/HBoxContainer/RightPanel/VBoxContainer/RowBottom" instance=ExtResource("4_2wu1p")]
 layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxFlat_2wu1p")
 
-[node name="SkillSlot2" type="Button" parent="HBoxContainer/PanelContainer2/HBoxContainer/RightPanel/VBoxContainer/RowBottom"]
-custom_minimum_size = Vector2(48, 48)
+[node name="SkillSlot2" parent="HBoxContainer/PanelContainer2/HBoxContainer/RightPanel/VBoxContainer/RowBottom" instance=ExtResource("4_2wu1p")]
 layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxFlat_2wu1p")
+keybind = "E"
 
-[node name="SkillSlot3" type="Button" parent="HBoxContainer/PanelContainer2/HBoxContainer/RightPanel/VBoxContainer/RowBottom"]
-custom_minimum_size = Vector2(48, 48)
+[node name="SkillSlot3" parent="HBoxContainer/PanelContainer2/HBoxContainer/RightPanel/VBoxContainer/RowBottom" instance=ExtResource("4_2wu1p")]
 layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxFlat_2wu1p")
+keybind = "R"
 
-[node name="SkillSlot4" type="Button" parent="HBoxContainer/PanelContainer2/HBoxContainer/RightPanel/VBoxContainer/RowBottom"]
-custom_minimum_size = Vector2(48, 48)
+[node name="SkillSlot4" parent="HBoxContainer/PanelContainer2/HBoxContainer/RightPanel/VBoxContainer/RowBottom" instance=ExtResource("4_2wu1p")]
 layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxFlat_2wu1p")
+keybind = "T"
 
-[node name="SkillSlot5" type="Button" parent="HBoxContainer/PanelContainer2/HBoxContainer/RightPanel/VBoxContainer/RowBottom"]
-custom_minimum_size = Vector2(48, 48)
+[node name="SkillSlot5" parent="HBoxContainer/PanelContainer2/HBoxContainer/RightPanel/VBoxContainer/RowBottom" instance=ExtResource("4_2wu1p")]
 layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxFlat_2wu1p")
+keybind = "Y"
 
 [node name="ManaGroup" type="Control" parent="HBoxContainer/PanelContainer2/HBoxContainer"]
 custom_minimum_size = Vector2(220, 220)

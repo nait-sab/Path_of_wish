@@ -1,0 +1,52 @@
+[gd_scene load_steps=2 format=3 uid="uid://xy7umjnumcdd"]
+
+[ext_resource type="Script" uid="uid://cpdbiidu65xio" path="res://scenes/ui/skill_picker/skill_picker.gd" id="1_ccs8b"]
+
+[node name="SkillPicker" type="Control" node_paths=PackedStringArray("window", "grid")]
+top_level = true
+z_index = 1000
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_ccs8b")
+window = NodePath("window")
+grid = NodePath("window/MarginContainer/List/Grid")
+
+[node name="window" type="PanelContainer" parent="."]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 0
+
+[node name="Background" type="ColorRect" parent="window"]
+layout_mode = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 0.35)
+
+[node name="MarginContainer" type="MarginContainer" parent="window"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 5
+
+[node name="List" type="VBoxContainer" parent="window/MarginContainer"]
+layout_mode = 2
+
+[node name="SectionLabel" type="Label" parent="window/MarginContainer/List"]
+layout_mode = 2
+text = "Aptitudes disponibles"
+horizontal_alignment = 1
+
+[node name="Grid" type="GridContainer" parent="window/MarginContainer/List"]
+layout_mode = 2
+size_flags_vertical = 3
+columns = 4
+
+[node name="ClearButton" type="Button" parent="window/MarginContainer/List"]
+layout_mode = 2
+text = "Supprimer"
+
+[connection signal="pressed" from="window/MarginContainer/List/ClearButton" to="." method="_on_clear_button_pressed"]
