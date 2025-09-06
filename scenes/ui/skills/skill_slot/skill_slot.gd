@@ -30,14 +30,5 @@ func apply_skill_instance(instance: SkillInstance) -> void:
 func _on_skills_changed() -> void:
 	if current_instance == null:
 		return
-	
-	var still_exist := false
-	var skills = SkillsWindow.get_any().get_instances()
-	
-	for skill: SkillInstance in skills:
-		if skill != null and skill.origin_item_id == current_instance.origin_item_id:
-			still_exist = true
-			break
-	
-	if not still_exist:
+	if not SkillsWindow.get_any().get_instances().has(current_instance):
 		reset()

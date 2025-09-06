@@ -49,6 +49,9 @@ func _input(event):
 				return
 			
 		_drop_held_item_to_ground()
+	
+	if event.is_action_pressed("toggle_options"):
+		PauseMenu.get_any().open_options()
 		
 func spawn_loot(item: Item, origin: Vector2) -> void:
 	var instance: ItemLoot = loot_scene.instantiate()

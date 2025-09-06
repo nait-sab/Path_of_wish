@@ -54,8 +54,9 @@ func refresh_ui() -> void:
 		var button := support_slots[index]
 		var button_icon := support_slots_icon[index]
 		var gem := support_gems[index]
-		var unlocked := (index > default_support_count)
-		button.disabled = unlocked
+		var locked := (index >= default_support_count)
+		button.disabled = locked
+		button.modulate = Color(1, 1, 1, .35 if locked else 1)
 		if gem:
 			button_icon.setupByTexture(gem.get_icon_texture())
 		else:

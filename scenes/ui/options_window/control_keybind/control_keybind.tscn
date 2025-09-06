@@ -1,0 +1,26 @@
+[gd_scene load_steps=2 format=3 uid="uid://d08311gfawbb7"]
+
+[ext_resource type="Script" uid="uid://b7ploqh5i74ks" path="res://scenes/ui/options_window/control_keybind/control_keybind.gd" id="1_ism6h"]
+
+[node name="ControlBind" type="HBoxContainer" node_paths=PackedStringArray("action_label", "bind_button", "clear_button")]
+size_flags_horizontal = 3
+script = ExtResource("1_ism6h")
+action_label = NodePath("Name")
+bind_button = NodePath("AssignBind")
+clear_button = NodePath("ClearBind")
+
+[node name="Name" type="Label" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Emplacement Sort 1"
+
+[node name="AssignBind" type="Button" parent="."]
+layout_mode = 2
+text = "Appuyer pour assigner"
+
+[node name="ClearBind" type="Button" parent="."]
+layout_mode = 2
+text = "Effacer"
+
+[connection signal="pressed" from="AssignBind" to="." method="_on_assign_bind_pressed"]
+[connection signal="pressed" from="ClearBind" to="." method="_on_clear_bind_pressed"]

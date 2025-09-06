@@ -3,6 +3,7 @@ extends Node
 signal graphics_changed(options: Dictionary)
 signal interface_changed(options: Dictionary)
 signal audio_changed(options: Dictionary)
+signal controls_changed(options: Dictionary)
 
 const SAVE_KEY := "settings"
 
@@ -24,7 +25,27 @@ const DEFAULTS := {
 		"master_volume": 100,
 		"music_volume": 80
 	},
-	"controls": {}
+	"controls": {
+		# Flasks
+		"flask_1": [{ "type": "key", "code": KEY_1 }],
+		"flask_2": [{ "type": "key", "code": KEY_2 }],
+		
+		# Skills
+		"skill_slot_1": [{ "type": "mouse", "button": MOUSE_BUTTON_LEFT }],
+		"skill_slot_2": [{ "type": "mouse", "button": MOUSE_BUTTON_MIDDLE }],
+		"skill_slot_3": [{ "type": "mouse", "button": MOUSE_BUTTON_RIGHT }],
+		"skill_slot_4": [{ "type": "key", "code": KEY_A }],
+		"skill_slot_5": [{ "type": "key", "code": KEY_E }],
+		"skill_slot_6": [{ "type": "key", "code": KEY_R }],
+		"skill_slot_7": [{ "type": "key", "code": KEY_T }],
+		"skill_slot_8": [{ "type": "key", "code": KEY_Y }],
+		
+		# HUD
+		"toggle_options": [{ "type": "key", "code": KEY_O }],
+		"toggle_inventory": [{ "type": "key", "code": KEY_I }],
+		"toggle_character_sheet": [{ "type": "key", "code": KEY_C }],
+		"toggle_skills_window": [{ "type": "key", "code": KEY_G }],
+	}
 }
 
 var current: Dictionary = {}
@@ -93,6 +114,7 @@ func apply_all() -> void:
 	apply_graphics(current.get("graphics", {}))
 	apply_audio(current.get("audio", {}))
 	apply_interface(current.get("interface", {}))
+	apply_controls(current.get("controls", {}))
 
 # -------------------------------------------------
 # Apply
@@ -149,6 +171,21 @@ func apply_interface(options: Dictionary) -> void:
 	
 	interface_changed.emit(options)
 
+func apply_controls(options: Dictionary) -> void:
+	for action in options.keys():
+		if not InputMap.has_action(action):
+			InputMap.add_action(action)
+		for event in InputMap.action_get_events(action):
+			InputMap.action_erase_event(action, event)
+		
+		var event_list: Array = options[action]
+		for packed in event_list:
+			var event := _dict_to_event(packed)
+			if event != null:
+				InputMap.action_add_event(action, event)
+	
+	controls_changed.emit(options)
+
 # -------------------------------------------------
 # Helpers
 # -------------------------------------------------
@@ -192,3 +229,58 @@ func _set_by_path(root: Dictionary, path: String, value: Variant) -> void:
 			if not current_path.has(key) or typeof(current_path[key]) != TYPE_DICTIONARY:
 				current_path[key] = {}
 			current_path = current_path[key]
+
+static func _event_to_dict(event: InputEvent) -> Dictionary:
+	if event is InputEventKey:
+		var e := event as InputEventKey
+		return {
+			"type": "key",
+			"code": e.keycode,
+			"shift": e.shift_pressed,
+			"ctrl": e.ctrl_pressed,
+			"alt": e.alt_pressed,
+			"meta": e.meta_pressed
+		}
+	elif event is InputEventMouseButton:
+		var mouse_button := event as InputEventMouseButton
+		return {"type":"mouse", "button": mouse_button.button_index}
+	return {}
+
+static func _dict_to_event(data: Dictionary) -> InputEvent:
+	var type := str(data.get("type",""))
+	match type:
+		"key":
+			var key := InputEventKey.new()
+			key.keycode = int(data.get("code", 0))
+			key.shift_pressed = bool(data.get("shift", false))
+			key.ctrl_pressed  = bool(data.get("ctrl", false))
+			key.alt_pressed   = bool(data.get("alt", false))
+			key.meta_pressed  = bool(data.get("meta", false))
+			return key
+		"mouse":
+			var mouse_button := InputEventMouseButton.new()
+			mouse_button.button_index = int(data.get("button", 1))
+			return mouse_button
+		_:
+			return null
+
+func get_action_bindings(action: String, from_pending: bool = true) -> Array:
+	var root: Dictionary = (pending if from_pending else current)
+	var data: Array = root.get("controls", {}).get(action, [])
+	return data.duplicate(true)
+
+func set_action_bindings(action: String, events_as_dict: Array) -> void:
+	# Ecrase la liste de bindings pour cette action… dans pending
+	var controls: Dictionary = pending.get("controls", {})
+	controls[action] = events_as_dict.duplicate(true)
+	pending["controls"] = controls
+
+func rebind_single(action: String, event: InputEvent) -> void:
+	set_action_bindings(action, [ _event_to_dict(event) ])
+
+func clear_binding(action: String) -> void:
+	set_action_bindings(action, [])
+
+func reset_controls_to_defaults() -> void:
+	pending["controls"] = _deep_copy(DEFAULTS["controls"])
+	apply_pending()

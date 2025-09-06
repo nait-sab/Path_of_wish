@@ -85,15 +85,15 @@ func _apply_orb_mask() -> void:
 		
 	_mask_mat.set_shader_parameter("mask_tex", mask)
 	_mask_mat.set_shader_parameter("refraction", 0.1)
-	_mask_mat.set_shader_parameter("vignette", 0.1)
-	_mask_mat.set_shader_parameter("vignette_width", 0.2)
-	_mask_mat.set_shader_parameter("rim_strength", 0.2)
+	_mask_mat.set_shader_parameter("vignette", 0.06)
+	_mask_mat.set_shader_parameter("vignette_width", 0.1)
+	_mask_mat.set_shader_parameter("rim_strength", 0.28)
 	_mask_mat.set_shader_parameter("tint_color", Color(1.0, 0.5, 0.25))
 	_mask_mat.set_shader_parameter("tint_strength", 0.2)
-	_mask_mat.set_shader_parameter("exposure", 1.5)
+	_mask_mat.set_shader_parameter("exposure", 1.35)
 	_mask_mat.set_shader_parameter("saturation", 1.1)
-	_mask_mat.set_shader_parameter("spec_intensity", 0.35)
-	_mask_mat.set_shader_parameter("spec_power", 36.0)
+	_mask_mat.set_shader_parameter("spec_intensity", 0.22)
+	_mask_mat.set_shader_parameter("spec_power", 24.0)
 	_mask_mat.set_shader_parameter("light_dir", Vector2(-0.35, -0.65))
 	
 	icon_rect.material = _mask_mat

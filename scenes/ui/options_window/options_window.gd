@@ -18,12 +18,48 @@ class_name OptionsWindow extends Control
 @export var music_volume : HSlider
 
 @export_category("Contrôles")
+@export var controls_list: VBoxContainer
+const CONTROL_KEYBIND_SCENE: PackedScene = preload("res://scenes/ui/options_window/control_keybind/control_keybind.tscn")
+const CONTROL_ROWS := [
+	# Flasks
+	{ "label": "Utiliser le flacon N°1", "action": "flask_1" },
+	{ "label": "Utiliser le flacon N°2", "action": "flask_2" },
+	
+	# Skills
+	{ "label": "Utiliser l'aptitude N°1", "action": "skill_slot_1" },
+	{ "label": "Utiliser l'aptitude N°2", "action": "skill_slot_2" },
+	{ "label": "Utiliser l'aptitude N°3", "action": "skill_slot_3" },
+	{ "label": "Utiliser l'aptitude N°4", "action": "skill_slot_4" },
+	{ "label": "Utiliser l'aptitude N°5", "action": "skill_slot_5" },
+	{ "label": "Utiliser l'aptitude N°6", "action": "skill_slot_6" },
+	{ "label": "Utiliser l'aptitude N°7", "action": "skill_slot_7" },
+	{ "label": "Utiliser l'aptitude N°8", "action": "skill_slot_8" },
+	
+	# HUD
+	{ "label": "Options", "action": "toggle_options" },
+	{ "label": "Inventaire", "action": "toggle_inventory" },
+	{ "label": "Feuille de personnage", "action": "toggle_character_sheet" },
+	{ "label": "Panneau des aptitudes", "action": "toggle_skills_window" },
+]
 
 func _ready() -> void:
+	add_to_group("OptionsWindow")
+	
 	# Set settings value (ex: dropdowns)
 	_populate_graphics()
 	_populate_audio_devices()
+	_populate_controls()
 	_refresh_ui_from_pending()
+
+static func get_any() -> OptionsWindow:
+	var tree := Engine.get_main_loop() as SceneTree
+	if tree == null:
+		return null
+	return tree.get_first_node_in_group("OptionsWindow") as OptionsWindow
+
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("toggle_options"):
+		PauseMenu.get_any().open_options()
 
 # -------------------------------------------------
 # Helpers
@@ -130,6 +166,16 @@ func _populate_audio_devices() -> void:
 		device.set_item_metadata(index, device_found)
 		index += 1
 
+func _populate_controls() -> void:
+	for control in controls_list.get_children():
+		control.queue_free()
+	
+	for row in CONTROL_ROWS:
+		var control :=CONTROL_KEYBIND_SCENE.instantiate()
+		control.action_name = row["action"]
+		control.action_label.text = row["label"]
+		controls_list.add_child(control)
+
 # -------------------------------------------------
 # Graphics options
 # -------------------------------------------------
@@ -173,6 +219,14 @@ func _on_general_volume_value_changed(value: float) -> void:
 
 func _on_music_volume_value_changed(value: float) -> void:
 	Options.set_pending("audio/music_volume", int(round(value)))
+	
+# -------------------------------------------------
+# Controls options
+# -------------------------------------------------
+
+func _on_reset_controls_pressed() -> void:
+	Options.reset_controls_to_defaults()
+	_populate_controls()
 
 # -------------------------------------------------
 # Bottom buttons

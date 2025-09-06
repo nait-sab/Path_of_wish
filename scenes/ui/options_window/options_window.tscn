@@ -55,7 +55,7 @@ corner_radius_bottom_left = 50
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_u2pi6"]
 bg_color = Color(0.227451, 0.227451, 0.227451, 0.752941)
 
-[node name="OptionsWindow" type="Control" node_paths=PackedStringArray("window_mode", "window_vsync", "window_resolution", "see_clock", "isolate_cursor", "see_life_and_mana", "device", "general_volume", "music_volume")]
+[node name="OptionsWindow" type="Control" node_paths=PackedStringArray("window_mode", "window_vsync", "window_resolution", "see_clock", "isolate_cursor", "see_life_and_mana", "device", "general_volume", "music_volume", "controls_list")]
 top_level = true
 z_index = 100
 layout_mode = 3
@@ -74,6 +74,7 @@ see_life_and_mana = NodePath("HBoxContainer/Window/MarginContainer/VBoxContainer
 device = NodePath("HBoxContainer/Window/MarginContainer/VBoxContainer/ColorRect2/MarginContainer/Tabs/Son/ScrollContainer/MarginContainer/VBoxContainer/Device/OptionButton")
 general_volume = NodePath("HBoxContainer/Window/MarginContainer/VBoxContainer/ColorRect2/MarginContainer/Tabs/Son/ScrollContainer/MarginContainer/VBoxContainer/MasterVolume/HSlider")
 music_volume = NodePath("HBoxContainer/Window/MarginContainer/VBoxContainer/ColorRect2/MarginContainer/Tabs/Son/ScrollContainer/MarginContainer/VBoxContainer/MusicVolume/HSlider")
+controls_list = NodePath("HBoxContainer/Window/MarginContainer/VBoxContainer/ColorRect2/MarginContainer/Tabs/Contrôles/MarginContainer/VBoxContainer/ScrollContainer/MarginContainer/ControlsList")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 1
@@ -165,7 +166,7 @@ theme_override_constants/margin_bottom = 20
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_s6ior")
 tab_alignment = 1
-current_tab = 3
+current_tab = 4
 
 [node name="Graphismes" type="TabBar" parent="HBoxContainer/Window/MarginContainer/VBoxContainer/ColorRect2/MarginContainer/Tabs"]
 visible = false
@@ -188,6 +189,7 @@ size_flags_vertical = 3
 theme_override_constants/margin_left = 5
 theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
 
 [node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/Window/MarginContainer/VBoxContainer/ColorRect2/MarginContainer/Tabs/Graphismes/ScrollContainer/MarginContainer"]
 layout_mode = 2
@@ -250,15 +252,18 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/Window/MarginContainer/VBoxContainer/ColorRect2/MarginContainer/Tabs/Jeu/ScrollContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/Window/MarginContainer/VBoxContainer/ColorRect2/MarginContainer/Tabs/Jeu"]
 layout_mode = 2
+offset_right = 10.0
+offset_bottom = 10.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_constants/margin_left = 5
 theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
 
-[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/Window/MarginContainer/VBoxContainer/ColorRect2/MarginContainer/Tabs/Jeu/ScrollContainer/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/Window/MarginContainer/VBoxContainer/ColorRect2/MarginContainer/Tabs/Jeu/MarginContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -284,6 +289,7 @@ size_flags_vertical = 3
 theme_override_constants/margin_left = 5
 theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
 
 [node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/Window/MarginContainer/VBoxContainer/ColorRect2/MarginContainer/Tabs/Interface/ScrollContainer/MarginContainer"]
 layout_mode = 2
@@ -338,6 +344,7 @@ text = "Voir les valeurs de vie et mana"
 layout_mode = 2
 
 [node name="Son" type="TabBar" parent="HBoxContainer/Window/MarginContainer/VBoxContainer/ColorRect2/MarginContainer/Tabs"]
+visible = false
 layout_mode = 2
 tab_alignment = 1
 metadata/_tab_index = 3
@@ -357,6 +364,7 @@ size_flags_vertical = 3
 theme_override_constants/margin_left = 5
 theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
 
 [node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/Window/MarginContainer/VBoxContainer/ColorRect2/MarginContainer/Tabs/Son/ScrollContainer/MarginContainer"]
 layout_mode = 2
@@ -411,28 +419,46 @@ value = 60.0
 rounded = true
 
 [node name="Contrôles" type="TabBar" parent="HBoxContainer/Window/MarginContainer/VBoxContainer/ColorRect2/MarginContainer/Tabs"]
-visible = false
 layout_mode = 2
 tab_alignment = 1
 metadata/_tab_index = 4
 
-[node name="ScrollContainer" type="ScrollContainer" parent="HBoxContainer/Window/MarginContainer/VBoxContainer/ColorRect2/MarginContainer/Tabs/Contrôles"]
+[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/Window/MarginContainer/VBoxContainer/ColorRect2/MarginContainer/Tabs/Contrôles"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-
-[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/Window/MarginContainer/VBoxContainer/ColorRect2/MarginContainer/Tabs/Contrôles/ScrollContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
 theme_override_constants/margin_left = 5
 theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
 
-[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/Window/MarginContainer/VBoxContainer/ColorRect2/MarginContainer/Tabs/Contrôles/ScrollContainer/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/Window/MarginContainer/VBoxContainer/ColorRect2/MarginContainer/Tabs/Contrôles/MarginContainer"]
+layout_mode = 2
+
+[node name="ResetControls" type="Button" parent="HBoxContainer/Window/MarginContainer/VBoxContainer/ColorRect2/MarginContainer/Tabs/Contrôles/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Réinitialiser"
+
+[node name="HSeparator" type="HSeparator" parent="HBoxContainer/Window/MarginContainer/VBoxContainer/ColorRect2/MarginContainer/Tabs/Contrôles/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="HBoxContainer/Window/MarginContainer/VBoxContainer/ColorRect2/MarginContainer/Tabs/Contrôles/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/Window/MarginContainer/VBoxContainer/ColorRect2/MarginContainer/Tabs/Contrôles/MarginContainer/VBoxContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 0
+theme_override_constants/margin_bottom = 5
+
+[node name="ControlsList" type="VBoxContainer" parent="HBoxContainer/Window/MarginContainer/VBoxContainer/ColorRect2/MarginContainer/Tabs/Contrôles/MarginContainer/VBoxContainer/ScrollContainer/MarginContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -499,6 +525,7 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_u2pi6")
 [connection signal="item_selected" from="HBoxContainer/Window/MarginContainer/VBoxContainer/ColorRect2/MarginContainer/Tabs/Son/ScrollContainer/MarginContainer/VBoxContainer/Device/OptionButton" to="." method="_on_audio_device_selected"]
 [connection signal="value_changed" from="HBoxContainer/Window/MarginContainer/VBoxContainer/ColorRect2/MarginContainer/Tabs/Son/ScrollContainer/MarginContainer/VBoxContainer/MasterVolume/HSlider" to="." method="_on_general_volume_value_changed"]
 [connection signal="value_changed" from="HBoxContainer/Window/MarginContainer/VBoxContainer/ColorRect2/MarginContainer/Tabs/Son/ScrollContainer/MarginContainer/VBoxContainer/MusicVolume/HSlider" to="." method="_on_music_volume_value_changed"]
+[connection signal="pressed" from="HBoxContainer/Window/MarginContainer/VBoxContainer/ColorRect2/MarginContainer/Tabs/Contrôles/MarginContainer/VBoxContainer/ResetControls" to="." method="_on_reset_controls_pressed"]
 [connection signal="pressed" from="HBoxContainer/Window/MarginContainer/VBoxContainer/MarginContainer/Buttons/Save" to="." method="_on_save_pressed"]
 [connection signal="pressed" from="HBoxContainer/Window/MarginContainer/VBoxContainer/MarginContainer/Buttons/Default" to="." method="_on_default_pressed"]
 [connection signal="pressed" from="HBoxContainer/Window/MarginContainer/VBoxContainer/MarginContainer/Buttons/Close" to="." method="_on_close_pressed"]
