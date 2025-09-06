@@ -1,0 +1,198 @@
+[gd_scene load_steps=5 format=3 uid="uid://r32xuxcryjdt"]
+
+[ext_resource type="Script" uid="uid://bewynmhx234wa" path="res://scenes/ui/skills/skills_window/skill_slot/skill_window_slot.gd" id="1_k13u0"]
+[ext_resource type="PackedScene" uid="uid://bsj2c4h85hjik" path="res://scenes/ui/skills/skill_icon/skill_icon.tscn" id="2_vvmxq"]
+[ext_resource type="Texture2D" uid="uid://gplovp8ilae5" path="res://assets/textures/ui/skill_slot/skill_slot_placeholder.png" id="2_ygkdf"]
+[ext_resource type="Texture2D" uid="uid://c3mc2vdn5rdhy" path="res://assets/textures/ui/skill_slot/support_slot_placeholder.png" id="3_8hx3c"]
+
+[node name="SkillWindowSlot" type="VBoxContainer" node_paths=PackedStringArray("skill_icon", "skill_name", "skill_level", "dps_button", "skill_slot", "skill_slot_icon", "support_slots", "support_slots_icon")]
+custom_minimum_size = Vector2(562, 160)
+size_flags_horizontal = 3
+theme_override_constants/separation = 0
+script = ExtResource("1_k13u0")
+skill_icon = NodePath("Header/ColorRect/MarginContainer/HBoxContainer/SkillIcon")
+skill_name = NodePath("Header/ColorRect/MarginContainer/HBoxContainer/Name")
+skill_level = NodePath("Header/ColorRect/MarginContainer/HBoxContainer/Level")
+dps_button = NodePath("Header/ColorRect/MarginContainer/HBoxContainer/DPS Button")
+skill_slot = NodePath("Body/ColorRect/HBoxContainer/Skill")
+skill_slot_icon = NodePath("Body/ColorRect/HBoxContainer/Skill/SkillIcon")
+support_slots = [NodePath("Body/ColorRect/HBoxContainer/Support1"), NodePath("Body/ColorRect/HBoxContainer/Support2"), NodePath("Body/ColorRect/HBoxContainer/Support3"), NodePath("Body/ColorRect/HBoxContainer/Support4"), NodePath("Body/ColorRect/HBoxContainer/Support5")]
+support_slots_icon = [NodePath("Body/ColorRect/HBoxContainer/Support1/SkillIcon"), NodePath("Body/ColorRect/HBoxContainer/Support2/SkillIcon"), NodePath("Body/ColorRect/HBoxContainer/Support3/SkillIcon"), NodePath("Body/ColorRect/HBoxContainer/Support4/SkillIcon"), NodePath("Body/ColorRect/HBoxContainer/Support5/SkillIcon")]
+skill_slot_placeholder = ExtResource("2_ygkdf")
+support_slot_placeholder = ExtResource("3_8hx3c")
+
+[node name="Header" type="Control" parent="."]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ColorRect" type="ColorRect" parent="Header"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.260021, 0.260021, 0.260021, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="Header/ColorRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 30
+theme_override_constants/margin_bottom = 5
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Header/ColorRect/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="SkillIcon" parent="Header/ColorRect/MarginContainer/HBoxContainer" instance=ExtResource("2_vvmxq")]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+
+[node name="Name" type="Label" parent="Header/ColorRect/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 16
+text = "Frappe à la main"
+
+[node name="Level" type="Label" parent="Header/ColorRect/MarginContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 16
+text = "Niveau : 1"
+
+[node name="DPS Button" type="Button" parent="Header/ColorRect/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(150, 30)
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+text = "DPS : 12"
+
+[node name="Body" type="Control" parent="."]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 1.2
+
+[node name="ColorRect" type="ColorRect" parent="Body"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.133196, 0.133196, 0.133196, 1)
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Body/ColorRect"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -217.0
+offset_top = -32.0
+offset_right = 217.0
+offset_bottom = 32.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 20
+
+[node name="Skill" type="Button" parent="Body/ColorRect/HBoxContainer"]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+
+[node name="SkillIcon" parent="Body/ColorRect/HBoxContainer/Skill" instance=ExtResource("2_vvmxq")]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 0.0
+offset_bottom = 0.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Support1" type="Button" parent="Body/ColorRect/HBoxContainer"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="SkillIcon" parent="Body/ColorRect/HBoxContainer/Support1" instance=ExtResource("2_vvmxq")]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 0.0
+offset_bottom = 0.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Support2" type="Button" parent="Body/ColorRect/HBoxContainer"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="SkillIcon" parent="Body/ColorRect/HBoxContainer/Support2" instance=ExtResource("2_vvmxq")]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 0.0
+offset_bottom = 0.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Support3" type="Button" parent="Body/ColorRect/HBoxContainer"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="SkillIcon" parent="Body/ColorRect/HBoxContainer/Support3" instance=ExtResource("2_vvmxq")]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 0.0
+offset_bottom = 0.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Support4" type="Button" parent="Body/ColorRect/HBoxContainer"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="SkillIcon" parent="Body/ColorRect/HBoxContainer/Support4" instance=ExtResource("2_vvmxq")]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 0.0
+offset_bottom = 0.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Support5" type="Button" parent="Body/ColorRect/HBoxContainer"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="SkillIcon" parent="Body/ColorRect/HBoxContainer/Support5" instance=ExtResource("2_vvmxq")]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 0.0
+offset_bottom = 0.0
+grow_horizontal = 2
+grow_vertical = 2

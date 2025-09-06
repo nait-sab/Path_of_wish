@@ -121,6 +121,12 @@ func to_modifiers() -> Array:
 			continue
 		result.append(StatEngineClass.create_modifier(mod["target"], mod["form"], mod["value"]))
 	return result
+
+func get_icon_id() -> String:
+	return ""
+
+func get_icon_texture() -> Texture2D:
+	return IconLoader.load_skill_icon(get_icon_id())
 	
 static func convert_string_to_tag(tag: String) -> Tag:
 	if Item.Tag.has(tag.to_upper()):

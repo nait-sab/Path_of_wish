@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://xy7umjnumcdd"]
 
-[ext_resource type="Script" uid="uid://cpdbiidu65xio" path="res://scenes/ui/skill_picker/skill_picker.gd" id="1_ccs8b"]
+[ext_resource type="Script" uid="uid://cpdbiidu65xio" path="res://scenes/ui/skills/skill_picker/skill_picker.gd" id="1_ccs8b"]
 
 [node name="SkillPicker" type="Control" node_paths=PackedStringArray("window", "grid")]
 top_level = true

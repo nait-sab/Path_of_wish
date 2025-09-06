@@ -3,6 +3,7 @@ class_name SkillInstance extends RefCounted
 var gem: Gem
 var level: int = 1
 var is_support: bool = false
+var origin_item_id: int = 0
 
 var def: Dictionary = {}
 var final: Dictionary = {}
@@ -12,6 +13,7 @@ func setup_from_gem(_gem: Gem) -> void:
 	gem = _gem
 	level = max(1, int(gem.item_level))
 	is_support = gem.support_id != ""
+	origin_item_id = int(gem.get_instance_id())
 
 	if is_support:
 		def = SupportDb.get_support(gem.support_id, level)

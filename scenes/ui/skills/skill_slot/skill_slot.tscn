@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://bwjlldw2fm50n"]
+[gd_scene load_steps=5 format=3 uid="uid://bwjlldw2fm50n"]
 
 [ext_resource type="Texture2D" uid="uid://bxysdgjxr1wen" path="res://assets/textures/ui/skill_slot/skill_placeholder.png" id="1_t1o8o"]
-[ext_resource type="Script" uid="uid://ceul4birhrnrm" path="res://scenes/ui/skill_slot/skill_slot.gd" id="1_wytqm"]
+[ext_resource type="Script" uid="uid://ceul4birhrnrm" path="res://scenes/ui/skills/skill_slot/skill_slot.gd" id="1_wytqm"]
+[ext_resource type="PackedScene" uid="uid://bsj2c4h85hjik" path="res://scenes/ui/skills/skill_icon/skill_icon.tscn" id="3_f2ja0"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wytqm"]
 content_margin_left = 3.0
@@ -18,24 +19,16 @@ corner_radius_top_right = 2
 corner_radius_bottom_right = 2
 corner_radius_bottom_left = 2
 
-[node name="SkillSlot" type="Button" node_paths=PackedStringArray("keybind_label", "skill_texture")]
+[node name="SkillSlot" type="Button" node_paths=PackedStringArray("keybind_label", "skill_icon")]
 custom_minimum_size = Vector2(48, 48)
 action_mode = 0
 flat = true
 script = ExtResource("1_wytqm")
 keybind_label = NodePath("Hotkey")
-skill_texture = NodePath("Icon")
+skill_icon = NodePath("SkillIcon")
 skill_placeholder = ExtResource("1_t1o8o")
 
-[node name="Icon" type="TextureRect" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("1_t1o8o")
-stretch_mode = 6
+[node name="SkillIcon" parent="." instance=ExtResource("3_f2ja0")]
 
 [node name="Hotkey" type="Label" parent="."]
 layout_mode = 1

@@ -1,9 +1,10 @@
-[gd_scene load_steps=3 format=3 uid="uid://bcthwf35yc4wh"]
+[gd_scene load_steps=4 format=3 uid="uid://bcthwf35yc4wh"]
 
 [ext_resource type="Script" uid="uid://pgfw4cw10jje" path="res://scenes/ui/inventory/held_item/held_item.gd" id="1_sbalr"]
 [ext_resource type="Texture2D" uid="uid://bk3w8sbuv1d5a" path="res://assets/textures/icon.svg" id="2_b6rfu"]
+[ext_resource type="PackedScene" uid="uid://bsj2c4h85hjik" path="res://scenes/ui/skills/skill_icon/skill_icon.tscn" id="3_wg7ug"]
 
-[node name="HeldItem" type="Control" node_paths=PackedStringArray("texture_rect", "amount_label")]
+[node name="HeldItem" type="Control" node_paths=PackedStringArray("texture_rect", "skill_icon", "amount_label")]
 top_level = true
 z_index = 999
 layout_mode = 3
@@ -11,6 +12,7 @@ anchors_preset = 0
 mouse_filter = 2
 script = ExtResource("1_sbalr")
 texture_rect = NodePath("Texture")
+skill_icon = NodePath("SkillIcon")
 amount_label = NodePath("Control/Amount")
 
 [node name="Texture" type="TextureRect" parent="."]
@@ -29,6 +31,18 @@ grow_vertical = 2
 mouse_filter = 2
 texture = ExtResource("2_b6rfu")
 expand_mode = 1
+
+[node name="SkillIcon" parent="." instance=ExtResource("3_wg7ug")]
+visible = false
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 0.0
+offset_bottom = 0.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="Control" type="Control" parent="."]
 layout_mode = 1

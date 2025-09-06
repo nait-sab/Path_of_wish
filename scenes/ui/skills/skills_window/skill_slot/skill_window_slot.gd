@@ -5,14 +5,20 @@ signal slot_changed(slot: SkillWindowSlot)
 @export var default_support_count: int = 2
 
 @export_category("Skill infos")
-@export var skill_icon: TextureRect
+@export var skill_icon: SkillIcon
 @export var skill_name: Label
 @export var skill_level: Label
 @export var dps_button: Button
 
 @export_category("Slots")
-@export var skill_slot: TextureButton
-@export var support_slots: Array[TextureButton]
+@export var skill_slot: Button
+@export var skill_slot_icon: SkillIcon
+@export var support_slots: Array[Button]
+@export var support_slots_icon: Array[SkillIcon]
+
+@export_category("Placeholders")
+@export var skill_slot_placeholder: Texture2D
+@export var support_slot_placeholder: Texture2D
 
 var skill_gem: Gem = null
 var support_gems: Array[Gem] = []
@@ -30,15 +36,15 @@ func _ready() -> void:
 	
 func refresh_ui() -> void:
 	if skill_gem:
-		skill_icon.texture = preload("res://assets/textures/icon.svg")
-		skill_slot.texture_normal = preload("res://assets/textures/icon.svg")
+		skill_icon.setupByTexture(skill_gem.get_icon_texture(), SkillIcon.IconMode.SQUARE)
+		skill_slot_icon.setupByTexture(skill_gem.get_icon_texture())
 		skill_name.text = skill_gem.name
 		skill_level.text = "Niveau : %d" % int(max(1, skill_gem.item_level))
 		dps_button.visible = true
 		dps_button.text = "DPS : --"
 	else:
-		skill_icon.texture = null
-		skill_slot.texture_normal = null
+		skill_icon.setupById("", SkillIcon.IconMode.SQUARE)
+		skill_slot_icon.setupByTexture(skill_slot_placeholder, SkillIcon.IconMode.SQUARE)
 		skill_name.text = ""
 		skill_level.text = ""
 		dps_button.visible = false
@@ -46,13 +52,15 @@ func refresh_ui() -> void:
 		
 	for index in range(support_slots.size()):
 		var button := support_slots[index]
+		var button_icon := support_slots_icon[index]
 		var gem := support_gems[index]
 		var unlocked := (index > default_support_count)
 		button.disabled = unlocked
 		if gem:
-			button.texture_normal = preload("res://assets/textures/icon.svg")
+			button_icon.setupByTexture(gem.get_icon_texture())
 		else:
-			button.texture_normal = null
+			button_icon.setupById("")
+			button_icon.setupByTexture(support_slot_placeholder, SkillIcon.IconMode.SQUARE)
 
 func _on_skill_slot_pressed() -> void:
 	var held_item := HeldItem.get_any().item
@@ -98,7 +106,7 @@ func _on_support_slot_pressed(index: int) -> void:
 		if old:
 			HeldItem.get_any().set_item(old)
 		else:
-			HeldItem.get_any().clear_item()		
+			HeldItem.get_any().clear_item()
 		refresh_ui()
 		slot_changed.emit(self)
 		return

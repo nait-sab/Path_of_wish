@@ -3,6 +3,7 @@
 		"id": "gem_added_fire",
 		"name": "Added Fire Support",
 		"support_id": "added_fire",
+		"icon_id": "added_fire",
 		"item_level": 1,
 		"tags": ["gem", "support"],
 		"size": { "width": 1, "height": 1 },

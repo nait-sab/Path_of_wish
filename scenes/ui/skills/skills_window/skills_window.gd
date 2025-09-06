@@ -2,7 +2,7 @@ class_name SkillsWindow extends Control
 
 signal skills_changed
 
-const SKILL_WINDOW_SLOT: PackedScene = preload("res://scenes/ui/skills_window/skill_slot/skill_window_slot.tscn")
+const SKILL_WINDOW_SLOT: PackedScene = preload("res://scenes/ui/skills/skills_window/skill_slot/skill_window_slot.tscn")
 
 @export var skill_slot_number: int = 5
 @export var skill_slots_container: VBoxContainer

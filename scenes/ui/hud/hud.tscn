@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://btdj0jkixbuk0" path="res://assets/textures/hud/orb_frame.png" id="1_bo48s"]
 [ext_resource type="Texture2D" uid="uid://dikwxis4uaog6" path="res://assets/textures/hud/orb_life_fill.png" id="2_8qguk"]
 [ext_resource type="Texture2D" uid="uid://b2io0derawsca" path="res://assets/textures/hud/orb_mana_fill.png" id="3_136eg"]
-[ext_resource type="PackedScene" uid="uid://bwjlldw2fm50n" path="res://scenes/ui/skill_slot/skill_slot.tscn" id="4_2wu1p"]
+[ext_resource type="PackedScene" uid="uid://bwjlldw2fm50n" path="res://scenes/ui/skills/skill_slot/skill_slot.tscn" id="4_2wu1p"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ax4tw"]
 

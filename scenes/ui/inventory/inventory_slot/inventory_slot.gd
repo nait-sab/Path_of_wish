@@ -1,6 +1,7 @@
 class_name InventorySlot extends Button
 
 @export var texture_rect: TextureRect
+@export var skill_icon: SkillIcon
 @export var amount_label: Label
 
 var master_slot: Button = null
@@ -16,6 +17,8 @@ const SLOT_SIZE: int = 48
 func _ready():
 	if item == null:
 		clear()
+	else:
+		set_item(item)
 
 func set_item(data: Item):
 	item = data
@@ -25,7 +28,15 @@ func set_item(data: Item):
 		return
 	
 	texture_rect.visible = true
-	texture_rect.texture = default_texture
+	skill_icon.visible = false
+	
+	if item is Gem:
+		texture_rect.visible = false
+		skill_icon.visible = true
+		skill_icon.setupByTexture(item.get_icon_texture())
+	else:
+		texture_rect.texture = default_texture
+	
 	refresh()
 
 	# Draw correctly the icon by item size
@@ -37,6 +48,7 @@ func set_item(data: Item):
 		)
 	else:
 		texture_rect.visible = false
+		skill_icon.visible = false
 		amount_label.visible = false
 
 func refresh():
@@ -48,6 +60,8 @@ func refresh():
 
 func clear():
 	texture_rect.texture = null
+	texture_rect.visible = true
+	skill_icon.visible = false
 	amount_label.visible = false
 
 func clear_item():
@@ -66,6 +80,7 @@ func clear_item():
 	
 	linked_positions.clear()
 	texture_rect.visible = true
+	skill_icon.visible = false
 	clear()
 
 func _on_mouse_entered() -> void:

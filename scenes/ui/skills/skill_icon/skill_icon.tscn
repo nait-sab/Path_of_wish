@@ -1,0 +1,42 @@
+[gd_scene load_steps=6 format=3 uid="uid://bsj2c4h85hjik"]
+
+[ext_resource type="Script" uid="uid://pwow8174dwes" path="res://scenes/ui/skills/skill_icon/skill_icon.gd" id="1_5asvi"]
+[ext_resource type="Texture2D" uid="uid://deos1rkwvcrwe" path="res://assets/textures/skills/fireball.png" id="1_5ifus"]
+[ext_resource type="Texture2D" uid="uid://bxysdgjxr1wen" path="res://assets/textures/ui/skill_slot/skill_placeholder.png" id="2_0ai4r"]
+[ext_resource type="Texture2D" uid="uid://csptw8hogp0gu" path="res://assets/textures/skill_frame.png" id="2_5asvi"]
+[ext_resource type="Texture2D" uid="uid://c6dja0olbqfek" path="res://assets/textures/orb_mask.png" id="3_d3gjh"]
+
+[node name="SkillIcon" type="Control" node_paths=PackedStringArray("icon_rect", "frame_rect")]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2
+script = ExtResource("1_5asvi")
+icon_rect = NodePath("Icon")
+frame_rect = NodePath("Frame")
+placeholder = ExtResource("2_0ai4r")
+mask_texture = ExtResource("3_d3gjh")
+
+[node name="Icon" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_5ifus")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Frame" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_5asvi")
+expand_mode = 1
+stretch_mode = 5

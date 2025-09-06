@@ -1,8 +1,10 @@
-[gd_scene load_steps=15 format=3 uid="uid://dj34wt6g60kma"]
+[gd_scene load_steps=17 format=3 uid="uid://dj34wt6g60kma"]
 
 [ext_resource type="Texture2D" uid="uid://bk3w8sbuv1d5a" path="res://assets/textures/icon.svg" id="1_wle7a"]
 [ext_resource type="Script" uid="uid://b2l270dj4rnri" path="res://scenes/ui/inventory/inventory_slot/inventory_slot.gd" id="2_gbfhx"]
 [ext_resource type="Texture2D" uid="uid://bed6g75k2imqc" path="res://assets/textures/hud/inventory_slot.png" id="2_ma1jx"]
+[ext_resource type="PackedScene" uid="uid://bsj2c4h85hjik" path="res://scenes/ui/skills/skill_icon/skill_icon.tscn" id="4_6tvh1"]
+[ext_resource type="Texture2D" uid="uid://cupeucmr8n8c" path="res://assets/textures/ui/skill_slot/orb_mask.png" id="5_snxct"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ma1jx"]
 
@@ -26,7 +28,7 @@
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_siqmo"]
 
-[node name="Inventory Slot" type="Button" node_paths=PackedStringArray("texture_rect", "amount_label")]
+[node name="Inventory Slot" type="Button" node_paths=PackedStringArray("texture_rect", "skill_icon", "amount_label")]
 custom_minimum_size = Vector2(48, 48)
 offset_right = 8.0
 offset_bottom = 8.0
@@ -43,6 +45,7 @@ theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_1wvu3")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_siqmo")
 script = ExtResource("2_gbfhx")
 texture_rect = NodePath("Panel/Icon")
+skill_icon = NodePath("Panel/SkillIcon")
 amount_label = NodePath("Panel/Amount")
 
 [node name="Panel" type="Panel" parent="."]
@@ -73,6 +76,22 @@ grow_vertical = 2
 mouse_filter = 2
 texture = ExtResource("1_wle7a")
 expand_mode = 1
+
+[node name="SkillIcon" parent="Panel" instance=ExtResource("4_6tvh1")]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+mask_texture = ExtResource("5_snxct")
 
 [node name="Amount" type="Label" parent="Panel"]
 visible = false

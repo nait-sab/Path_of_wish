@@ -1,7 +1,7 @@
 [gd_scene load_steps=15 format=3 uid="uid://b46y766uljjon"]
 
-[ext_resource type="Script" uid="uid://bmows7bgd6opw" path="res://scenes/ui/skills_window/skills_window.gd" id="1_3ht1q"]
-[ext_resource type="PackedScene" uid="uid://r32xuxcryjdt" path="res://scenes/ui/skills_window/skill_slot/skill_window_slot.tscn" id="1_jam1y"]
+[ext_resource type="Script" uid="uid://bmows7bgd6opw" path="res://scenes/ui/skills/skills_window/skills_window.gd" id="1_3ht1q"]
+[ext_resource type="PackedScene" uid="uid://r32xuxcryjdt" path="res://scenes/ui/skills/skills_window/skill_slot/skill_window_slot.tscn" id="1_jam1y"]
 
 [sub_resource type="Gradient" id="Gradient_3ht1q"]
 colors = PackedColorArray(0.17355, 0.17355, 0.17355, 1, 0.293216, 0.240169, 0.0787779, 1)

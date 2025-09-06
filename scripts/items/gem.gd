@@ -1,6 +1,7 @@
 class_name Gem extends Item
 
 var skill_id: String = ""
+var icon_id: String = ""
 var support_id: String = ""
 var description: String = ""
 var spirit_cost: int = 0
@@ -11,6 +12,7 @@ var allowed_weapon_tags: Array[Item.Tag] = []
 func load_json(json: Dictionary) -> void:
 	super.load_json(json)
 	skill_id = json.get("skill_id", skill_id)
+	icon_id = json.get("icon_id", icon_id)
 	support_id = json.get("support_id", support_id)
 	description = json.get("description", description)
 	spirit_cost = json.get("spirit_cost", spirit_cost)
@@ -37,6 +39,7 @@ func clone() -> Gem:
 	target.rarity = rarity
 	target.stack_current = stack_current
 	target.skill_id = skill_id
+	target.icon_id = icon_id
 	target.support_id = support_id
 	target.description = description
 	target.spirit_cost = spirit_cost
@@ -44,3 +47,6 @@ func clone() -> Gem:
 	target.xp_to_next = xp_to_next
 	target.allowed_weapon_tags = allowed_weapon_tags.duplicate(true)
 	return target
+
+func get_icon_texture() -> Texture2D:
+	return IconLoader.load_skill_icon(icon_id)

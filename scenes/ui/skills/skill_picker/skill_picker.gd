@@ -7,6 +7,7 @@ var skill_slot: SkillSlot
 
 # Temporary variable
 const TEMP_ICON = preload("res://assets/textures/ui/skill_slot/skill_placeholder.png")
+const SKILL_ICON_SCENE: PackedScene = preload("res://scenes/ui/skills/skill_icon/skill_icon.tscn")
 
 func _ready() -> void:
 	add_to_group("SkillPicker")
@@ -42,17 +43,15 @@ func _build_grid() -> void:
 	
 	var skills = SkillsWindow.get_any().get_instances()
 	
-	for skill in skills:
+	for skill: SkillInstance in skills:
 		if skill == null:
 			continue
-		var skill_button := TextureButton.new()
+		var skill_button := Button.new()
 		skill_button.custom_minimum_size = Vector2(48, 48)
-		
-		# Tempory until I add icons to skills
-		skill_button.texture_normal = TEMP_ICON
-		skill_button.modulate = Color.from_hsv(randf(), .35, .95, 1)
-		
+		var skill_icon := SKILL_ICON_SCENE.instantiate()
+		skill_icon.setupById(skill.final.get("id", ""), SkillIcon.IconMode.SQUARE)
 		skill_button.pressed.connect(func(): _on_select_skill(skill))
+		skill_button.add_child(skill_icon)
 		grid.add_child(skill_button)
 	
 	await get_tree().process_frame
@@ -64,7 +63,7 @@ func _on_select_skill(instance: SkillInstance):
 	close()
 
 func _on_clear_button_pressed() -> void:
-	skill_slot.current_instance = null
+	skill_slot.reset()
 	close()
 
 func _move_to_slot() -> void:
