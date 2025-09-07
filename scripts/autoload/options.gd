@@ -284,3 +284,24 @@ func clear_binding(action: String) -> void:
 func reset_controls_to_defaults() -> void:
 	pending["controls"] = _deep_copy(DEFAULTS["controls"])
 	apply_pending()
+
+func get_action_primary_event(action: String, from_pending: bool = true) -> InputEvent:
+	var list := get_action_bindings(action, from_pending)
+	if list.is_empty():
+		return null
+	return _dict_to_event(list[0])
+
+func get_action_short_label(action: String, from_pending: bool = true) -> String:
+	var event := get_action_primary_event(action, from_pending)
+	if event == null:
+		return "—"
+	if event is InputEventMouseButton:
+		var button_index := (event as InputEventMouseButton).button_index
+		match button_index:
+			MOUSE_BUTTON_LEFT:   return "LB"
+			MOUSE_BUTTON_MIDDLE: return "MB"
+			MOUSE_BUTTON_RIGHT:  return "RB"
+			_: return "MB%d" % button_index
+	elif event is InputEventKey:
+		return OS.get_keycode_string((event as InputEventKey).keycode)
+	return event.as_text()

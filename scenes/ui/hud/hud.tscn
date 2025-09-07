@@ -339,12 +339,15 @@ text = "Portail"
 
 [node name="SkillSlot1" parent="HBoxContainer/PanelContainer2/HBoxContainer/RightPanel/VBoxContainer/RowTop" instance=ExtResource("4_2wu1p")]
 layout_mode = 2
+action_name = "skill_slot_1"
 
 [node name="SkillSlot2" parent="HBoxContainer/PanelContainer2/HBoxContainer/RightPanel/VBoxContainer/RowTop" instance=ExtResource("4_2wu1p")]
 layout_mode = 2
+action_name = "skill_slot_2"
 
 [node name="SkillSlot3" parent="HBoxContainer/PanelContainer2/HBoxContainer/RightPanel/VBoxContainer/RowTop" instance=ExtResource("4_2wu1p")]
 layout_mode = 2
+action_name = "skill_slot_3"
 
 [node name="RowBottom" type="HBoxContainer" parent="HBoxContainer/PanelContainer2/HBoxContainer/RightPanel/VBoxContainer"]
 layout_mode = 2
@@ -352,22 +355,23 @@ mouse_filter = 2
 
 [node name="SkillSlot1" parent="HBoxContainer/PanelContainer2/HBoxContainer/RightPanel/VBoxContainer/RowBottom" instance=ExtResource("4_2wu1p")]
 layout_mode = 2
+action_name = "skill_slot_4"
 
 [node name="SkillSlot2" parent="HBoxContainer/PanelContainer2/HBoxContainer/RightPanel/VBoxContainer/RowBottom" instance=ExtResource("4_2wu1p")]
 layout_mode = 2
-keybind = "E"
+action_name = "skill_slot_5"
 
 [node name="SkillSlot3" parent="HBoxContainer/PanelContainer2/HBoxContainer/RightPanel/VBoxContainer/RowBottom" instance=ExtResource("4_2wu1p")]
 layout_mode = 2
-keybind = "R"
+action_name = "skill_slot_6"
 
 [node name="SkillSlot4" parent="HBoxContainer/PanelContainer2/HBoxContainer/RightPanel/VBoxContainer/RowBottom" instance=ExtResource("4_2wu1p")]
 layout_mode = 2
-keybind = "T"
+action_name = "skill_slot_7"
 
 [node name="SkillSlot5" parent="HBoxContainer/PanelContainer2/HBoxContainer/RightPanel/VBoxContainer/RowBottom" instance=ExtResource("4_2wu1p")]
 layout_mode = 2
-keybind = "Y"
+action_name = "skill_slot_8"
 
 [node name="ManaGroup" type="Control" parent="HBoxContainer/PanelContainer2/HBoxContainer"]
 custom_minimum_size = Vector2(220, 220)

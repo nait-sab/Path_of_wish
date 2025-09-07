@@ -84,33 +84,29 @@ func clear_item():
 	clear()
 
 func _on_mouse_entered() -> void:
-	var target: InventorySlot = self
-	
-	if is_linked and master_slot:
-		target = master_slot
-		
+	var target: InventorySlot = master_slot if is_linked and master_slot else self
 	if target.item:
-		ItemTooltip.get_any().show_item(target.item)
+		ItemTooltip.get_any().show_item(target.item, target)
 	
 func _on_mouse_exited() -> void:
-	var target: InventorySlot = self
+	await get_tree().process_frame
+	if _is_hovering_self_or_links():
+		return
 	
-	if is_linked and master_slot:
-		target = master_slot
-		
-	var tooltip = ItemTooltip.get_any()
-	
-	if not target.is_mouse_over_any():
-		tooltip.hide_item()
-		
-func is_mouse_over_any() -> bool:
-	var mouse_position = get_global_mouse_position()
-	
-	if get_global_rect().has_point(mouse_position):
-		return true
-		
-	for slot in linked_positions:
-		if slot.get_global_rect().has_point(mouse_position):
-			return true
+	var target: InventorySlot = master_slot if is_linked and master_slot else self
+	ItemTooltip.get_any().request_hide(target)
 
+func _is_hovering_self_or_links() -> bool:
+	var hovered := get_viewport().gui_get_hovered_control()
+	if hovered == null:
+		return false
+	var root: InventorySlot = master_slot if is_linked and master_slot else self
+	if _is_over_slot_or_child(hovered, root):
+		return true
+	for slot in root.linked_positions:
+		if _is_over_slot_or_child(hovered, slot):
+			return true
 	return false
+
+func _is_over_slot_or_child(hovered: Control, slot: Control) -> bool:
+	return hovered == slot or slot.is_ancestor_of(hovered)

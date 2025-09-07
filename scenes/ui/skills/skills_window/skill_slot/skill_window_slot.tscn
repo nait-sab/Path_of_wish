@@ -1,9 +1,31 @@
-[gd_scene load_steps=5 format=3 uid="uid://r32xuxcryjdt"]
+[gd_scene load_steps=16 format=3 uid="uid://r32xuxcryjdt"]
 
 [ext_resource type="Script" uid="uid://bewynmhx234wa" path="res://scenes/ui/skills/skills_window/skill_slot/skill_window_slot.gd" id="1_k13u0"]
 [ext_resource type="PackedScene" uid="uid://bsj2c4h85hjik" path="res://scenes/ui/skills/skill_icon/skill_icon.tscn" id="2_vvmxq"]
 [ext_resource type="Texture2D" uid="uid://gplovp8ilae5" path="res://assets/textures/ui/skill_slot/skill_slot_placeholder.png" id="2_ygkdf"]
 [ext_resource type="Texture2D" uid="uid://c3mc2vdn5rdhy" path="res://assets/textures/ui/skill_slot/support_slot_placeholder.png" id="3_8hx3c"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ygkdf"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8hx3c"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5qybl"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_x7im6"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_b4bpu"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_x8tbw"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_pyhnm"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_h2vli"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qtdns"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4ak7a"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_32111"]
 
 [node name="SkillWindowSlot" type="VBoxContainer" node_paths=PackedStringArray("skill_icon", "skill_name", "skill_level", "dps_button", "skill_slot", "skill_slot_icon", "support_slots", "support_slots_icon")]
 custom_minimum_size = Vector2(562, 160)
@@ -106,6 +128,17 @@ theme_override_constants/separation = 20
 [node name="Skill" type="Button" parent="Body/ColorRect/HBoxContainer"]
 custom_minimum_size = Vector2(80, 80)
 layout_mode = 2
+theme_override_styles/focus = SubResource("StyleBoxEmpty_ygkdf")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_8hx3c")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_5qybl")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_x7im6")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_b4bpu")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_x8tbw")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_pyhnm")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_h2vli")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_qtdns")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_4ak7a")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_32111")
 
 [node name="SkillIcon" parent="Body/ColorRect/HBoxContainer/Skill" instance=ExtResource("2_vvmxq")]
 layout_mode = 1
@@ -122,6 +155,17 @@ custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+theme_override_styles/focus = SubResource("StyleBoxEmpty_ygkdf")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_8hx3c")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_5qybl")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_x7im6")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_b4bpu")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_x8tbw")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_pyhnm")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_h2vli")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_qtdns")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_4ak7a")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_32111")
 
 [node name="SkillIcon" parent="Body/ColorRect/HBoxContainer/Support1" instance=ExtResource("2_vvmxq")]
 layout_mode = 1
@@ -138,6 +182,17 @@ custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+theme_override_styles/focus = SubResource("StyleBoxEmpty_ygkdf")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_8hx3c")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_5qybl")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_x7im6")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_b4bpu")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_x8tbw")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_pyhnm")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_h2vli")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_qtdns")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_4ak7a")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_32111")
 
 [node name="SkillIcon" parent="Body/ColorRect/HBoxContainer/Support2" instance=ExtResource("2_vvmxq")]
 layout_mode = 1
@@ -154,6 +209,17 @@ custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+theme_override_styles/focus = SubResource("StyleBoxEmpty_ygkdf")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_8hx3c")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_5qybl")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_x7im6")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_b4bpu")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_x8tbw")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_pyhnm")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_h2vli")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_qtdns")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_4ak7a")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_32111")
 
 [node name="SkillIcon" parent="Body/ColorRect/HBoxContainer/Support3" instance=ExtResource("2_vvmxq")]
 layout_mode = 1
@@ -170,6 +236,17 @@ custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+theme_override_styles/focus = SubResource("StyleBoxEmpty_ygkdf")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_8hx3c")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_5qybl")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_x7im6")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_b4bpu")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_x8tbw")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_pyhnm")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_h2vli")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_qtdns")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_4ak7a")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_32111")
 
 [node name="SkillIcon" parent="Body/ColorRect/HBoxContainer/Support4" instance=ExtResource("2_vvmxq")]
 layout_mode = 1
@@ -186,6 +263,17 @@ custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+theme_override_styles/focus = SubResource("StyleBoxEmpty_ygkdf")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_8hx3c")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_5qybl")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_x7im6")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_b4bpu")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_x8tbw")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_pyhnm")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_h2vli")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_qtdns")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_4ak7a")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_32111")
 
 [node name="SkillIcon" parent="Body/ColorRect/HBoxContainer/Support5" instance=ExtResource("2_vvmxq")]
 layout_mode = 1

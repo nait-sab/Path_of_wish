@@ -3,6 +3,9 @@ class_name ItemTooltip extends PanelContainer
 @export var item_name: Label
 @export var item_description: RichTextLabel
 
+var origin_owner: Control = null
+var _pending_hide: SceneTreeTimer = null
+
 func _ready() -> void:
 	add_to_group("ItemTooltip")
 	visible = false
@@ -13,8 +16,9 @@ static func get_any() -> ItemTooltip:
 		return null
 	return tree.get_first_node_in_group("ItemTooltip") as ItemTooltip
 
-func show_item(item: Item):
+func show_item(item: Item, origin_owner: Control = null) -> void:
 	clear()
+	self.origin_owner = origin_owner
 	
 	# Name / Rarity
 	item_name.text = item.name
@@ -59,6 +63,7 @@ func show_item(item: Item):
 		append_line("Pile: %d / %d" % [item.stack_current, item.stack_max], null, Color(.7, .7, .7))
 	
 	call_deferred("_after_fill")
+	_pending_hide = null
 	visible = true
 	
 func _after_fill() -> void:
@@ -183,3 +188,19 @@ func tags_to_strings(tags: Array, tags_ignored: Array = []) -> String:
 		elif typeof(tag) == TYPE_INT:
 			list.append(str(Item.Tag.keys()[tag]).capitalize())
 	return " / ".join(list)
+
+func request_hide(request_control: Control) -> void:
+	if request_control != origin_owner:
+		return
+	if _pending_hide != null:
+		return
+	_pending_hide = get_tree().create_timer(0.0)
+	_pending_hide.timeout.connect(func():
+		_pending_hide = null
+		if request_control != origin_owner:
+			return
+		var hovered := get_viewport().gui_get_hovered_control()
+		if hovered != null and (hovered == request_control or request_control.is_ancestor_of(hovered)):
+			return
+		hide_item()
+	)
