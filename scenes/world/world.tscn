@@ -1,9 +1,10 @@
-[gd_scene load_steps=12 format=3 uid="uid://djatk87yr8qql"]
+[gd_scene load_steps=13 format=3 uid="uid://djatk87yr8qql"]
 
 [ext_resource type="Script" uid="uid://vcs46cmckm4e" path="res://scenes/world/world.gd" id="1_6m72w"]
 [ext_resource type="PackedScene" uid="uid://da38mat7gdu37" path="res://scenes/player/player.tscn" id="2_v5dby"]
-[ext_resource type="PackedScene" uid="uid://6fvn45q6m2qo" path="res://scenes/ui/item_tooltip/item_tooltip.tscn" id="3_j2gmx"]
+[ext_resource type="PackedScene" uid="uid://6fvn45q6m2qo" path="res://scenes/ui/tooltips/item_tooltip/item_tooltip.tscn" id="3_j2gmx"]
 [ext_resource type="PackedScene" uid="uid://up0b15oa2a68" path="res://scenes/ui/hud/hud.tscn" id="4_bq33v"]
+[ext_resource type="PackedScene" uid="uid://xk0hlhcnc417" path="res://scenes/ui/tooltips/skill_tooltip/SkillTooltip.tscn" id="5_dlabj"]
 [ext_resource type="PackedScene" uid="uid://c1anxqj6baj0b" path="res://scenes/ui/character_sheet/character_sheet.tscn" id="5_v5dby"]
 [ext_resource type="PackedScene" uid="uid://ce4lue806eu41" path="res://scenes/ui/inventory/inventory/inventory.tscn" id="6_t5ptc"]
 [ext_resource type="PackedScene" uid="uid://s1pigorfv2bo" path="res://scenes/ui/pause/pause_menu.tscn" id="7_bq33v"]
@@ -46,3 +47,7 @@ offset_right = 300.0
 [node name="PauseMenu" parent="UI" instance=ExtResource("7_bq33v")]
 
 [node name="SkillPicker" parent="UI" instance=ExtResource("11_5qq27")]
+
+[node name="SkillTooltip" parent="UI" instance=ExtResource("5_dlabj")]
+offset_right = 500.0
+offset_bottom = 131.0

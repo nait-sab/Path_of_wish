@@ -51,6 +51,13 @@ func _build_grid() -> void:
 		var skill_icon := SKILL_ICON_SCENE.instantiate()
 		skill_icon.setupById(skill.final.get("id", ""), SkillIcon.IconMode.SQUARE)
 		skill_button.pressed.connect(func(): _on_select_skill(skill))
+		skill_button.mouse_entered.connect(func():
+			SkillTooltip.get_any().show_skill(skill, skill_button)
+		)
+		skill_button.mouse_exited.connect(func():
+			await get_tree().process_frame
+			SkillTooltip.get_any().request_hide(skill_button)
+		)
 		skill_button.add_child(skill_icon)
 		grid.add_child(skill_button)
 	

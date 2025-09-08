@@ -14,6 +14,7 @@
                 "intelligence": 0
             },
             "mana_cost": 6,
+            "cast_speed_scalar": 0.8,
             "damage_base": { "fire": [9, 14] },
             "effectiveness_of_added_damage": 2.6,
             "projectile_speed": 1040,
@@ -29,6 +30,7 @@
                 "intelligence": 0
             },
             "mana_cost": 6,
+            "cast_speed_scalar": 0.8,
             "damage_base": { "fire": [10, 16] },
             "effectiveness_of_added_damage": 2.6,
             "projectile_speed": 1040,

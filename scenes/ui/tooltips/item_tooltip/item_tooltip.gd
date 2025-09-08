@@ -1,10 +1,7 @@
-class_name ItemTooltip extends PanelContainer
+class_name ItemTooltip extends TooltipBase
 
 @export var item_name: Label
 @export var item_description: RichTextLabel
-
-var origin_owner: Control = null
-var _pending_hide: SceneTreeTimer = null
 
 func _ready() -> void:
 	add_to_group("ItemTooltip")
@@ -17,18 +14,18 @@ static func get_any() -> ItemTooltip:
 	return tree.get_first_node_in_group("ItemTooltip") as ItemTooltip
 
 func show_item(item: Item, origin_owner: Control = null) -> void:
+	show_for(origin_owner)
 	clear()
-	self.origin_owner = origin_owner
 	
 	# Name / Rarity
 	item_name.text = item.name
-	item_name.add_theme_color_override("font_color", rarity_color(item.rarity))
+	item_name.add_theme_color_override("font_color", ToolTipHelper.rarity_color(item.rarity))
 	
 	# Type
 	if item.tags.has(Item.Tag.WEAPON):
-		append_line("Arme - " + tags_to_strings(item.tags, [Item.Tag.WEAPON]))
+		append_line("Arme - " + ToolTipHelper.tags_to_strings(item.tags, [Item.Tag.WEAPON]))
 	elif item.tags.has(Item.Tag.ARMOUR):
-		append_line("Armure - " + tags_to_strings(item.tags, [Item.Tag.ARMOUR]))
+		append_line("Armure - " + ToolTipHelper.tags_to_strings(item.tags, [Item.Tag.ARMOUR]))
 	elif item.tags.has(Item.Tag.CURRENCY):
 		append_line("Currency")
 	elif item.tags.has(Item.Tag.GEM):
@@ -63,8 +60,6 @@ func show_item(item: Item, origin_owner: Control = null) -> void:
 		append_line("Pile: %d / %d" % [item.stack_current, item.stack_max], null, Color(.7, .7, .7))
 	
 	call_deferred("_after_fill")
-	_pending_hide = null
-	visible = true
 	
 func _after_fill() -> void:
 	if is_instance_valid(item_description):
@@ -72,24 +67,7 @@ func _after_fill() -> void:
 	reset_size()
 	
 func hide_item():
-	visible = false
-	
-func _process(_delta: float) -> void:
-	if not visible:
-		return
-		
-	var new_position = get_viewport().get_mouse_position()
-	var viewport_size = get_viewport().get_visible_rect().size
-	var tooltip_size = size
-	
-	if new_position.x + tooltip_size.x > viewport_size.x:
-		new_position.x = viewport_size.x - tooltip_size.x
-	if new_position.y + tooltip_size.y > viewport_size.y:
-		new_position.y = viewport_size.y - tooltip_size.y
-		
-	new_position.x = max(new_position.x, 0)
-	new_position.y = max(new_position.y, 0)
-	position = new_position
+	hide_now()
 
 # --- Block Gear
 func _add_gear_properties(gear: Gear):
@@ -169,38 +147,3 @@ func append_line(text: String, value: Variant = null, color: Color = Color.WHITE
 		item_description.append_text("[color=%s]%s[/color]\n" % [
 			color.to_html(), text
 		])
-		
-func rarity_color(rarity: Item.Rarity) -> Color:
-	match rarity:
-		Item.Rarity.NORMAL: return Color.WHITE
-		Item.Rarity.MAGIC: return Color(.3, .5, 1)
-		Item.Rarity.RARE: return Color(1, 1, .3)
-		Item.Rarity.UNIQUE: return Color(1, .5, .1)
-		_: return Color.WHITE
-
-func tags_to_strings(tags: Array, tags_ignored: Array = []) -> String:
-	var list = []
-	for tag in tags:
-		if tags_ignored.has(tag):
-			continue
-		if typeof(tag) == TYPE_STRING:
-			list.append(tag.capitalize())
-		elif typeof(tag) == TYPE_INT:
-			list.append(str(Item.Tag.keys()[tag]).capitalize())
-	return " / ".join(list)
-
-func request_hide(request_control: Control) -> void:
-	if request_control != origin_owner:
-		return
-	if _pending_hide != null:
-		return
-	_pending_hide = get_tree().create_timer(0.0)
-	_pending_hide.timeout.connect(func():
-		_pending_hide = null
-		if request_control != origin_owner:
-			return
-		var hovered := get_viewport().gui_get_hovered_control()
-		if hovered != null and (hovered == request_control or request_control.is_ancestor_of(hovered)):
-			return
-		hide_item()
-	)

@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://6fvn45q6m2qo"]
 
-[ext_resource type="Script" uid="uid://cy1i5s42tci3" path="res://scenes/ui/item_tooltip/item_tooltip.gd" id="1_5152n"]
+[ext_resource type="Script" uid="uid://cy1i5s42tci3" path="res://scenes/ui/tooltips/item_tooltip/item_tooltip.gd" id="1_5152n"]
 
 [node name="ItemTooltip" type="PanelContainer" node_paths=PackedStringArray("item_name", "item_description")]
 top_level = true

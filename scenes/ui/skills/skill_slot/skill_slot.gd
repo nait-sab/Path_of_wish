@@ -47,3 +47,12 @@ func _on_controls_changed(_opts: Dictionary) -> void:
 func _refresh_bind_label() -> void:
 	if action_name != "":
 		keybind_label.text = Options.get_action_short_label(action_name)
+
+func _on_mouse_entered() -> void:
+	if current_instance:
+		SkillTooltip.get_any().show_skill(current_instance, self)
+	
+func _on_mouse_exited() -> void:
+	await get_tree().process_frame
+	if current_instance:
+		SkillTooltip.get_any().request_hide(self)
