@@ -2,16 +2,16 @@ class_name Player extends CharacterBody2D
 
 signal stats_changed(stats)
 
-@export_category("Data")
-@export var base_speed: float = 200
-@export var melee_range: float
-@export var melee_damage: float = 10
-@export var mana_cost: int = 3
+@export_category("Movement")
+@export var move_speed: float = 260
+@export var acceleration: float = 1800
+@export var friction: float = 1800
 
 @export_category("Components")
 @export var sprite: Sprite2D
-@export var melee_zone: CollisionShape2D
 @export var energy_shield_delay_timer: Timer
+
+var _input_dir := Vector2.ZERO
 
 # Caracteristics
 var level: int = 1
@@ -51,13 +51,23 @@ func _ready():
 	add_to_group("Player")
 	await get_tree().current_scene.ready
 	Inventory.get_any().connect("equipment_changed", Callable(self, "_on_equipment_changed"))
-	melee_zone.shape.radius = melee_range
 	load_current()
 	_refresh_data()
 	emit_signal("stats_changed", self)
-	
+
+static func get_any() -> Player:
+	var tree := Engine.get_main_loop() as SceneTree
+	if tree == null:
+		return null
+	return tree.get_first_node_in_group("Player") as Player
+
 func _process(delta: float) -> void:
 	var updated = false
+	
+	var mouse := get_global_mouse_position()
+	var to_mouse := mouse - global_position
+	if to_mouse.length_squared() > 0.0001:
+		rotation = to_mouse.angle()
 	
 	if life < life_max_cached and life_regen_percent > 0.0:
 		var regen_amount = life_max_cached * (life_regen_percent / 100.0) * delta
@@ -81,55 +91,27 @@ func _process(delta: float) -> void:
 		emit_signal("stats_changed", self)
 		
 func _physics_process(delta: float) -> void:
-	var direction := Input.get_vector("move_left", "move_right", "move_up", "move_down")
+	_input_dir = Input.get_vector(
+		"move_left", "move_right", "move_up", "move_down"
+	).normalized()
 	
 	if pickup_target and is_instance_valid(pickup_target):
 		var distance := (pickup_target.global_position - global_position)
 		if distance.length() > PICKUP_RADIUS:
-			direction = distance.normalized()
+			_input_dir = distance.normalized()
 		else:
 			_try_pickup_item(pickup_target)
 			pickup_target = null
 	
 	var movespeed_percent = StatEngine.get_stat("move_speed_percent")
-	var speed = base_speed * (1.0 + movespeed_percent / 100.0)
-	velocity = direction * speed
+	var speed = move_speed * (1.0 + movespeed_percent / 100.0)
+	var target_velocity: Vector2 = _input_dir * speed
 	
-	if direction != Vector2.ZERO:
-		rotation = direction.angle()
+	var acceleration := acceleration if _input_dir != Vector2.ZERO else friction
+	velocity = velocity.move_toward(target_velocity, acceleration * delta)
 	
 	move_and_slide()
-	
-	_cd = max(0, _cd - delta)
-	
-	if Input.is_action_pressed("attack") and _cd == 0:
-		_try_attack()
-		
-func _try_attack():	
-	if mana < mana_cost:
-		return
-		
-	var target: CharacterBody2D = _find_enemy_under_mouse()
-	
-	if target == null:
-		return
 
-	if target.global_position.distance_to(global_position) > melee_range:
-		return
-		
-	var packet := (DamagePacket.new()).melee_physical(melee_damage)
-	packet.can_crit = false
-	packet.crit_chance = 0.0
-	packet.crit_multiplier = 0.0
-	
-	if "receive_hit" in target:
-		target.receive_hit(packet)
-
-	#target.apply_damage(melee_damage)
-	mana = clamp(mana - mana_cost, 0, StatEngine.get_stat("mana_max"))
-	emit_signal("stats_changed", self)
-	_cd = attack_cooldown
-	
 func receive_hit(packet: DamagePacket) -> DamageReport:
 	var defender_get := Callable(StatEngine, "get_stat")
 	var defender_state := {
@@ -165,24 +147,7 @@ func _try_pickup_item(node: ItemLoot) -> void:
 	else:
 		# TODO - Sound of full inventory
 		pass
-	
-func _find_enemy_under_mouse():
-	var mouse := get_global_mouse_position()
-	
-	var best
-	var best_d: float = 60 # Range around cursor allowed
-	
-	for enemy: CharacterBody2D in get_tree().get_nodes_in_group("Enemy"):
-		if enemy.is_dead:
-			continue
-			
-		var distance := enemy.global_position.distance_to(mouse)
-		if distance < best_d:
-			best_d = distance
-			best = enemy
-			
-	return best
-	
+
 func load_current():
 	var stats: Dictionary = Game.current_char["stats"]
 	

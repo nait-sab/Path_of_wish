@@ -13,19 +13,21 @@
 [ext_resource type="PackedScene" uid="uid://b46y766uljjon" path="res://scenes/ui/skills/skills_window/skills_window.tscn" id="10_gb53w"]
 [ext_resource type="PackedScene" uid="uid://xy7umjnumcdd" path="res://scenes/ui/skills/skill_picker/skill_picker.tscn" id="11_5qq27"]
 
-[node name="World" type="Node2D" node_paths=PackedStringArray("player", "enemies_node", "loots_node")]
+[node name="World" type="Node2D" node_paths=PackedStringArray("player", "loots_node", "enemies_node", "projectiles_node")]
 script = ExtResource("1_6m72w")
 player = NodePath("Player")
-enemies_node = NodePath("Enemies")
 loots_node = NodePath("Loots")
+enemies_node = NodePath("Enemies")
+projectiles_node = NodePath("Projectiles")
 
 [node name="Player" parent="." instance=ExtResource("2_v5dby")]
 position = Vector2(805, 608)
-melee_damage = 50.0
 
 [node name="Loots" type="Node2D" parent="."]
 
 [node name="Enemies" type="Node2D" parent="."]
+
+[node name="Projectiles" type="Node2D" parent="."]
 
 [node name="Devtool" parent="." instance=ExtResource("7_j2gmx")]
 

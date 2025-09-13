@@ -63,5 +63,6 @@ func _on_area_2d_mouse_exited() -> void:
 	tooltip.hide_item()
 
 func _on_area_2d_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
-	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
-		emit_signal("pickup_requested", self)
+	if event is InputEventMouseButton:
+		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed and not event.is_echo() and not event.double_click:
+			emit_signal("pickup_requested", self)

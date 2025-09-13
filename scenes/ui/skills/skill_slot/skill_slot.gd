@@ -23,9 +23,13 @@ func _on_pressed() -> void:
 	SkillPicker.get_any().open(self)
 
 func _unhandled_input(event: InputEvent) -> void:
-	if action_name != "" and event.is_action_pressed(action_name) and not event.is_echo() and current_instance != null:
-		triggered.emit(self)
-		print("Trigger %s" % current_instance.final.get("id", ""))
+	if current_instance == null:
+		return
+	
+	if action_name != "" and event.is_action_pressed(action_name) and not event.is_echo():
+		var mouse_pos := get_viewport().get_mouse_position()
+		ActionBus.request_cast(current_instance, Player.get_any(), mouse_pos)
+		accept_event()
 
 func reset() -> void:
 	current_instance = null

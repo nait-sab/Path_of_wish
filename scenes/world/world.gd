@@ -1,14 +1,24 @@
 class_name World extends Node2D
 
 @export var player: Player
-@export var enemies_node: Node2D
 @export var loots_node: Node2D
+@export var enemies_node: Node2D
+@export var projectiles_node: Node2D
 
 const enemy_scene: PackedScene = preload("res://scenes/enemy/enemy.tscn")
 const loot_scene: PackedScene = preload("res://scenes/items/item_loot.tscn")
 
 # Config LOOT
 const LOOT_RADIUS_STEP := 24.0
+
+func _ready() -> void:
+	add_to_group("World")
+
+static func get_any() -> World:
+	var tree := Engine.get_main_loop() as SceneTree
+	if tree == null:
+		return null
+	return tree.get_first_node_in_group("World") as World
 
 func _exit_tree() -> void:
 	if Game.current_char_id != "":
