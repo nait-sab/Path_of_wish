@@ -1,35 +1,80 @@
-[gd_scene load_steps=3 format=3 uid="uid://cfolyylpbv677"]
+[gd_scene load_steps=8 format=3 uid="uid://cfolyylpbv677"]
 
 [ext_resource type="Script" uid="uid://bpffgfg5dgva6" path="res://scenes/skills/projectiles/fireball/fireball.gd" id="1_e7f53"]
+[ext_resource type="Texture2D" uid="uid://c1r73y7ot4cgb" path="res://assets/textures/skills/fireball/Fireball-Sheet.png" id="2_0pwr1"]
+[ext_resource type="Texture2D" uid="uid://clhv3utlyft8l" path="res://assets/textures/skills/fireball/light_fireball.png" id="3_hnn3l"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_in3j8"]
-size = Vector2(42, 42)
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_0pwr1"]
+radius = 20.0
+height = 52.0
+
+[sub_resource type="Animation" id="Animation_d7pvp"]
+resource_name = "Fireball"
+length = 1.2
+loop_mode = 1
+step = 0.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.5, 0.75),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [1, 2, 3, 0]
+}
+
+[sub_resource type="Animation" id="Animation_csfe8"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_4642m"]
+_data = {
+&"Fireball": SubResource("Animation_d7pvp"),
+&"RESET": SubResource("Animation_csfe8")
+}
 
 [node name="Fireball" type="Node2D" node_paths=PackedStringArray("collision_shape", "lifetime_timer")]
 script = ExtResource("1_e7f53")
 collision_shape = NodePath("Area2D/CollisionShape2D")
 lifetime_timer = NodePath("Lifetime")
 
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("2_0pwr1")
+hframes = 4
+
 [node name="Area2D" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-shape = SubResource("RectangleShape2D_in3j8")
-
-[node name="ColorRect" type="ColorRect" parent="."]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -20.0
-offset_right = 20.0
-offset_bottom = 20.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0.551684, 0.169714, 0.0883325, 1)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_0pwr1")
 
 [node name="Lifetime" type="Timer" parent="."]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_4642m")
+}
+autoplay = "Fireball"
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+color = Color(0.999995, 0.414003, 0.082373, 1)
+energy = 2.0
+texture = ExtResource("3_hnn3l")
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
 [connection signal="timeout" from="Lifetime" to="." method="_on_lifetime_timeout"]
