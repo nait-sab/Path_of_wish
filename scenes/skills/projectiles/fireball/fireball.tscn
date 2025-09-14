@@ -1,0 +1,35 @@
+[gd_scene load_steps=3 format=3 uid="uid://cfolyylpbv677"]
+
+[ext_resource type="Script" uid="uid://bpffgfg5dgva6" path="res://scenes/skills/projectiles/fireball/fireball.gd" id="1_e7f53"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_in3j8"]
+size = Vector2(42, 42)
+
+[node name="Fireball" type="Node2D" node_paths=PackedStringArray("collision_shape", "lifetime_timer")]
+script = ExtResource("1_e7f53")
+collision_shape = NodePath("Area2D/CollisionShape2D")
+lifetime_timer = NodePath("Lifetime")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_in3j8")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.551684, 0.169714, 0.0883325, 1)
+
+[node name="Lifetime" type="Timer" parent="."]
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="timeout" from="Lifetime" to="." method="_on_lifetime_timeout"]

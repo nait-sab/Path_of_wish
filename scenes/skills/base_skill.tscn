@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://c1dyjqxa5rbc4"]
+
+[ext_resource type="Script" uid="uid://cfpuq07fg7vg8" path="res://scenes/skills/base_skill.gd" id="1_hnlkd"]
+
+[node name="BaseSkill" type="Node2D"]
+script = ExtResource("1_hnlkd")

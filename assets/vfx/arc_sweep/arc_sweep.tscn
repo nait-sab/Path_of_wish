@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://cfl4n6waycq2"]
+
+[ext_resource type="Script" uid="uid://bhvup42owoqru" path="res://assets/vfx/arc_sweep/arc_sweep.gd" id="1_8lhw0"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_8lhw0"]
+blend_mode = 1
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_menr5"]
+blend_mode = 1
+
+[node name="ArcSweep" type="Node2D" node_paths=PackedStringArray("fill", "rim")]
+script = ExtResource("1_8lhw0")
+fill = NodePath("Fill")
+rim = NodePath("Rim")
+
+[node name="Fill" type="Polygon2D" parent="."]
+material = SubResource("CanvasItemMaterial_8lhw0")
+
+[node name="Rim" type="Line2D" parent="."]
+material = SubResource("CanvasItemMaterial_menr5")

@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://cle37c145gap"]
+
+[ext_resource type="Script" uid="uid://b40r1yvi0ugck" path="res://scenes/skills/melee/cleave/cleave.gd" id="1_hfpwj"]
+
+[node name="Cleave" type="Node2D"]
+script = ExtResource("1_hfpwj")
