@@ -67,6 +67,21 @@ func apply_supports(supports: Array[SkillInstance]) -> void:
 	
 	final["mana_cost"] = mana_cost
 
+static func make_default_attack() -> SkillInstance:
+	var instance := SkillInstance.new()
+	instance.final = {
+		"id": "default_attack",
+		"name": "Attaque par défaut",
+		"icon": "default_attack",
+		"level": "1",
+		"cast_speed_scalar": 1.0,
+		"weapon_physical_percent": 100.0,
+		"uses_weapon": true,
+		"unarmed_min": 2,
+		"unarmed_max": 6,
+	}
+	return instance
+
 func dump() -> void:
 	print("--- SkillInstance ---")
 	print("Gem: %s (level %d)" % [gem.name, level])

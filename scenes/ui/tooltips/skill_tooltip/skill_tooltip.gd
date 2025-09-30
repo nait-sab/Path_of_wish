@@ -19,8 +19,14 @@ static func get_any() -> SkillTooltip:
 
 func show_skill(skill: SkillInstance, origin_owner: Control = null) -> void:
 	show_for(origin_owner, TooltipBase.Placement.ABOVE_CENTERED)
-	skill_icon.setupByTexture(skill.gem.get_icon_texture(), SkillIcon.IconMode.SQUARE)
-	skill_name.text = skill.gem.name
+	if skill.gem:
+		skill_name.text = skill.gem.name
+		skill_description.text = skill.gem.description
+		skill_icon.setupByTexture(skill.gem.get_icon_texture(), SkillIcon.IconMode.SQUARE)
+	else:
+		skill_name.text = skill.final.get("name", "")
+		skill_description.text = ""
+		skill_icon.setupById(skill.final.get("icon", ""), SkillIcon.IconMode.SQUARE)
 	skill_cost.text = "%d Mana" % skill.final.get("mana_cost", 0)
 	
 	var cooldown: float = 0.0
@@ -32,7 +38,6 @@ func show_skill(skill: SkillInstance, origin_owner: Control = null) -> void:
 		cooldown = skill.final.get("cast_speed_scalar")
 	
 	skill_cooldown.text = "%s Sec" % String(ToolTipHelper.convert_comma_decimal(cooldown))
-	skill_description.text = skill.gem.description
 	reset_size()
 	
 func hide_item():

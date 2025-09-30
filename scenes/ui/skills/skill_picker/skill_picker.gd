@@ -41,29 +41,35 @@ func _build_grid() -> void:
 	for slot in grid.get_children():
 		slot.queue_free()
 	
+	var default_instance := SkillInstance.make_default_attack()
+	_add_skill_button(default_instance)
+	
 	var skills = SkillsWindow.get_any().get_instances()
 	
 	for skill: SkillInstance in skills:
 		if skill == null:
 			continue
-		var skill_button := Button.new()
-		skill_button.custom_minimum_size = Vector2(48, 48)
-		var skill_icon := SKILL_ICON_SCENE.instantiate()
-		skill_icon.setupById(skill.final.get("id", ""), SkillIcon.IconMode.SQUARE)
-		skill_button.pressed.connect(func(): _on_select_skill(skill))
-		skill_button.mouse_entered.connect(func():
-			SkillTooltip.get_any().show_skill(skill, skill_button)
-		)
-		skill_button.mouse_exited.connect(func():
-			await get_tree().process_frame
-			SkillTooltip.get_any().request_hide(skill_button)
-		)
-		skill_button.add_child(skill_icon)
-		grid.add_child(skill_button)
+		_add_skill_button(skill)
 	
 	await get_tree().process_frame
 	if visible:
 		_move_to_slot()
+
+func _add_skill_button(skill: SkillInstance) -> void:
+	var skill_button := Button.new()
+	skill_button.custom_minimum_size = Vector2(48, 48)
+	var skill_icon := SKILL_ICON_SCENE.instantiate()
+	skill_icon.setupById(skill.final.get("id", ""), SkillIcon.IconMode.SQUARE)
+	skill_button.pressed.connect(func(): _on_select_skill(skill))
+	skill_button.mouse_entered.connect(func():
+		SkillTooltip.get_any().show_skill(skill, skill_button)
+	)
+	skill_button.mouse_exited.connect(func():
+		await get_tree().process_frame
+		SkillTooltip.get_any().request_hide(skill_button)
+	)
+	skill_button.add_child(skill_icon)
+	grid.add_child(skill_button)
 
 func _on_select_skill(instance: SkillInstance):
 	skill_slot.apply_skill_instance(instance)

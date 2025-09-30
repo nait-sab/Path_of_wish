@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://clhv3utlyft8l"
-path="res://.godot/imported/light_fireball.png-d958b93223a93729b626919ba6739940.ctex"
+uid="uid://x4dgme67gukv"
+path="res://.godot/imported/default_attack.png-90087d78cee93abb100fe54148621ecf.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/textures/skills/fireball/light_fireball.png"
-dest_files=["res://.godot/imported/light_fireball.png-d958b93223a93729b626919ba6739940.ctex"]
+source_file="res://assets/textures/skills/default_attack.png"
+dest_files=["res://.godot/imported/default_attack.png-90087d78cee93abb100fe54148621ecf.ctex"]
 
 [params]
 

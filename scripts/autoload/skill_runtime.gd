@@ -1,6 +1,7 @@
 extends Node
 
 const SKILLS := {
+	"default_attack": preload("res://scenes/skills/default_attack/default_attack.tscn"),
 	"fireball": preload("res://scenes/skills/projectiles/fireball/fireball.tscn"),
 	"cleave": preload("res://scenes/skills/melee/cleave/cleave.tscn")
 }

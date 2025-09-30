@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://dcenahuoavwa0"]
+
+[ext_resource type="Script" uid="uid://draafgspsd2pl" path="res://scenes/skills/default_attack/default_attack.gd" id="1_vwvsa"]
+
+[node name="DefaultAttack" type="Node2D"]
+script = ExtResource("1_vwvsa")
+radius = null
+arc_degrees = null
+cast_time = null

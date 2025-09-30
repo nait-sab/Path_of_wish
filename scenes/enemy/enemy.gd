@@ -94,8 +94,6 @@ func _physics_process(_delta: float) -> void:
 func attack_target():
 	if not target or is_broken:
 		return
-	#if "apply_damage" in target:
-	#	target.apply_damage(roundi(damage))
 	
 	var packet := (DamagePacket.new()).melee_physical(damage)
 	packet.can_crit = true
