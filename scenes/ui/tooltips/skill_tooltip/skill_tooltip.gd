@@ -19,23 +19,23 @@ static func get_any() -> SkillTooltip:
 
 func show_skill(skill: SkillInstance, origin_owner: Control = null) -> void:
 	show_for(origin_owner, TooltipBase.Placement.ABOVE_CENTERED)
-	if skill.gem:
-		skill_name.text = skill.gem.name
-		skill_description.text = skill.gem.description
-		skill_icon.setupByTexture(skill.gem.get_icon_texture(), SkillIcon.IconMode.SQUARE)
+	if skill.origin_gem:
+		skill_name.text = skill.origin_gem.name
+		skill_description.text = skill.origin_gem.description
+		skill_icon.setupByTexture(skill.origin_gem.get_icon_texture(), SkillIcon.IconMode.SQUARE)
 	else:
-		skill_name.text = skill.final.get("name", "")
+		skill_name.text = skill.name
 		skill_description.text = ""
-		skill_icon.setupById(skill.final.get("icon", ""), SkillIcon.IconMode.SQUARE)
-	skill_cost.text = "%d Mana" % skill.final.get("mana_cost", 0)
+		skill_icon.setupById(skill.icon, SkillIcon.IconMode.SQUARE)
+	skill_cost.text = "%d Mana" % skill.mana_cost
 	
 	var cooldown: float = 0.0
-	if skill.final.get("attack_speed_scalar", -1.0) != -1.0:
+	if skill.attack_speed_scalar != 0.0:
 		skill_cooldown_type.text = "Temps d'attaque"
-		cooldown = skill.final.get("attack_speed_scalar")
-	elif skill.final.get("cast_speed_scalar", -1.0) != -1.0:
+		cooldown = skill.attack_speed_scalar
+	elif skill.cast_speed_scalar != 0.0:
 		skill_cooldown_type.text = "Temps d'utilisation"
-		cooldown = skill.final.get("cast_speed_scalar")
+		cooldown = skill.cast_speed_scalar
 	
 	skill_cooldown.text = "%s Sec" % String(ToolTipHelper.convert_comma_decimal(cooldown))
 	reset_size()

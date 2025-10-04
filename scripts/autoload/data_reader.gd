@@ -5,6 +5,11 @@ signal data_indexed()
 const ROOT_PATH := "res://data"
 const JSON_EXTENSION := ".json"
 
+const SKIP_CATEGORIES := {
+	"skills": true,
+	"supports": true,
+}
+
 var _collections: Dictionary = {}
 # Debug
 var _sources: Dictionary = {}
@@ -89,6 +94,10 @@ func _index_json_file(file_path: String) -> void:
 		
 	var category := _category_for(file_path)
 	if category == "":
+		return
+	
+	# Skip resources data
+	if SKIP_CATEGORIES.has(category):
 		return
 	
 	if not _collections.has(category):

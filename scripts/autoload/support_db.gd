@@ -1,74 +1,75 @@
 extends Node
 
-var _list: Dictionary = {}
+const SUPPORTS_DIR := "res://data/supports"
+const EXTENSION := ".tres"
+
+## String => SupportResource
+var _by_id: Dictionary = {}
+var _all: Array[SupportResource] = []
 
 func _ready() -> void:
-	if DataReader.list_categories().is_empty():
-		DataReader.data_indexed.connect(load_data)
-	else:
-		load_data()
+	_load()
 
-func load_data() -> void:
-	_list.clear()
-	var skills = DataReader.get_by_category("supports")
-	for skill: Dictionary in skills:
-		var id := str(skill.get("id", ""))
-		if id == "":
-			push_warning("[SUPPORT_DB] Skill without id -> skip")
+func _load() -> void:
+	_by_id.clear()
+	_all.clear()
+	
+	var dir := DirAccess.open(SUPPORTS_DIR)
+	if dir == null:
+		push_warning("[SUPPORT_DB] Missing dir %s" % SUPPORTS_DIR)
+		return
+	
+	dir.list_dir_begin()
+	while true:
+		var dir_name := dir.get_next()
+		if dir_name == "":
+			break
+		if dir.current_is_dir():
 			continue
-		_list[id] = skill
-	print("[SUPPORT_DB] Init done -> %d items loaded" % _list.size())
+		var low := dir_name.to_lower()
+		if not low.ends_with(EXTENSION):
+			continue
+		var path := SUPPORTS_DIR.path_join(dir_name)
+		var resource := ResourceLoader.load(path)
+		if resource == null:
+			push_warning("[SUPPORT_DB] Failed to load %s" % path)
+			continue
+		if not resource is SupportResource:
+			push_warning("[SUPPORT_DB] Resource isn't SupportResource at %s" % path)
+			continue
+		_register_support(resource)
+	
+	dir.list_dir_end()
+	print("[SUPPORT_DB] Init done -> %d items loaded" % _all.size())
 
-# --- Helpers
-static func _as_array(value: Variant) -> Array:
-	if typeof(value) == TYPE_ARRAY:
-		return value
-	elif typeof(value) == TYPE_STRING and value != "":
-		return [value]
-	return []
+func _register_support(resource: SupportResource) -> void:
+	_by_id[resource.id] = resource
+	_all.append(resource)
 
-static func _pick_level_block(levels: Array, want_level: int) -> Dictionary:
-	var best := {}
-	var best_level := -1
+# --- API
+## List of SupportResource
+func get_all() -> Array:
+	return _all
 
-	for level in levels:
-		var skill_level := int(level.get("level", 1))
-		if skill_level == want_level:
-			return level
-		if skill_level < want_level and skill_level > best_level:
-			best_level = skill_level
-			best = level
-	if not best.is_empty():
-		return best
-	return levels[0] if levels.size() > 0 else {}
+func has(id: String) -> bool:
+	return _by_id.has(id)
 
-func get_support(id: String, level: int) -> Dictionary:
-	var model: Dictionary = _list.get(id, {})
-	if model == {}:
-		push_warning("[SUPPORT_DB] Unknown id %s" % id)
-		return {}
-	var result := {}
-	result["id"] = model.get("id","")
-	result["type"] = model.get("type", "active")
-	result["applies_to_tags"] = _as_array(model.get("applies_to_tags", []))
-	result["drop_level"] = int(model.get("drop_level", 1))
+func get_support(id: String) -> SupportResource:
+	if not has(id):
+		print("[SUPPORT_DB] ID not found : %s" % id)
+		return null
+	
+	return _by_id.get(id)
 
-	var levels: Array = model.get("levels", [])
-	var skill_level := _pick_level_block(levels, level)
-	# merge level fields into result
-	for key in skill_level.keys():
-		result[str(key)] = skill_level[key]
-
-	# normalize some types
-	if result.has("requirements"):
-		var requirements: Dictionary = result["requirements"]
-		result["requirements"] = {
-			"level": int(requirements.get("level", 1)),
-			"strength": int(requirements.get("strength", 0)),
-			"dexterity": int(requirements.get("dexterity", 0)),
-			"intelligence": int(requirements.get("intelligence", 0)),
-		}
-	if result.has("xp_to_next"):
-		result["xp_to_next"] = int(result["xp_to_next"])
-
-	return result
+func get_level(id: String, level: int) -> SkillLevelResource:
+	if not has(id):
+		print("[SUPPORT_DB] ID not found : %s" % id)
+		return null
+	
+	var support: SupportResource = _by_id.get(id)
+	
+	for level_infos: SkillLevelResource in support.levels:
+		if level_infos.level == level:
+			return level_infos
+	
+	return null

@@ -37,12 +37,12 @@ func reset() -> void:
 
 func apply_skill_instance(instance: SkillInstance) -> void:
 	current_instance = instance
-	skill_icon.setupById(instance.final.get("id", ""), SkillIcon.IconMode.SQUARE)
+	skill_icon.setupById(instance.id, SkillIcon.IconMode.SQUARE)
 
 func _on_skills_changed() -> void:
 	if current_instance == null:
 		return
-	if current_instance.final.get("id", "") == "default_attack":
+	if current_instance.id == "default_attack":
 		return
 	if not SkillsWindow.get_any().get_instances().has(current_instance):
 		reset()

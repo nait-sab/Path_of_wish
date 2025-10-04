@@ -1,0 +1,40 @@
+[gd_resource type="Resource" script_class="SkillResource" load_steps=5 format=3 uid="uid://cmhv70cs54s52"]
+
+[ext_resource type="Script" uid="uid://7l3c5iuct2dp" path="res://resources/skills/skill_level_resource.gd" id="1_ope86"]
+[ext_resource type="Script" uid="uid://tegucct6boqu" path="res://resources/skills/skill_resource.gd" id="2_0kv8v"]
+
+[sub_resource type="Resource" id="Resource_ope86"]
+script = ExtResource("1_ope86")
+xp_to_next = 70
+mana_cost = 6
+cast_speed_scalar = 0.8
+effectiveness_of_added_damage = 2.6
+damage_base = {
+"fire": [9, 14]
+}
+crit_chance_percent = 6.0
+radius = 9
+projectile_speed = 1040
+metadata/_custom_type_script = "uid://7l3c5iuct2dp"
+
+[sub_resource type="Resource" id="Resource_0kv8v"]
+script = ExtResource("1_ope86")
+level = 2
+xp_to_next = 378
+mana_cost = 6
+cast_speed_scalar = 0.8
+effectiveness_of_added_damage = 2.6
+damage_base = {
+"fire": [10, 16]
+}
+crit_chance_percent = 6.0
+radius = 9
+projectile_speed = 1040
+metadata/_custom_type_script = "uid://7l3c5iuct2dp"
+
+[resource]
+script = ExtResource("2_0kv8v")
+id = "fireball"
+tags = Array[String](["spell", "projectile", "aoe", "fire"])
+levels = Array[ExtResource("1_ope86")]([SubResource("Resource_ope86"), SubResource("Resource_0kv8v")])
+metadata/_custom_type_script = "uid://tegucct6boqu"

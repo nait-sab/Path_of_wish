@@ -1,102 +1,142 @@
 class_name SkillInstance extends RefCounted
 
-var gem: Gem
+# Origin informations
+var origin_gem: Gem
 var level: int = 1
 var is_support: bool = false
 var origin_item_id: int = 0
+## SkillResource or SupportResource
+var resource: Resource
+var skill_level: SkillLevelResource
 
-var def: Dictionary = {}
-var final: Dictionary = {}
-var applied_supports: Array[Dictionary] = []
+# Final skill data
+var id: String = ""
+var name: String = ""
+var icon: String = ""
+var tags: Array[String] = []
+var applies_to_tags: Array[String] = []
+var xp_current: int = 0
+var xp_to_next: int = 0
+
+var uses_weapon: bool = false
+
+var min_level: int = 0
+var min_strength: int = 0
+var min_dexterity: int = 0
+var min_intelligence: int = 0
+var mana_cost: int = 0
+var attack_speed_scalar: float = 0.0
+var cast_speed_scalar: float = 0.0
+var weapon_physical_percent: float = 0.0
+var crit_chance_percent: float = 0.0
+var damage_base: Dictionary = {}
+var radius: int = 0
+
+# Modifiers
+var added_fire_from_physical_percent: float = 0.0
 
 func setup_from_gem(_gem: Gem) -> void:
-	gem = _gem
-	level = max(1, int(gem.item_level))
-	is_support = gem.support_id != ""
-	origin_item_id = int(gem.get_instance_id())
+	origin_gem = _gem
+	level = max(1, int(origin_gem.item_level))
+	is_support = origin_gem.support_id != ""
+	origin_item_id = int(origin_gem.get_instance_id())
 
 	if is_support:
-		def = SupportDb.get_support(gem.support_id, level)
+		skill_level = SupportDb.get_level(origin_gem.support_id, level)
+		resource = SupportDb.get_support(origin_gem.support_id)
 	else:
-		def = SkillDb.get_skill(gem.skill_id, level)
+		skill_level = SkillDb.get_level(origin_gem.skill_id, level)
+		resource = SkillDb.get_skill(origin_gem.skill_id)
 
-	final = def.duplicate(true)
-	final["gem_name"] = gem.name
-	final["description"] = gem.description
-	final["xp_current"] = gem.xp_current
-	final["xp_to_next"] = gem.xp_to_next
-	final["spirit_cost"] = gem.spirit_cost
-	final["requirements"] = gem.requirements
+	_recompute()
+
+func _recompute() -> void:
+	id = resource.id
+	name = origin_gem.name
+	icon = origin_gem.icon_path
+	xp_current = origin_gem.xp_current
+	
+	if resource is SkillResource:
+		uses_weapon = resource.uses_weapon
+		tags = resource.tags
+	
+	if resource is SupportResource:
+		applies_to_tags = resource.applies_to_tags
+	
+	xp_to_next = skill_level.xp_to_next
+	min_level = skill_level.min_level
+	min_strength = skill_level.min_strength
+	min_dexterity = skill_level.min_dexterity
+	min_intelligence = skill_level.min_intelligence
+	mana_cost = skill_level.mana_cost
+	attack_speed_scalar = skill_level.attack_speed_scalar
+	cast_speed_scalar = skill_level.cast_speed_scalar
+	weapon_physical_percent = skill_level.weapon_physical_percent
+	crit_chance_percent = skill_level.crit_chance_percent
+	damage_base = skill_level.damage_base
+	radius = skill_level.radius
 
 func apply_supports(supports: Array[SkillInstance]) -> void:
 	if is_support:
 		return
-
-	var base_tags: Array = final.get("tags", [])
-	var mana_cost: float = final.get("mana_cost", 0)
 
 	for support in supports:
 		# Skip skill instance
 		if not support.is_support:
 			continue
 
-		var applies_to: Array = support.final.get("applies_to_tags", [])
-		if applies_to.is_empty():
+		if support.applies_to_tags.is_empty():
 			continue
 
-		# Vérifie compatibilité tags
+		# Check compatibility tags
 		var ok := false
-		for tag in base_tags:
-			if tag in applies_to:
+		for tag in tags:
+			if tag in support.applies_to_tags:
 				ok = true
 				break
 		if not ok:
 			continue
 
-		applied_supports.append(support.final)
-
-		var effects: Dictionary = support.final.get("effects", {})
+		var effects = support.skill_level.effects
+		
 		for key in effects.keys():
 			match key:
 				"mana_multiplier_percent":
 					mana_cost = ceil(mana_cost * (effects[key] / 100.0))
 				"added_fire_from_physical_percent":
-					final["added_fire_from_physical_percent"] = final.get("added_fire_from_physical_percent", 0) + effects[key]
+					added_fire_from_physical_percent += effects[key]
 				_:
 					print("Support effect without any case: %s", str(key))
-	
-	final["mana_cost"] = mana_cost
 
 static func make_default_attack() -> SkillInstance:
 	var instance := SkillInstance.new()
-	instance.final = {
-		"id": "default_attack",
-		"name": "Attaque par défaut",
-		"icon": "default_attack",
-		"level": "1",
-		"cast_speed_scalar": 1.0,
-		"weapon_physical_percent": 100.0,
-		"uses_weapon": true,
-		"unarmed_min": 2,
-		"unarmed_max": 6,
+	instance.id = "default_attack"
+	instance.name = "Attaque par défaut"
+	instance.icon = "default_attack"
+	instance.level = 1
+	instance.cast_speed_scalar = 1.0
+	instance.weapon_physical_percent = 100.0
+	instance.uses_weapon = true
+	instance.damage_base = {
+		"physical": [2, 6]
 	}
 	return instance
 
 func dump() -> void:
 	print("--- SkillInstance ---")
-	print("Gem: %s (level %d)" % [gem.name, level])
+	print("Gem: %s (level %d)" % [origin_gem.name, level])
 	print("Support ?: %s" % str(is_support))
-	print("Tags / Applies: ", final.get("tags", final.get("applies_to_tags", [])))
-	print("Mana Cost: ", final.get("mana_cost", 0))
-	print("Uses Weapon: ", final.get("uses_weapon", false))
-	if final.has("weapon_physical_percent"):
-		print("Weapon % Phys: ", final["weapon_physical_percent"])
-	if final.has("damage_base"):
-		print("Damage Base: ", final["damage_base"])
-	if final.has("radius"):
-		print("Radius: ", final["radius"])
-	if final.has("added_fire_from_physical_percent"):
-		print("Added Fire% Phys: ", final["added_fire_from_physical_percent"])
-	print("Reqs: ", final.get("requirements", {}))
-	print("XP: %d / %d" % [final.get("xp_current",0), final.get("xp_to_next",0)])
+	print("Tags: ", tags)
+	print("Applies: ", applies_to_tags)
+	print("Mana Cost: ", mana_cost)
+	print("Uses Weapon: ", uses_weapon)
+	print("Weapon % Phys: ", weapon_physical_percent)
+	print("Damage Base: ", damage_base)
+	print("Radius: ", radius)
+	print("Added Fire% Phys: ", added_fire_from_physical_percent)
+	print("Min level", min_level)
+	print("Min strength", min_strength)
+	print("Min dexterity", min_dexterity)
+	print("Min intelligence", min_intelligence)
+	print("XP: %d / %d" % [xp_current, xp_to_next])
 	print("---------------------")
