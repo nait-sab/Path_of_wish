@@ -1,0 +1,31 @@
+[gd_resource type="Resource" script_class="SupportResource" load_steps=5 format=3 uid="uid://f4wophsv5g2q"]
+
+[ext_resource type="Script" uid="uid://7l3c5iuct2dp" path="res://resources/skills/skill_level_resource.gd" id="1_ldv1i"]
+[ext_resource type="Script" uid="uid://nhifnhicdfwc" path="res://resources/skills/support_resource.gd" id="2_mif3g"]
+
+[sub_resource type="Resource" id="Resource_ldv1i"]
+script = ExtResource("1_ldv1i")
+xp_to_next = 70
+effects = {
+"added_fire_from_physical_percent": 25.0,
+"mana_multiplier_percent": 110.0
+}
+metadata/_custom_type_script = "uid://7l3c5iuct2dp"
+
+[sub_resource type="Resource" id="Resource_mif3g"]
+script = ExtResource("1_ldv1i")
+level = 2
+xp_to_next = 70
+min_level = 2
+effects = {
+"added_fire_from_physical_percent": 25.0,
+"mana_multiplier_percent": 110.0
+}
+metadata/_custom_type_script = "uid://7l3c5iuct2dp"
+
+[resource]
+script = ExtResource("2_mif3g")
+id = "added_fire"
+applies_to_tags = Array[String](["attack", "spell"])
+levels = Array[ExtResource("1_ldv1i")]([SubResource("Resource_ldv1i"), SubResource("Resource_mif3g")])
+metadata/_custom_type_script = "uid://nhifnhicdfwc"

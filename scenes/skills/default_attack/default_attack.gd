@@ -15,8 +15,8 @@ func _on_cast_started():
 	global_position = source.global_position
 	
 	# 2. Cast time - Used later
-	var scalar := float(instance.final.get("cast_speed_scalar", 1.0))
-	var time: float = max(0.001, cast_time / scalar)
+	#var scalar := float(instance.final.get("cast_speed_scalar", 1.0))
+	#var time: float = max(0.001, cast_time / scalar)
 	
 	# 3. Use the correct attack based on the main hand
 	match _style:
@@ -53,13 +53,11 @@ func _do_melee(unarmed: bool) -> void:
 	if not unarmed:
 		apply_hit(enemy)
 	else:
-		var damage := randi_range(
-			instance.final.get("unarmed_min", 2),
-			instance.final.get("unarmed_max", 6)
-		)
-		
 		var packet := SkillMath.build_packet(instance, Callable(StatEngine, "get_stat"), null)
-		packet.physical = damage
+		packet.physical = randi_range(
+			instance.damage_base["physical"][0],
+			instance.damage_base["physical"][1]
+		)
 		enemy.receive_hit(packet)
 
 func _find_enemy_near_cursor(origin: Vector2, cursor: Vector2, max_range: float, arc_deg: float) -> Enemy:

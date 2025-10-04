@@ -1,0 +1,32 @@
+[gd_resource type="Resource" script_class="SkillResource" load_steps=5 format=3 uid="uid://ddl7subs2dcuo"]
+
+[ext_resource type="Script" uid="uid://7l3c5iuct2dp" path="res://resources/skills/skill_level_resource.gd" id="1_se1q1"]
+[ext_resource type="Script" uid="uid://tegucct6boqu" path="res://resources/skills/skill_resource.gd" id="2_6v63m"]
+
+[sub_resource type="Resource" id="Resource_se1q1"]
+script = ExtResource("1_se1q1")
+xp_to_next = 70
+mana_cost = 7
+attack_speed_scalar = 0.8
+weapon_physical_percent = 179.4
+radius = 20
+metadata/_custom_type_script = "uid://7l3c5iuct2dp"
+
+[sub_resource type="Resource" id="Resource_6v63m"]
+script = ExtResource("1_se1q1")
+level = 2
+xp_to_next = 378
+min_level = 2
+mana_cost = 7
+attack_speed_scalar = 0.8
+weapon_physical_percent = 188.7
+radius = 21
+metadata/_custom_type_script = "uid://7l3c5iuct2dp"
+
+[resource]
+script = ExtResource("2_6v63m")
+id = "cleave"
+tags = Array[String](["attack", "melee", "aoe", "physical"])
+uses_weapon = true
+levels = Array[ExtResource("1_se1q1")]([SubResource("Resource_se1q1"), SubResource("Resource_6v63m")])
+metadata/_custom_type_script = "uid://tegucct6boqu"

@@ -1,162 +1,118 @@
 class_name SkillMath extends RefCounted
 
-static func build_packet(skill: SkillInstance, _get_stat: Callable, main_hand: Gear) -> DamagePacket:
-	# 1 - Get weapon stats
-	var physical_range: Vector2 = Vector2.ZERO
-	
-	if main_hand:
-		physical_range = main_hand.get_final_physical_range()
-		
-	# 2 - Split the skill damage types
-	var base_physical := 0.0
-	var base_fire := 0.0
-	var base_cold := 0.0
-	var base_lightning := 0.0
-	var base_chaos := 0.0
-	
-	# Skill using weapon stats
-	if skill.final.get("uses_weapon", false):
-		var weapon_packet := float(skill.final.get("weapon_physical_percent", 0.0)) / 100.0
-		if weapon_packet > 0.0 and physical_range != Vector2.ZERO:
-			var hit_physical := randf_range(physical_range.x, physical_range.y)
-			base_physical += hit_physical * weapon_packet
-	
-	# Skill with base damage (ex: spell)
-	if skill.final.has("damage_base"):
-		var data := skill.final["damage_base"] as Dictionary
-		for key in data.keys():
-			var value = data[key]
-			var rolled := 0.0
-			
-			if typeof(value) == TYPE_ARRAY and value.size() == 2:
-				rolled = randf_range(float(value[0]), float(value[1]))
-			else:
-				rolled = float(value)
-			
-			match str(key):
-				"physical": 		base_physical += rolled
-				"fire": 			base_fire += rolled
-				"cold": 			base_cold += rolled
-				"lightning": 	base_lightning += rolled
-				"chaos": 		base_chaos += rolled
-	
-	# Supports
-	var added_fire_percent := float(skill.final.get("added_fire_from_physical_percent", 0.0))
-	if added_fire_percent != 0.0 and base_physical > 0.0:
-		base_fire += base_physical * (added_fire_percent / 100.0)
-		
-	# TODO - Effectiveness coming from equipments
-	#var effectiveness := float(skill.final.get("effectiveness_of_added_damage", 1.0))
-	#base_fire += flat_fire_from_stats * effectiveness
-	
-	# 3 - Handle crit
-	var critical_chance := float(skill.final.get("crit_chance_percent", 0.0))
-	var is_critical := randf() < (critical_chance / 100.0)
-	if is_critical:
-		# TODO - Prepare critical stats on the player ! use 50% multiplier by default
-		base_physical 	*= 1.5
-		base_fire 		*= 1.5
-		base_cold 		*= 1.5
-		base_lightning 	*= 1.5
-		base_chaos 		*= 1.5
-		
-	# 4 - Make the packet
+# --- API
+static func build_packet(instance: SkillInstance, _get_stat: Callable, weapon: Gear) -> DamagePacket:
 	var packet := DamagePacket.new()
-	packet.physical 		= max(base_physical, 0.0)
-	packet.fire 			= max(base_fire, 0.0)
-	packet.cold 			= max(base_cold, 0.0)
-	packet.lightning 	= max(base_lightning, 0.0)
-	packet.chaos 		= max(base_chaos, 0.0)
-	
-	return packet
 
-static func build_packet_average(skill: SkillInstance, _get_stat: Callable, main_hand: Gear) -> DamagePacket:
-	# 1 - Get weapon stats
-	var physical_range: Vector2 = Vector2.ZERO
-	var attack_speed: float = 1.0
-	
-	if main_hand:
-		physical_range = main_hand.get_final_physical_range()
-		attack_speed = main_hand.get_final_attack_speed()
-		
-	# 2 - Split the skill damage types
-	var base_physical := 0.0
-	var base_fire := 0.0
-	var base_cold := 0.0
-	var base_lightning := 0.0
-	var base_chaos := 0.0
-	
-	# Skill using weapon stats
-	if skill.final.get("uses_weapon", false):
-		var weapon_packet := float(skill.final.get("weapon_physical_percent", 0.0)) / 100.0
-		if weapon_packet > 0.0 and physical_range != Vector2.ZERO:
-			var hit_physical := (float(physical_range.x) + float(physical_range.y)) * .5
-			base_physical += hit_physical * weapon_packet
-	
-	# Skill with base damage (ex: spell)
-	if skill.final.has("damage_base"):
-		var data := skill.final["damage_base"] as Dictionary
-		for key in data.keys():
-			var value = data[key]
-			var rolled := 0.0
-			
-			if typeof(value) == TYPE_ARRAY and value.size() == 2:
-				rolled = (float(value[0]) + float(value[1])) *.5
-			else:
-				rolled = float(value)
-			
-			match str(key):
-				"physical": 		base_physical += rolled
-				"fire": 			base_fire += rolled
-				"cold": 			base_cold += rolled
-				"lightning": 	base_lightning += rolled
-				"chaos": 		base_chaos += rolled
-	
-	# Supports
-	var added_fire_percent := float(skill.final.get("added_fire_from_physical_percent", 0.0))
-	if added_fire_percent != 0.0 and base_physical > 0.0:
-		base_fire += base_physical * (added_fire_percent / 100.0)
-		
-	# TODO - Effectiveness coming from equipments
-	#var effectiveness := float(skill.final.get("effectiveness_of_added_damage", 1.0))
-	#base_fire += flat_fire_from_stats * effectiveness
-	
-	# 3 - Handle crit
-	var critical_chance := float(skill.final.get("crit_chance_percent", 0.0))
-	# TODO - Prepare critical stats on the player ! use 50% multiplier by default
-	var critical_multiplier := 1.5
-	var average_critical := 1.0 + (critical_multiplier - 1.0) * (critical_chance / 100.0)
-	
-	base_physical 	*= average_critical
-	base_fire 		*= average_critical
-	base_cold 		*= average_critical
-	base_lightning 	*= average_critical
-	base_chaos 		*= average_critical
-	
-	# 4 - handle speed
-	var speed := 1.0
-	if skill.final.get("uses_weapon", false) and main_hand:
-		speed *= attack_speed
-	else:
-		speed *= float(skill.final.get("casts_per_second", 1.0))
-		
-	base_physical 	*= speed
-	base_fire 		*= speed
-	base_cold 		*= speed
-	base_lightning 	*= speed
-	base_chaos 		*= speed
-	
-	# 5 - Make the packet
+	return _calculate_damage_packet(
+		packet,
+		instance,
+		weapon,
+		false
+	)
+
+static func build_packet_average(instance: SkillInstance, _get_stat: Callable, weapon: Gear) -> DamagePacket:
 	var packet := DamagePacket.new()
-	packet.physical 		= max(base_physical, 0.0)
-	packet.fire 			= max(base_fire, 0.0)
-	packet.cold 			= max(base_cold, 0.0)
-	packet.lightning 	= max(base_lightning, 0.0)
-	packet.chaos 		= max(base_chaos, 0.0)
-	
-	return packet
+
+	return _calculate_damage_packet(
+		packet,
+		instance,
+		weapon,
+		true
+	)
 
 static func final_mana_cost(skill: SkillInstance, _stat_get: Callable) -> int:
-	var base := float(skill.final.get("mana_cost", 0))
+	var base := float(skill.mana_cost)
 	# TODO - Handle special stats like mana cost reduction, ect
 	return int(round(base))
+
+# --- Helpers
+static func _calculate_damage_packet(packet: DamagePacket, instance: SkillInstance, weapon: Gear, is_average: bool) -> DamagePacket:
+	packet = _calculate_weapon_damage(packet, instance, weapon, is_average)
+	packet = _calculate_damage_base(packet, instance, is_average)
+	packet = _calculate_modifiers(packet, instance)
+	packet = _calculate_critical(packet, instance, is_average)
+	if is_average:
+		packet = _calculate_weapon_speed(packet, instance, weapon)
+	
+	return packet
+
+static func _calculate_weapon_damage(packet: DamagePacket, instance: SkillInstance, weapon: Gear, is_average: bool) -> DamagePacket:
+	if not instance.uses_weapon or weapon == null:
+		return packet
+	
+	var physical_range: Vector2 = weapon.get_final_physical_range()
+	var physical_percent: float = instance.weapon_physical_percent / 100.0
+	
+	if physical_percent > 0.0 and physical_range != Vector2.ZERO:
+		var physical_hit: float = 0.0
+		if is_average:
+			physical_hit = (float(physical_range.x) + float(physical_range.y)) / 2
+		else:
+			physical_hit = randf_range(float(physical_range.x), float(physical_range.y))
+		packet.physical += physical_hit * physical_percent
+	return packet
+
+static func _calculate_damage_base(packet: DamagePacket, instance: SkillInstance, is_average: bool) -> DamagePacket:
+	if instance.damage_base.is_empty():
+		return packet
+	
+	for damage_type in instance.damage_base.keys():
+		var value = instance.damage_base[damage_type]
+		var roll = 0.0
+		
+		if typeof(value) == TYPE_ARRAY and value.size() == 2:
+			if is_average:
+				roll = (float(value[0]) + float(value[1])) / 2
+			else:
+				roll = randf_range(float(value[0]), float(value[1]))
+		else:
+			roll = float(value)
+		
+		match str(damage_type):
+			"physical": packet.physical += roll
+			"fire": packet.fire += roll
+			"cold": packet.cold += roll
+			"lightning": packet.lightning += roll
+			"chaos": packet.chaos += roll
+	return packet
+
+static func _calculate_modifiers(packet: DamagePacket, instance: SkillInstance) -> DamagePacket:
+	if instance.added_fire_from_physical_percent != 0.0 and packet.physical > 0.0:
+		packet.fire += packet.physical * (instance.added_fire_from_physical_percent / 100.0)
+	return packet
+
+static func _calculate_critical(packet: DamagePacket, instance: SkillInstance, is_average: bool) -> DamagePacket:
+	# TODO: Get the multiplier from player stats. 150% fixed for now
+	var critical_multiplier = 150.0 / 100.0
+	var is_critical: bool = randf() < (instance.crit_chance_percent / 100.0)
+	var average_critical: float = 1.0 + (critical_multiplier - 1.0) * (instance.crit_chance_percent / 100.0)
+	
+	if is_critical and not is_average:
+		packet.physical *= critical_multiplier
+		packet.fire *= critical_multiplier
+		packet.cold *= critical_multiplier
+		packet.lightning *= critical_multiplier
+		packet.chaos *= critical_multiplier
+	if is_average:
+		packet.physical *= average_critical
+		packet.fire *= average_critical
+		packet.cold *= average_critical
+		packet.lightning *= average_critical
+		packet.chaos *= average_critical
+	return packet
+
+static func _calculate_weapon_speed(packet: DamagePacket, instance: SkillInstance, weapon: Gear) -> DamagePacket:
+	if weapon == null:
+		return packet
+	var speed := 1.0
+	if instance.uses_weapon:
+		speed = weapon.get_final_attack_speed() * instance.attack_speed_scalar
+	else:
+		speed = instance.cast_speed_scalar
+	packet.physical *= speed
+	packet.fire *= speed
+	packet.cold *= speed
+	packet.lightning *= speed
+	packet.chaos *= speed
+	return packet

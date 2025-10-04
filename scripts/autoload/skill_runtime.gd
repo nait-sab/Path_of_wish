@@ -27,7 +27,7 @@ func _on_cast_requested(instance: SkillInstance, source: Node, target_pos: Vecto
 		ActionBus.cast_rejected.emit("no_camera", instance, source)
 		return
 	
-	var id := str(instance.final.get("id", ""))
+	var id := str(instance.id)
 	var scene: PackedScene = SKILLS.get(id, null)
 	
 	if scene == null:

@@ -59,7 +59,7 @@ func _add_skill_button(skill: SkillInstance) -> void:
 	var skill_button := Button.new()
 	skill_button.custom_minimum_size = Vector2(48, 48)
 	var skill_icon := SKILL_ICON_SCENE.instantiate()
-	skill_icon.setupById(skill.final.get("id", ""), SkillIcon.IconMode.SQUARE)
+	skill_icon.setupById(skill.id, SkillIcon.IconMode.SQUARE)
 	skill_button.pressed.connect(func(): _on_select_skill(skill))
 	skill_button.mouse_entered.connect(func():
 		SkillTooltip.get_any().show_skill(skill, skill_button)

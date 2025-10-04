@@ -1,77 +1,75 @@
 extends Node
 
-var _list: Dictionary = {}
+const SKILLS_DIR := "res://data/skills"
+const EXTENSION := ".tres"
+
+## String => SkillResource
+var _by_id: Dictionary = {}
+var _all: Array[SkillResource] = []
 
 func _ready() -> void:
-	if DataReader.list_categories().is_empty():
-		DataReader.data_indexed.connect(load_data)
-	else:
-		load_data()
+	_load()
 
-func load_data() -> void:
-	_list.clear()
-	var skills = DataReader.get_by_category("skills")
-	for skill: Dictionary in skills:
-		var id := str(skill.get("id", ""))
-		if id == "":
-			push_warning("[SKILL_DB] Skill without id -> skip")
+func _load() -> void:
+	_by_id.clear()
+	_all.clear()
+	
+	var dir := DirAccess.open(SKILLS_DIR)
+	if dir == null:
+		push_warning("[SKILL_DB] Missing dir %s" % SKILLS_DIR)
+		return
+	
+	dir.list_dir_begin()
+	while true:
+		var dir_name := dir.get_next()
+		if dir_name == "":
+			break
+		if dir.current_is_dir():
 			continue
-		_list[id] = skill
-	print("[SKILL_DB] Init done -> %d items loaded" % _list.size())
+		var low := dir_name.to_lower()
+		if not low.ends_with(EXTENSION):
+			continue
+		var path := SKILLS_DIR.path_join(dir_name)
+		var resource := ResourceLoader.load(path)
+		if resource == null:
+			push_warning("[SKILL_DB] Failed to load %s" % path)
+			continue
+		if not resource is SkillResource:
+			push_warning("[SKILL_DB] Resource isn't SkillResource at %s" % path)
+			continue
+		_register_skill(resource)
+	
+	dir.list_dir_end()
+	print("[SKILL_DB] Init done -> %d items loaded" % _all.size())
 
-# --- Helpers
-static func _as_array(value: Variant) -> Array:
-	if typeof(value) == TYPE_ARRAY:
-		return value
-	elif typeof(value) == TYPE_STRING and value != "":
-		return [value]
-	return []
+func _register_skill(resource: SkillResource) -> void:
+	_by_id[resource.id] = resource
+	_all.append(resource)
 
-static func _pick_level_block(levels: Array, want_level: int) -> Dictionary:
-	var best := {}
-	var best_level := -1
+# --- API
+## List of SkillResource
+func get_all() -> Array:
+	return _all
 
-	for level in levels:
-		var skill_level := int(level.get("level", 1))
-		if skill_level == want_level:
-			return level
-		if skill_level < want_level and skill_level > best_level:
-			best_level = skill_level
-			best = level
-	if not best.is_empty():
-		return best
-	return levels[0] if levels.size() > 0 else {}
+func has(id: String) -> bool:
+	return _by_id.has(id)
 
-func get_skill(id: String, level: int) -> Dictionary:
-	var model: Dictionary = _list.get(id, {})
-	if model == {}:
-		push_warning("[SKILL_DB] Unknown id %s" % id)
-		return {}
-	var result := {}
-	result["id"] = model.get("id","")
-	result["type"] = model.get("type", "support")
-	result["tags"] = _as_array(model.get("tags", []))
-	result["drop_level"] = int(model.get("drop_level", 1))
-	result["uses_weapon"] = bool(model.get("uses_weapon", false))
+func get_skill(id: String) -> SkillResource:
+	if not has(id):
+		print("[SKILL_DB] ID not found : %s" % id)
+		return null
+	
+	return _by_id.get(id)
 
-	var levels: Array = model.get("levels", [])
-	var skill_level := _pick_level_block(levels, level)
-	# merge level fields into result
-	for key in skill_level.keys():
-		result[str(key)] = skill_level[key]
-
-	# normalize some types
-	if result.has("requirements"):
-		var requirements: Dictionary = result["requirements"]
-		result["requirements"] = {
-			"level": int(requirements.get("level", 1)),
-			"strength": int(requirements.get("strength", 0)),
-			"dexterity": int(requirements.get("dexterity", 0)),
-			"intelligence": int(requirements.get("intelligence", 0)),
-		}
-	if result.has("mana_cost"):
-		result["mana_cost"] = int(result["mana_cost"])
-	if result.has("xp_to_next"):
-		result["xp_to_next"] = int(result["xp_to_next"])
-
-	return result
+func get_level(id: String, level: int) -> SkillLevelResource:
+	if not has(id):
+		print("[SKILL_DB] ID not found : %s" % id)
+		return null
+	
+	var skill: SkillResource = _by_id.get(id)
+	
+	for level_infos: SkillLevelResource in skill.levels:
+		if level_infos.level == level:
+			return level_infos
+	
+	return null
